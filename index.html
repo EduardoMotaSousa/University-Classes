@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>University Classes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <h1>University <span>Classes</span></h1>
+    <p>Explorando código, aprendizados e projetos em C++</p>
+  </header>
+
+  <!-- GRAFICO GITHUB -->
+  <section class="contrib">
+    <h2>📊 Commits</h2>
+    <img 
+      src="https://ghchart.rshah.org/40c463/EduardoMotaSousa" 
+      alt="GitHub chart"
+    />
+  </section>
+
+  <!-- NAVEGAÇÃO -->
+  <section class="nav" id="pastas"></section>
+
+  <!-- INFO -->
+  <section class="info">
+    <h2>📁 <span id="caminho">home</span></h2>
+
+    <button id="voltar" onclick="voltar()" class="btn-voltar" style="display:none;">
+      ⬅ Voltar
+    </button>
+  </section>
+
+  <!-- GITHUB -->
+  <section class="github">
+    <button onclick="irGithub()" class="btn-github">
+      🚀 Ver no GitHub
+    </button>
+  </section>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
