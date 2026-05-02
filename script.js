@@ -12,7 +12,7 @@ async function carregarConteudo(pasta = "") {
   const container = document.getElementById("pastas");
   container.innerHTML = "";
 
-  const ignorar = [".git", ".vscode", "node_modules", "README.md", "output"];
+  const ignorar = [".git", "index.html", "script.js", "style.css", ".vscode", "node_modules", "README.md", "output"];
 
   dados.forEach(item => {
     if (ignorar.includes(item.name)) return;
