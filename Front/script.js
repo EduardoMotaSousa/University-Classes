@@ -15,7 +15,7 @@ async function carregarConteudo(pasta = "") {
   const ignorar = [
     ".git", ".vscode", "node_modules",
     "index.html", "style.css", "script.js",
-    "README.md", "output", "icon.png"
+    "README.md", "output", "icon.png", "Front"
   ];
 
   dados.forEach(item => {
