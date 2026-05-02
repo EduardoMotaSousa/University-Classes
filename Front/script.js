@@ -12,7 +12,11 @@ async function carregarConteudo(pasta = "") {
   const container = document.getElementById("pastas");
   container.innerHTML = "";
 
-  const ignorar = [".git", "index.html", "script.js", "style.css", ".vscode", "node_modules", "README.md", "output"];
+  const ignorar = [
+    ".git", ".vscode", "node_modules",
+    "index.html", "style.css", "script.js",
+    "README.md", "output", "icon.png"
+  ];
 
   dados.forEach(item => {
     if (ignorar.includes(item.name)) return;
@@ -33,8 +37,6 @@ async function carregarConteudo(pasta = "") {
 
     container.appendChild(div);
   });
-
-  document.getElementById("caminho").textContent = pasta || "Home Page";
 
   document.getElementById("voltar").style.display =
     historico.length ? "inline-block" : "none";
@@ -60,5 +62,6 @@ async function carregarReadme() {
     marked.parse(markdown);
 }
 
+/* INIT */
 carregarConteudo();
 carregarReadme();

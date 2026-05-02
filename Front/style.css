@@ -114,7 +114,6 @@ body {
   line-height: 1.6;
 }
 
-/* títulos README */
 #readme-content h1,
 #readme-content h2,
 #readme-content h3 {
@@ -122,7 +121,6 @@ body {
   margin-top: 15px;
 }
 
-/* links README */
 #readme-content a {
   color: #60a5fa;
   text-decoration: none;
