@@ -39,7 +39,7 @@ durante o processo.
 | `02-Code` | Exercícios introdutórios |
 | `03-Loop` | Laços de repetição |
 | `AulaLoop SAVA` | Exercícios complementares de loop |
-| `AulaVetores&Matrizes SAVA` | Vetores e Matrizes |
+| `AulaVetores SAVA` | Vetores e Matrizes |
 | `ExerciciosDouglas` | Lista de exercícios do professor |
 
 ---
