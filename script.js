@@ -34,7 +34,7 @@ async function carregarConteudo(pasta = "") {
     container.appendChild(div);
   });
 
-  document.getElementById("caminho").textContent = pasta || "home";
+  document.getElementById("caminho").textContent = pasta || "Home Page";
 
   document.getElementById("voltar").style.display =
     historico.length ? "inline-block" : "none";
@@ -49,4 +49,16 @@ function irGithub() {
   window.open("https://github.com/EduardoMotaSousa");
 }
 
+/* README */
+async function carregarReadme() {
+  const url = "https://raw.githubusercontent.com/EduardoMotaSousa/University-Classes/main/README.md";
+  
+  const res = await fetch(url);
+  const markdown = await res.text();
+
+  document.getElementById("readme-content").innerHTML =
+    marked.parse(markdown);
+}
+
 carregarConteudo();
+carregarReadme();
