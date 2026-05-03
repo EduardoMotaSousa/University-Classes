@@ -153,3 +153,44 @@ body {
   transform: scale(1.1);
   box-shadow: 0 0 35px rgb(86, 235, 37);
 }
+
+/* LINKEDIN */
+.btn-linkedin {
+  margin-left: 10px;
+  padding: 14px 30px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #0a66c2, #004182);
+  color: white;
+
+  box-shadow: 0 0 20px rgba(10,102,194,0.7);
+  transition: 0.3s;
+}
+
+.btn-linkedin:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 35px rgba(10,102,194,1);
+}
+
+/* BOTÃO + */
+.card-add {
+  width: 140px;
+  padding: 20px;
+  background: rgba(15,23,42,0.5);
+  border: 2px dashed #3b82f6;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.card-add:hover {
+  background: rgba(59,130,246,0.2);
+  transform: scale(1.1);
+}
