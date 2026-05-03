@@ -29,11 +29,17 @@
 
   <!-- INFO -->
   <section class="info">
-    <h2>📁 <span id="caminho">Home Page</span></h2>
 
-    <button id="voltar" onclick="voltar()" class="btn-voltar" style="display:none;">
-      ⬅ Voltar
-    </button>
+    <div id="homeBtn" class="home-btn" onclick="voltar()" style="display:none;">
+     <div class="home-content">
+       <span class="home-icon">📁</span>
+       <span class="home-text">Home Page</span>
+      </div>
+      <div class="home-arrow">⬅</div>
+    </div>
+
+    <h2 id="caminho"></h2>
+
   </section>
 
   <!-- README -->

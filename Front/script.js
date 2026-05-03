@@ -52,8 +52,8 @@ async function carregarConteudo(pasta = "") {
 
   container.appendChild(add);
 
-  document.getElementById("voltar").style.display =
-    historico.length ? "inline-block" : "none";
+  document.getElementById("homeBtn").style.display =
+    historico.length ? "flex" : "none";
 }
 
 function voltar() {
