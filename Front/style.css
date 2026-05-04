@@ -1,4 +1,184 @@
-/* BOTÕES (GITHUB + LINKEDIN) */
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #020617, #000);
+  color: #e2e8f0;
+  text-align: center;
+}
+
+/* HERO */
+.hero {
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 45px;
+}
+
+.hero span {
+  color: #3b82f6;
+  text-shadow: 0 0 15px rgba(59,130,246,0.8);
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #94a3b8;
+}
+
+/* GRAFICO */
+.contrib {
+  margin: 30px 0;
+}
+
+.contrib img {
+  width: 90%;
+  max-width: 900px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(59,130,246,0.4);
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 30px;
+}
+
+/* CARDS */
+.card {
+  width: 140px;
+  padding: 20px;
+  background: rgba(15,23,42,0.7);
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 25px rgba(59,130,246,0.7);
+}
+
+/* BOTÃO + */
+.card-add {
+  width: 140px;
+  padding: 20px;
+  background: rgba(15,23,42,0.5);
+  border: 2px dashed #3b82f6;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.card-add:hover {
+  background: rgba(59,130,246,0.2);
+  transform: scale(1.1);
+}
+
+/* INFO */
+.info {
+  margin-top: 20px;
+}
+
+/* BOTÃO HOME */
+.home-btn {
+  margin: 25px auto;
+  width: 240px;
+  padding: 18px;
+  border-radius: 16px;
+
+  background: rgba(15,23,42,0.8);
+  border: 1px solid #1e293b;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  transform: scale(1.05);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59,130,246,0.7);
+}
+
+.home-icon {
+  font-size: 22px;
+}
+
+.home-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.home-arrow {
+  font-size: 20px;
+  color: #38bdf8;
+  opacity: 0.8;
+}
+
+/* README */
+.readme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px 0;
+}
+
+.readme h2 {
+  margin-bottom: 20px;
+}
+
+#readme-content {
+  background: rgba(15,23,42,0.7);
+  border: 1px solid #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 90%;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* TITULOS README */
+#readme-content h1,
+#readme-content h2,
+#readme-content h3 {
+  color: #38bdf8;
+  margin-top: 15px;
+}
+
+/* LINKS README */
+#readme-content a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+#readme-content a:hover {
+  text-decoration: underline;
+}
+
+/* BOTÕES GITHUB + LINKEDIN */
 .github {
   margin: 50px 0;
   display: flex;
@@ -43,48 +223,4 @@
 .btn-linkedin:hover {
   transform: scale(1.08);
   box-shadow: 0 0 25px rgba(10,102,194,1);
-}
-
-/* BOTÃO HOME */
-.home-btn {
-  margin: 25px auto;
-  width: 240px;
-  padding: 18px;
-  border-radius: 16px;
-
-  background: rgba(15,23,42,0.8);
-  border: 1px solid #1e293b;
-
-  cursor: pointer;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-
-  transition: all 0.3s ease;
-}
-
-.home-btn:hover {
-  transform: scale(1.05);
-  border-color: #3b82f6;
-  box-shadow: 0 0 20px rgba(59,130,246,0.7);
-}
-
-/* TEXTO */
-.home-text {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-/* ÍCONE */
-.home-icon {
-  font-size: 22px;
-}
-
-/* SETA */
-.home-arrow {
-  font-size: 20px;
-  color: #38bdf8;
-  opacity: 0.8;
 }
