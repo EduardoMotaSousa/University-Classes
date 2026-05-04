@@ -1,88 +1,90 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #020617, #000);
-  color: #e2e8f0;
-  text-align: center;
-}
-
-/* HERO */
-.hero {
-  padding: 60px 20px;
-}
-
-.hero span {
-  color: #3b82f6;
-}
-
-/* NAV */
-.nav {
+/* BOTÕES (GITHUB + LINKEDIN) */
+.github {
+  margin: 50px 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 30px;
 }
 
-/* CARD */
-.card {
-  width: 140px;
-  padding: 20px;
-  background: rgba(15,23,42,0.7);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: scale(1.1);
-  border: 1px solid #3b82f6;
-}
-
-/* BOTÃO + */
-.card-add {
-  width: 140px;
-  padding: 20px;
-  border: 2px dashed #3b82f6;
-  border-radius: 12px;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-/* HOME BUTTON */
-.home-btn {
-  margin: 20px auto;
-  width: 200px;
-  padding: 20px;
-  border-radius: 12px;
-  background: rgba(15,23,42,0.7);
-  cursor: pointer;
-}
-
-.home-arrow {
-  margin-top: 8px;
-  color: #38bdf8;
-}
-
-/* README */
-#readme-content {
-  background: rgba(15,23,42,0.7);
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 900px;
-  margin: auto;
-  text-align: left;
-}
-
-/* BOTÕES */
-.btn-github {
-  background: blue;
-  color: white;
-  padding: 12px;
-  margin: 10px;
-}
-
+.btn-github,
 .btn-linkedin {
-  background: #0a66c2;
+  padding: 14px 28px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
   color: white;
-  padding: 12px;
+  font-weight: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: all 0.3s ease;
+}
+
+/* GITHUB */
+.btn-github {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 0 15px rgba(37,99,235,0.6);
+}
+
+.btn-github:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(37,99,235,1);
+}
+
+/* LINKEDIN */
+.btn-linkedin {
+  background: linear-gradient(135deg, #0a66c2, #004182);
+  box-shadow: 0 0 15px rgba(10,102,194,0.6);
+}
+
+.btn-linkedin:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(10,102,194,1);
+}
+
+/* BOTÃO HOME */
+.home-btn {
+  margin: 25px auto;
+  width: 240px;
+  padding: 18px;
+  border-radius: 16px;
+
+  background: rgba(15,23,42,0.8);
+  border: 1px solid #1e293b;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  transform: scale(1.05);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59,130,246,0.7);
+}
+
+/* TEXTO */
+.home-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* ÍCONE */
+.home-icon {
+  font-size: 22px;
+}
+
+/* SETA */
+.home-arrow {
+  font-size: 20px;
+  color: #38bdf8;
+  opacity: 0.8;
 }
