@@ -3,46 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>University Classes</title>
-  <!-- FAVICON PADRÃO -->
-  <link rel="icon" href="Front/icon.png">
 
-<!-- ÍCONE PARA CELULAR -->
+  <!-- CSS (ESSENCIAL) -->
+  <link rel="stylesheet" href="Front/style.css">
+
+  <!-- ICONES -->
+  <link rel="icon" href="Front/icon.png">
   <link rel="apple-touch-icon" href="Front/icon.png">
 
-<!-- OPEN GRAPH (LINKEDIN / WHATSAPP / ETC) -->
+  <!-- OPEN GRAPH -->
   <meta property="og:title" content="University Classes">
   <meta property="og:description" content="Projeto para organizar e visualizar meus estudos em C++ com integração ao GitHub.">
   <meta property="og:image" content="https://eduardomotasousa.github.io/University-Classes/Front/icon.png">
   <meta property="og:url" content="https://eduardomotasousa.github.io/University-Classes/">
   <meta property="og:type" content="website">
 </head>
+
 <body>
 
   <!-- HERO -->
   <header class="hero">
     <h1>University <span>Classes</span></h1>
-    <p>Projeto pessoal para organização e visualização dos meus estudos em C++, com integração dinâmica ao GitHub.</p>
+    <p>Projeto pessoal para organizar e visualizar meus estudos em C++, com integração dinâmica ao GitHub.</p>
   </header>
 
-  <!-- GRAFICO GITHUB -->
+  <!-- GRAFICO -->
   <section class="contrib">
     <h2>📊 Meus Commits</h2>
-    <img 
-      src="https://ghchart.rshah.org/40c463/EduardoMotaSousa" 
-      alt="GitHub chart"
-    />
+    <img src="https://ghchart.rshah.org/40c463/EduardoMotaSousa">
   </section>
 
-  <!-- NAVEGAÇÃO -->
+  <!-- NAV -->
   <section class="nav" id="pastas"></section>
 
   <!-- INFO -->
   <section class="info">
 
     <div id="homeBtn" class="home-btn" onclick="voltar()" style="display:none;">
-     <div class="home-content">
-       <span class="home-icon">📁</span>
-       <span class="home-text">Home Page</span>
+      <div class="home-content">
+        📁 Home Page
       </div>
       <div class="home-arrow">⬅</div>
     </div>
@@ -54,26 +53,19 @@
   <!-- README -->
   <section class="readme">
     <h2>📘 Sobre o Projeto</h2>
-
-    <div id="readme-content">
-      Carregando README...
-    </div>
+    <div id="readme-content">Carregando README...</div>
   </section>
 
   <!-- BOTÕES -->
   <section class="github">
-    <button onclick="irGithub()" class="btn-github">
-      🚀 GitHub
-    </button>
-
-    <button onclick="irLinkedin()" class="btn-linkedin">
-      💼 LinkedIn
-    </button>
+    <button onclick="irGithub()" class="btn-github">🚀 GitHub</button>
+    <button onclick="irLinkedin()" class="btn-linkedin">💼 LinkedIn</button>
   </section>
 
-  <!-- LIB MARKDOWN -->
+  <!-- LIB -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+  <!-- JS -->
   <script src="Front/script.js"></script>
 
 </body>

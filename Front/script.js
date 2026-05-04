@@ -4,46 +4,41 @@ const repo = "University-Classes";
 let historico = [];
 let pastaAtual = "";
 
-// CACHE EM MEMÓRIA
+// CACHE
 const cache = {};
-
-//CARREGAR CONTEÚDO
 
 async function carregarConteudo(pasta = "") {
   pastaAtual = pasta;
 
   const container = document.getElementById("pastas");
-  container.innerHTML = "";
+  const caminho = document.getElementById("caminho");
+
+  container.innerHTML = "Carregando...";
 
   const ignorar = [
-    ".git", ".vscode", "node_modules","index.html","README.md", "output", "Front"
+    ".git", ".vscode", "node_modules",
+    "index.html", "README.md",
+    "Front", "output"
   ];
 
   let dados;
 
   try {
-    // SE JÁ TEM NO CACHE
 
     if (cache[pasta]) {
       dados = cache[pasta];
     } else {
       const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
-      
       const res = await fetch(url);
+
+      if (!res.ok) throw new Error("Erro API");
+
       dados = await res.json();
-
-      // TRATAMENTO DE ERRO (RATE LIMIT)
-      if (dados.message && dados.message.includes("rate limit")) {
-        container.innerHTML =
-          "<p>⚠️ Limite da API do GitHub atingido. Tente novamente mais tarde.</p>";
-        return;
-      }
-
-      // SALVA NO CACHE
       cache[pasta] = dados;
     }
 
-    // RENDERIZA
+    container.innerHTML = "";
+
     dados.forEach(item => {
       if (ignorar.includes(item.name)) return;
 
@@ -64,40 +59,37 @@ async function carregarConteudo(pasta = "") {
       container.appendChild(div);
     });
 
-    // BOTÃO "+"
+    // BOTÃO +
     const add = document.createElement("div");
     add.className = "card-add";
     add.innerHTML = "+";
 
     add.onclick = () => {
-      window.open(
-        `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
-        "_blank"
-      );
+      window.open(`https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`, "_blank");
     };
 
     container.appendChild(add);
 
-    // 🔹 CONTROLE BOTÃO HOME
+    // BOTÃO HOME
     document.getElementById("homeBtn").style.display =
       historico.length ? "flex" : "none";
 
+    // CAMINHO
+    caminho.textContent = pasta || "";
+
   } catch (erro) {
-    container.innerHTML =
-      "<p>❌ Erro ao carregar dados. Verifique sua conexão.</p>";
+    container.innerHTML = "<p>❌ Erro ao carregar dados.</p>";
     console.error(erro);
   }
 }
 
-//NAVEGAÇÃO
-
+// VOLTAR
 function voltar() {
   const anterior = historico.pop();
   carregarConteudo(anterior || "");
 }
 
 // LINKS
-
 function irGithub() {
   window.open("https://github.com/EduardoMotaSousa");
 }
@@ -106,25 +98,22 @@ function irLinkedin() {
   window.open("https://www.linkedin.com/in/eduardomotaads/");
 }
 
-//README (SEM CACHE POR ENQUANTO)
-
+// README
 async function carregarReadme() {
   try {
     const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
-    
     const res = await fetch(url);
     const markdown = await res.text();
 
     document.getElementById("readme-content").innerHTML =
       marked.parse(markdown);
 
-  } catch (erro) {
+  } catch {
     document.getElementById("readme-content").innerHTML =
-      "<p>Erro ao carregar README.</p>";
+      "Erro ao carregar README";
   }
 }
 
-//INIT
-
+// INIT
 carregarConteudo();
 carregarReadme();
