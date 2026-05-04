@@ -4,13 +4,14 @@ const repo = "University-Classes";
 let historico = [];
 let pastaAtual = "";
 
+// 🔥 CACHE EM MEMÓRIA
+const cache = {};
+
+/* =========================
+   CARREGAR CONTEÚDO
+========================= */
 async function carregarConteudo(pasta = "") {
   pastaAtual = pasta;
-
-  const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
-  
-  const res = await fetch(url);
-  const dados = await res.json();
 
   const container = document.getElementById("pastas");
   container.innerHTML = "";
@@ -21,46 +22,86 @@ async function carregarConteudo(pasta = "") {
     "README.md", "output", "icon.png", "Front"
   ];
 
-  dados.forEach(item => {
-    if (ignorar.includes(item.name)) return;
+  let dados;
 
-    const div = document.createElement("div");
-    div.className = "card";
-
-    if (item.type === "dir") {
-      div.innerHTML = `📁<br>${item.name}`;
-      div.onclick = () => {
-        historico.push(pasta);
-        carregarConteudo(item.path);
-      };
+  try {
+    // 🔥 SE JÁ TEM NO CACHE
+    if (cache[pasta]) {
+      dados = cache[pasta];
     } else {
-      div.innerHTML = `📄<br>${item.name}`;
-      div.onclick = () => window.open(item.download_url, "_blank");
+      const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
+      
+      const res = await fetch(url);
+      dados = await res.json();
+
+      // 🚫 TRATAMENTO DE ERRO (RATE LIMIT)
+      if (dados.message && dados.message.includes("rate limit")) {
+        container.innerHTML =
+          "<p>⚠️ Limite da API do GitHub atingido. Tente novamente mais tarde.</p>";
+        return;
+      }
+
+      // 🔥 SALVA NO CACHE
+      cache[pasta] = dados;
     }
 
-    container.appendChild(div);
-  });
+    // 🔹 RENDERIZA
+    dados.forEach(item => {
+      if (ignorar.includes(item.name)) return;
 
-  // 🔥 BOTÃO "+"
-  const add = document.createElement("div");
-  add.className = "card-add";
-  add.innerHTML = "+";
+      const div = document.createElement("div");
+      div.className = "card";
 
-  add.onclick = () => {
-    window.open(`https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`, "_blank");
-  };
+      if (item.type === "dir") {
+        div.innerHTML = `📁<br>${item.name}`;
+        div.onclick = () => {
+          historico.push(pasta);
+          carregarConteudo(item.path);
+        };
+      } else {
+        div.innerHTML = `📄<br>${item.name}`;
+        div.onclick = () => window.open(item.download_url, "_blank");
+      }
 
-  container.appendChild(add);
+      container.appendChild(div);
+    });
 
-  document.getElementById("homeBtn").style.display =
-    historico.length ? "flex" : "none";
+    // 🔥 BOTÃO "+"
+    const add = document.createElement("div");
+    add.className = "card-add";
+    add.innerHTML = "+";
+
+    add.onclick = () => {
+      window.open(
+        `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
+        "_blank"
+      );
+    };
+
+    container.appendChild(add);
+
+    // 🔹 CONTROLE BOTÃO HOME
+    document.getElementById("homeBtn").style.display =
+      historico.length ? "flex" : "none";
+
+  } catch (erro) {
+    container.innerHTML =
+      "<p>❌ Erro ao carregar dados. Verifique sua conexão.</p>";
+    console.error(erro);
+  }
 }
 
+/* =========================
+   NAVEGAÇÃO
+========================= */
 function voltar() {
   const anterior = historico.pop();
   carregarConteudo(anterior || "");
 }
 
+/* =========================
+   LINKS
+========================= */
 function irGithub() {
   window.open("https://github.com/EduardoMotaSousa");
 }
@@ -69,17 +110,27 @@ function irLinkedin() {
   window.open("https://www.linkedin.com/in/eduardomotaads/");
 }
 
-/* README */
+/* =========================
+   README (SEM CACHE POR ENQUANTO)
+========================= */
 async function carregarReadme() {
-  const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
-  
-  const res = await fetch(url);
-  const markdown = await res.text();
+  try {
+    const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
+    
+    const res = await fetch(url);
+    const markdown = await res.text();
 
-  document.getElementById("readme-content").innerHTML =
-    marked.parse(markdown);
+    document.getElementById("readme-content").innerHTML =
+      marked.parse(markdown);
+
+  } catch (erro) {
+    document.getElementById("readme-content").innerHTML =
+      "<p>Erro ao carregar README.</p>";
+  }
 }
 
-/* INIT */
+/* =========================
+   INIT
+========================= */
 carregarConteudo();
 carregarReadme();
