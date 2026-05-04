@@ -16,9 +16,7 @@ async function carregarConteudo(pasta = "") {
   container.innerHTML = "";
 
   const ignorar = [
-    ".git", ".vscode", "node_modules",
-    "index.html", "style.css", "script.js",
-    "README.md", "output", "icon.png", "Front"
+    ".git", ".vscode", "node_modules","index.html","README.md", "output", "Front"
   ];
 
   let dados;
