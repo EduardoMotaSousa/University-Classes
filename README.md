@@ -41,10 +41,3 @@ durante o processo.
 | `AulaLoop SAVA` | Exercícios complementares de loop |
 | `AulaVetores SAVA` | Vetores e Matrizes |
 | `ExerciciosDouglas` | Lista de exercícios do professor |
-
----
-
-## 👤 Contato
-
-**Eduardo Mota Sousa**
-📧 eduardomotasousa2005@gmail.com

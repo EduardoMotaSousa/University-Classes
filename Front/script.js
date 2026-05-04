@@ -4,12 +4,11 @@ const repo = "University-Classes";
 let historico = [];
 let pastaAtual = "";
 
-// 🔥 CACHE EM MEMÓRIA
+// CACHE EM MEMÓRIA
 const cache = {};
 
-/* =========================
-   CARREGAR CONTEÚDO
-========================= */
+//CARREGAR CONTEÚDO
+
 async function carregarConteudo(pasta = "") {
   pastaAtual = pasta;
 
@@ -25,7 +24,8 @@ async function carregarConteudo(pasta = "") {
   let dados;
 
   try {
-    // 🔥 SE JÁ TEM NO CACHE
+    // SE JÁ TEM NO CACHE
+
     if (cache[pasta]) {
       dados = cache[pasta];
     } else {
@@ -34,18 +34,18 @@ async function carregarConteudo(pasta = "") {
       const res = await fetch(url);
       dados = await res.json();
 
-      // 🚫 TRATAMENTO DE ERRO (RATE LIMIT)
+      // TRATAMENTO DE ERRO (RATE LIMIT)
       if (dados.message && dados.message.includes("rate limit")) {
         container.innerHTML =
           "<p>⚠️ Limite da API do GitHub atingido. Tente novamente mais tarde.</p>";
         return;
       }
 
-      // 🔥 SALVA NO CACHE
+      // SALVA NO CACHE
       cache[pasta] = dados;
     }
 
-    // 🔹 RENDERIZA
+    // RENDERIZA
     dados.forEach(item => {
       if (ignorar.includes(item.name)) return;
 
@@ -66,7 +66,7 @@ async function carregarConteudo(pasta = "") {
       container.appendChild(div);
     });
 
-    // 🔥 BOTÃO "+"
+    // BOTÃO "+"
     const add = document.createElement("div");
     add.className = "card-add";
     add.innerHTML = "+";
@@ -91,17 +91,15 @@ async function carregarConteudo(pasta = "") {
   }
 }
 
-/* =========================
-   NAVEGAÇÃO
-========================= */
+//NAVEGAÇÃO
+
 function voltar() {
   const anterior = historico.pop();
   carregarConteudo(anterior || "");
 }
 
-/* =========================
-   LINKS
-========================= */
+// LINKS
+
 function irGithub() {
   window.open("https://github.com/EduardoMotaSousa");
 }
@@ -110,9 +108,8 @@ function irLinkedin() {
   window.open("https://www.linkedin.com/in/eduardomotaads/");
 }
 
-/* =========================
-   README (SEM CACHE POR ENQUANTO)
-========================= */
+//README (SEM CACHE POR ENQUANTO)
+
 async function carregarReadme() {
   try {
     const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
@@ -129,8 +126,7 @@ async function carregarReadme() {
   }
 }
 
-/* =========================
-   INIT
-========================= */
+//INIT
+
 carregarConteudo();
 carregarReadme();
