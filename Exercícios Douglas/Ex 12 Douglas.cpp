@@ -8,7 +8,7 @@ int main(){
     cout << "Sua altura em metros: ";
     cin >> altura;
 
-    cout << "Peso ideal: " << (72.7*altura)-58;
+    cout << "Peso ideal: " << 72.7 * altura - 58;
 
     return 0;
 }

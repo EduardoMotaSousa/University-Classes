@@ -4,10 +4,10 @@ using namespace std;
 int main(){
     float met;
 
-    cout << "Metros:";
+    cout << "Metros: ";
     cin >> met;
 
-    cout << "Centimetros:" << met*100;
+    cout << "Centimetros: " << met * 100;
 
     return 0;
 }

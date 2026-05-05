@@ -9,7 +9,7 @@ int main(){
     cin >> peso;
 
     if(peso > 50){
-        cout << "Passou do limite por: " << peso - 50 << "\nMulta de: R$" << (peso - 50)*4 << ",00\n";
+        cout << "Passou do limite por: " << peso - 50 << "\nMulta de: R$" << (peso - 50) * 4 << ",00\n";
     }
     else{
         cout << "Dentro do limite" << endl;

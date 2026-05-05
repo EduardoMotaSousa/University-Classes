@@ -8,7 +8,7 @@ int main (){
     cout << "Temperatura em Celcius: ";
     cin >> c;
 
-    cout << "Farerint: " << (c*1.8)+32;
+    cout << "Farerint: " << (c * 1.8) + 32;
 
     return 0;
 }

@@ -8,8 +8,8 @@ int main (){
     cout << "Lado: ";
     cin >> lado;
 
-    cout << "Área do quadrado: " << lado*2 << endl;
-    cout << "Dobro: " << lado*4 << endl;
+    cout << "Área do quadrado: " << lado * 2 << endl;
+    cout << "Dobro: " << lado * 4 << endl;
 
     return 0;
 }

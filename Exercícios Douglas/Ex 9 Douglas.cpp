@@ -5,10 +5,10 @@ using namespace std;
 int main(){
     float c, f;
 
-    cout << "Temperatura em Farenheit:";
+    cout << "Temperatura em Farenheit: ";
     cin >> f;
 
-    c = 5*(f-32)/9;
+    c = 5 * (f - 32) / 9;
 
     cout << "Temperatura em Celcius: " << c << endl;
 
