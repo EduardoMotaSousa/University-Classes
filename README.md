@@ -64,8 +64,8 @@ Estas pastas são exibidas automaticamente na interface:
 | 01-Lógica | Exercícios de lógica |
 | 02-Code | Exercícios introdutórios |
 | 03-Loop | Estruturas de repetição |
-| Aula Loop SAVA | Exercícios complementares |
-| Aula Vetores & Matrizes SAVA | Vetores e matrizes |
+| SAVA Loop | Exercícios complementares |
+| SAVA Vetores & Matrizes | Vetores e matrizes |
 | Exercícios Douglas | Lista do professor |
 
 ---
@@ -76,7 +76,7 @@ Arquivos usados para funcionamento do projeto web:
 
 | Pasta | Função |
 |------|------|
-| Front | Contém todo o front-end (HTML, CSS e JS) |
+| Front | Contém todo o front-end (CSS, icone e JS) |
 | .vscode | Configurações do ambiente |
 | README.md | Documentação do projeto |
 | index.html | Entrada do site |
