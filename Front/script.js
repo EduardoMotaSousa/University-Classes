@@ -117,3 +117,106 @@ async function carregarReadme() {
 // INIT
 carregarConteudo();
 carregarReadme();
+
+// EXTENSÕES QUE CONTAM COMO ATIVIDADE
+const extensoesValidas = [".cpp", ".c", ".h"];
+
+// CACHE CONTAGEM
+const cacheCount = {};
+
+async function contarAtividades(pasta) {
+  if (cacheCount[pasta] !== undefined) {
+    return cacheCount[pasta];
+  }
+
+  const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
+  const res = await fetch(url);
+  const dados = await res.json();
+
+  let total = 0;
+
+  for (const item of dados) {
+    if (item.type === "file") {
+      if (extensoesValidas.some(ext => item.name.endsWith(ext))) {
+        total++;
+      }
+    }
+  }
+
+  cacheCount[pasta] = total;
+  return total;
+}
+
+async function carregarConteudo(pasta = "") {
+  pastaAtual = pasta;
+
+  const container = document.getElementById("pastas");
+  container.innerHTML = "";
+
+  const ignorar = [
+    ".git", ".vscode", "node_modules",
+    "index.html","README.md","output","Front"
+  ];
+
+  let dados;
+
+  if (cache[pasta]) {
+    dados = cache[pasta];
+  } else {
+    const url = `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
+    const res = await fetch(url);
+    dados = await res.json();
+    cache[pasta] = dados;
+  }
+
+  let totalGeral = 0;
+
+  for (const item of dados) {
+    if (ignorar.includes(item.name)) continue;
+
+    const div = document.createElement("div");
+    div.className = "card";
+
+    if (item.type === "dir") {
+      const qtd = await contarAtividades(item.path);
+      totalGeral += qtd;
+
+      div.innerHTML = `📁<br>${item.name}<br><small>${qtd} atividades</small>`;
+
+      div.onclick = () => {
+        historico.push(pasta);
+        carregarConteudo(item.path);
+      };
+    } else {
+      if (extensoesValidas.some(ext => item.name.endsWith(ext))) {
+        totalGeral++;
+      }
+
+      div.innerHTML = `📄<br>${item.name}`;
+      div.onclick = () => window.open(item.download_url, "_blank");
+    }
+
+    container.appendChild(div);
+  }
+
+  // TOTAL NO TOPO
+  document.getElementById("caminho").textContent =
+    pasta ? pasta : `Home • ${totalGeral} atividades`;
+
+  // BOTÃO "+"
+  const add = document.createElement("div");
+  add.className = "card-add";
+  add.innerHTML = "+";
+
+  add.onclick = () => {
+    window.open(
+      `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
+      "_blank"
+    );
+  };
+
+  container.appendChild(add);
+
+  document.getElementById("homeBtn").style.display =
+    historico.length ? "flex" : "none";
+}
