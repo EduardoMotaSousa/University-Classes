@@ -8,6 +8,27 @@ using namespace std;
 
 int main(){
     float lados[3];
-    
+
+    for(int i = 0; i < 3; i++){
+        cout << "Tamanho do lado do Triângulo: ";
+        cin >> lados[i];
+    }
+
+    if(lados[0] >= lados[1] + lados[2] || lados[2] >= lados[1] + lados[0] || lados[2] >= lados[0] + lados [1]){
+        cout << "Trinagulo invalido";
+    }
+
+    else if(lados[0] == lados[1] || lados[0] == lados[2]){
+        if(lados[1] == lados[2]){
+            cout << "Triângulo Equilátero\n";
+        }
+        else{
+            cout << "Triângulo Isósceles\n";
+        }
+    }
+    else{
+        cout << "Triângulo Escaleno\n";
+    }
+
     return 0;
 }
