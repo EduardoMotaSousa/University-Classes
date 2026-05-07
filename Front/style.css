@@ -1,4 +1,5 @@
 /* RESET */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,14 +7,17 @@
 }
 
 /* BODY */
+
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #020617, #000);
+  background:
+    radial-gradient(circle at top, #020617, #000);
   color: #e2e8f0;
   text-align: center;
 }
 
 /* HERO */
+
 .hero {
   padding: 60px 20px;
 }
@@ -24,15 +28,20 @@ body {
 
 .hero span {
   color: #3b82f6;
-  text-shadow: 0 0 15px rgba(59,130,246,0.8);
+  text-shadow:
+    0 0 15px rgba(59,130,246,0.8);
 }
 
 .hero p {
   margin-top: 10px;
   color: #94a3b8;
+  max-width: 700px;
+  margin-inline: auto;
+  line-height: 1.6;
 }
 
-/* GRAFICO */
+/* COMMITS */
+
 .contrib {
   margin: 30px 0;
 }
@@ -40,109 +49,183 @@ body {
 .contrib img {
   width: 90%;
   max-width: 900px;
+
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(59,130,246,0.4);
+
+  box-shadow:
+    0 0 20px rgba(59,130,246,0.4);
 }
 
 /* NAV */
+
 .nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
   gap: 20px;
+
   padding: 30px;
 }
 
 /* CARDS */
-.card {
-  width: 140px;
-  padding: 20px;
-  background: rgba(15,23,42,0.7);
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
-}
 
-.card:hover {
-  transform: scale(1.1);
-  border-color: #3b82f6;
-  box-shadow: 0 0 25px rgba(59,130,246,0.7);
-}
-
-/* BOTÃO + */
+.card,
 .card-add {
-  width: 140px;
+  width: 160px;
+  min-height: 150px;
+
   padding: 20px;
-  background: rgba(15,23,42,0.5);
-  border: 2px dashed #3b82f6;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-}
 
-.card-add:hover {
-  background: rgba(59,130,246,0.2);
-  transform: scale(1.1);
-}
-
-/* INFO */
-.info {
-  margin-top: 20px;
-}
-
-/* BOTÃO HOME */
-.home-btn {
-  margin: 25px auto;
-  width: 240px;
-  padding: 18px;
   border-radius: 16px;
-
-  background: rgba(15,23,42,0.8);
-  border: 1px solid #1e293b;
-
-  cursor: pointer;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
 
-  transition: all 0.3s ease;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+/* CARD */
+
+.card {
+  background: rgba(15,23,42,0.75);
+
+  border: 1px solid #1e293b;
+
+  backdrop-filter: blur(10px);
+}
+
+.card:hover {
+  transform: scale(1.06);
+
+  border-color: #3b82f6;
+
+  box-shadow:
+    0 0 25px rgba(59,130,246,0.7);
+}
+
+/* ÍCONE */
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+/* TITULO */
+
+.card-title {
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.4;
+
+  max-width: 100%;
+
+  word-break: break-word;
+}
+
+/* TEXTO PEQUENO */
+
+.card small {
+  margin-top: 10px;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+/* CARD + */
+
+.card-add {
+  background: rgba(15,23,42,0.45);
+
+  border: 2px dashed #3b82f6;
+
+  font-size: 40px;
+}
+
+.card-add:hover {
+  transform: scale(1.08);
+
+  background:
+    rgba(59,130,246,0.15);
+}
+
+/* INFO */
+
+.info {
+  margin-top: 10px;
+}
+
+/* HOME BUTTON */
+
+.home-btn {
+  margin: 20px auto;
+
+  width: 240px;
+
+  padding: 18px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(15,23,42,0.75);
+
+  border: 1px solid #1e293b;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
 }
 
 .home-btn:hover {
   transform: scale(1.05);
+
   border-color: #3b82f6;
-  box-shadow: 0 0 20px rgba(59,130,246,0.7);
+
+  box-shadow:
+    0 0 20px rgba(59,130,246,0.6);
 }
 
-.home-icon {
-  font-size: 22px;
-}
+.home-top {
+  display: flex;
+  align-items: center;
 
-.home-text {
+  gap: 8px;
+
   font-size: 18px;
-  font-weight: 500;
 }
 
 .home-arrow {
-  font-size: 20px;
   color: #38bdf8;
-  opacity: 0.8;
+  font-size: 20px;
+}
+
+/* CAMINHO */
+
+#caminho {
+  margin-top: 15px;
+  color: #94a3b8;
 }
 
 /* README */
+
 .readme {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 50px 0;
+
+  margin: 60px 0;
 }
 
 .readme h2 {
@@ -150,25 +233,52 @@ body {
 }
 
 #readme-content {
-  background: rgba(15,23,42,0.7);
+
+  background:
+    rgba(15,23,42,0.75);
+
   border: 1px solid #1e293b;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 900px;
+
+  border-radius: 14px;
+
+  padding: 30px;
+
   width: 90%;
+  max-width: 950px;
+
   text-align: left;
-  line-height: 1.6;
+
+  line-height: 1.8;
 }
 
-/* TITULOS README */
+/* README TITULOS */
+
 #readme-content h1,
 #readme-content h2,
 #readme-content h3 {
   color: #38bdf8;
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
-/* LINKS README */
+/* README PARÁGRAFOS */
+
+#readme-content p {
+  margin: 10px 0;
+}
+
+/* README LISTAS */
+
+#readme-content ul {
+  margin-left: 20px;
+}
+
+#readme-content li {
+  margin: 6px 0;
+}
+
+/* README LINKS */
+
 #readme-content a {
   color: #60a5fa;
   text-decoration: none;
@@ -178,126 +288,147 @@ body {
   text-decoration: underline;
 }
 
-/* BOTÕES GITHUB + LINKEDIN */
-.github {
-  margin: 50px 0;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
+/* README TABELAS */
 
-.btn-github,
-.btn-linkedin {
-  padding: 14px 28px;
-  font-size: 15px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-weight: 500;
-
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  transition: all 0.3s ease;
-}
-
-/* GITHUB */
-.btn-github {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  box-shadow: 0 0 15px rgba(37,99,235,0.6);
-}
-
-.btn-github:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 25px rgba(37,99,235,1);
-}
-
-/* LINKEDIN */
-.btn-linkedin {
-  background: linear-gradient(135deg, #0a66c2, #004182);
-  box-shadow: 0 0 15px rgba(10,102,194,0.6);
-}
-
-.btn-linkedin:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 25px rgba(10,102,194,1);
-}
-
-/* ===== README MELHORADO (ESTILO GITHUB) ===== */
-
-#readme-content {
-  text-align: left;
-}
-
-/* PARÁGRAFOS */
-#readme-content p {
-  margin: 10px 0;
-}
-
-/* LISTAS */
-#readme-content ul {
-  margin: 10px 0 10px 20px;
-}
-
-#readme-content li {
-  margin-bottom: 5px;
-}
-
-/* TABELAS */
 #readme-content table {
   width: 100%;
+
   border-collapse: collapse;
+
   margin: 20px 0;
-  background: rgba(2,6,23,0.8);
-  border-radius: 8px;
+
   overflow: hidden;
 }
 
 #readme-content th,
 #readme-content td {
+
   border: 1px solid #1e293b;
-  padding: 10px;
+
+  padding: 12px;
+
   text-align: left;
 }
 
 #readme-content th {
-  background: #020617;
   color: #38bdf8;
+  background: #020617;
 }
 
-/* LINHAS ALTERNADAS */
 #readme-content tr:nth-child(even) {
-  background: rgba(30,41,59,0.4);
+  background:
+    rgba(30,41,59,0.4);
 }
 
-/* HR (LINHA) */
-#readme-content hr {
-  border: none;
-  height: 1px;
-  background: #1e293b;
-  margin: 20px 0;
-}
+/* README CODE */
 
-/* CÓDIGO */
 #readme-content code {
   background: #020617;
-  padding: 3px 6px;
-  border-radius: 5px;
+
   color: #38bdf8;
+
+  padding: 3px 6px;
+
+  border-radius: 5px;
 }
 
-/* IMAGENS */
+/* README IMAGEM */
+
 #readme-content img {
   max-width: 100%;
   border-radius: 10px;
-  margin: 10px 0;
 }
 
-.card small {
-  display: block;
-  margin-top: 5px;
-  color: #94a3b8;
-  font-size: 12px;
+/* BOTÕES */
+
+.github {
+  margin: 50px 0;
+
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  flex-wrap: wrap;
+}
+
+/* BOTÕES BASE */
+
+.btn-github,
+.btn-linkedin {
+
+  padding: 14px 28px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+/* GITHUB */
+
+.btn-github {
+
+  background:
+    linear-gradient(135deg, #2563eb, #1d4ed8);
+
+  box-shadow:
+    0 0 15px rgba(37,99,235,0.6);
+}
+
+.btn-github:hover {
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 25px rgba(37,99,235,1);
+}
+
+/* LINKEDIN */
+
+.btn-linkedin {
+
+  background:
+    linear-gradient(135deg, #0a66c2, #004182);
+
+  box-shadow:
+    0 0 15px rgba(10,102,194,0.6);
+}
+
+.btn-linkedin:hover {
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 25px rgba(10,102,194,1);
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .hero h1 {
+    font-size: 35px;
+  }
+
+  .card,
+  .card-add {
+    width: 140px;
+    min-height: 140px;
+  }
+
+  .home-btn {
+    width: 210px;
+  }
+
+  #readme-content {
+    padding: 20px;
+  }
 }

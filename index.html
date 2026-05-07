@@ -2,12 +2,14 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>University Classes</title>
 
-  <!-- CSS (ESSENCIAL) -->
+  <!-- CSS -->
   <link rel="stylesheet" href="Front/style.css">
 
-  <!-- ICONES -->
+  <!-- ÍCONES -->
   <link rel="icon" href="Front/icon.png">
   <link rel="apple-touch-icon" href="Front/icon.png">
 
@@ -24,26 +26,44 @@
   <!-- HERO -->
   <header class="hero">
     <h1>University <span>Classes</span></h1>
-    <p>Projeto pessoal para organizar e visualizar meus estudos em C++, com integração dinâmica ao GitHub.</p>
+
+    <p>
+      Projeto pessoal para organização e visualização dos meus estudos em C++,
+      utilizando GitHub API, HTML, CSS e JavaScript.
+    </p>
   </header>
 
-  <!-- GRAFICO -->
+  <!-- COMMITS -->
   <section class="contrib">
     <h2>📊 Meus Commits</h2>
-    <img src="https://ghchart.rshah.org/40c463/EduardoMotaSousa">
+
+    <img
+      src="https://ghchart.rshah.org/40c463/EduardoMotaSousa"
+      alt="GitHub Chart"
+    >
   </section>
 
-  <!-- NAV -->
+  <!-- NAVEGAÇÃO -->
   <section class="nav" id="pastas"></section>
 
   <!-- INFO -->
   <section class="info">
 
-    <div id="homeBtn" class="home-btn" onclick="voltar()" style="display:none;">
-      <span class="home-icon">📁</span>
-      <span class="home-text">Home Page</span>
-      <span class="home-arrow">⬅</span>
-    </div> 
+    <div
+      id="homeBtn"
+      class="home-btn"
+      onclick="voltar()"
+      style="display:none;"
+    >
+      <div class="home-top">
+        <span>📁</span>
+        <span>Home Page</span>
+      </div>
+
+      <div class="home-arrow">
+        ⬅
+      </div>
+    </div>
 
     <h2 id="caminho"></h2>
 
@@ -51,17 +71,29 @@
 
   <!-- README -->
   <section class="readme">
+
     <h2>📘 Sobre o Projeto</h2>
-    <div id="readme-content">Carregando README...</div>
+
+    <div id="readme-content">
+      Carregando README...
+    </div>
+
   </section>
 
   <!-- BOTÕES -->
   <section class="github">
-    <button onclick="irGithub()" class="btn-github">🚀 GitHub</button>
-    <button onclick="irLinkedin()" class="btn-linkedin">💼 LinkedIn</button>
+
+    <button onclick="irGithub()" class="btn-github">
+      🚀 GitHub
+    </button>
+
+    <button onclick="irLinkedin()" class="btn-linkedin">
+      💼 LinkedIn
+    </button>
+
   </section>
 
-  <!-- LIB -->
+  <!-- MARKDOWN -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <!-- JS -->
