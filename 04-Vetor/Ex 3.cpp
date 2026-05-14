@@ -5,10 +5,12 @@ int main(){
     float notas[40];
     int faixa[4] = {0,0,0,0};
 
+    //Entra 40 notas no vetor
     for(int i = 0; i < 40; i++){
-        notas[i] = i;
+        notas[i] = i/4;
     }
 
+    //Calcula a quantidade de cada tipo de nota
     for(int i = 0; i < 40; i++){
         if(notas[i] < 5){
             faixa[0]++;
@@ -24,10 +26,11 @@ int main(){
         }
     }
 
-    cout << "insuficiente " << faixa[0] << endl
-         << "regular " << faixa[1] << endl
-         << "bom " <<faixa[2] << endl
-         << "excelente " << faixa[3] << endl;
+    //Exibe na tela as faixas 
+    cout << "Insuficiente: " << faixa[0] << endl
+         << "Regular: " << faixa[1] << endl
+         << "Bom: " << faixa[2] << endl
+         << "Excelente: " << faixa[3] << endl;
 
     return 0;
 }
