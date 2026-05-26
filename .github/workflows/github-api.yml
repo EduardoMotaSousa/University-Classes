@@ -1,0 +1,37 @@
+name: Atualizar Dados
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  gerar-json:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Baixar árvore
+
+        run: |
+
+          curl \
+          -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/main?recursive=1 \
+          > dados.json
+
+      - name: Commit JSON
+
+        run: |
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git add dados.json
+
+          git diff --quiet && git diff --staged --quiet || git commit -m "Atualizar JSON"
+
+          git push
