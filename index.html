@@ -1,103 +1,235 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>University Classes</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="Front/style.css">
+<title>University Classes</title>
 
-  <!-- ÍCONES -->
-  <link rel="icon" href="Front/icon.png">
-  <link rel="apple-touch-icon" href="Front/icon.png">
+<link rel="stylesheet"
+href="Front/style.css">
 
-  <!-- OPEN GRAPH -->
-  <meta property="og:title" content="University Classes">
-  <meta property="og:description" content="Projeto para organizar e visualizar meus estudos em C++ com integração ao GitHub.">
-  <meta property="og:image" content="https://eduardomotasousa.github.io/University-Classes/Front/icon.png">
-  <meta property="og:url" content="https://eduardomotasousa.github.io/University-Classes/">
-  <meta property="og:type" content="website">
+<link rel="icon"
+href="Front/icon.png">
+
+<link rel="apple-touch-icon"
+href="Front/icon.png">
+
+<meta property="og:title"
+content="University Classes">
+
+<meta property="og:description"
+content="Projeto para organizar e visualizar meus estudos em C++">
+
+<meta property="og:image"
+content="https://eduardomotasousa.github.io/University-Classes/Front/icon.png">
+
+<meta property="og:url"
+content="https://eduardomotasousa.github.io/University-Classes/">
+
+<meta property="og:type"
+content="website">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
 </head>
 
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
-    <h1>University <span>Classes</span></h1>
+<header class="hero">
 
-    <p>
-      Projeto pessoal para organização e visualização dos meus estudos em C++,
-      utilizando GitHub API, HTML, CSS e JavaScript.
-    </p>
-  </header>
+<h1>
 
-  <!-- COMMITS -->
-  <section class="contrib">
-    <h2>📊 Meus Commits</h2>
+University
+<span>C++</span>
+Classes
 
-    <img
-      src="https://ghchart.rshah.org/40c463/EduardoMotaSousa"
-      alt="GitHub Chart"
-    >
-  </section>
+</h1>
 
-  <!-- NAVEGAÇÃO -->
-  <section class="nav" id="pastas"></section>
+<p>
 
-  <!-- INFO -->
-  <section class="info">
+Projeto pessoal para organização e visualização
+dos meus estudos em C++,
+utilizando GitHub API,
+HTML,
+CSS e JavaScript.
 
-    <div
-      id="homeBtn"
-      class="home-btn"
-      onclick="voltar()"
-      style="display:none;"
-    >
-      <div class="home-top">
-        <span>📁</span>
-        <span>Home Page</span>
-      </div>
+</p>
 
-      <div class="home-arrow">
-        ⬅
-      </div>
-    </div>
+</header>
 
-    <h2 id="caminho"></h2>
 
-  </section>
 
-  <!-- README -->
-  <section class="readme">
+<section class="contrib">
 
-    <h2>📘 Sobre o Projeto</h2>
+<h2>
 
-    <div id="readme-content">
-      Carregando README...
-    </div>
+📊 Meus Commits
 
-  </section>
+</h2>
 
-  <!-- BOTÕES -->
-  <section class="github">
+<img
+src="https://ghchart.rshah.org/40c463/EduardoMotaSousa"
+alt="GitHub Chart">
 
-    <button onclick="irGithub()" class="btn-github">
-      🚀 GitHub
-    </button>
+</section>
 
-    <button onclick="irLinkedin()" class="btn-linkedin">
-      💼 LinkedIn
-    </button>
 
-  </section>
 
-  <!-- MARKDOWN -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<section
+class="nav"
+id="pastas">
+</section>
 
-  <!-- JS -->
-  <script src="Front/script.js"></script>
+
+
+<section class="info">
+
+<div
+id="homeBtn"
+class="home-btn"
+onclick="voltar()"
+style="display:none;">
+
+<div class="home-top">
+
+<span>
+
+📁
+
+</span>
+
+<span>
+
+Home Page
+
+</span>
+
+</div>
+
+<div class="home-arrow">
+
+⬅
+
+</div>
+
+</div>
+
+
+<h2 id="caminho"></h2>
+
+</section>
+
+
+
+<section class="readme">
+
+<h2>
+
+📘 Sobre o Projeto
+
+</h2>
+
+<div id="readme-content">
+
+Carregando README...
+
+</div>
+
+</section>
+
+
+
+<section class="github">
+
+<button
+onclick="irGithub()"
+class="btn-github">
+
+🚀 GitHub
+
+</button>
+
+
+<button
+onclick="irLinkedin()"
+class="btn-linkedin">
+
+💼 LinkedIn
+
+</button>
+
+</section>
+
+
+<!-- POPUP -->
+
+<div id="popup">
+
+<div class="popup-content">
+
+<div class="popup-top">
+
+<span id="nomeArquivo">
+
+arquivo.cpp
+
+</span>
+
+<div>
+
+<button
+onclick="copiarCodigo()">
+
+Copiar
+
+</button>
+
+
+<button
+onclick="baixarCodigo()">
+
+Download
+
+</button>
+
+
+<button
+onclick="fecharPopup()">
+
+✕
+
+</button>
+
+</div>
+
+</div>
+
+
+<pre>
+<code
+id="codigo"
+class="language-cpp">
+</code>
+</pre>
+
+</div>
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<script src="Front/script.js"></script>
 
 </body>
+
 </html>

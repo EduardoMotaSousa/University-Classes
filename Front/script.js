@@ -4,303 +4,616 @@ const repo = "University-Classes";
 let historico = [];
 let pastaAtual = "";
 
-/* CACHE */
-const cache = {};
-const cacheCount = {};
+let codigoAtual = "";
+let arquivoAtual = "";
 
-/* EXTENSÕES VÁLIDAS */
-const extensoesValidas = [".cpp", ".c", ".h"];
+/* CACHE GERAL */
 
-/* ITENS IGNORADOS */
+let arvoreRepositorio = [];
+
+/* EXTENSÕES */
+
+const extensoesValidas = [
+  ".cpp",
+  ".c",
+  ".h"
+];
+
+/* IGNORAR */
+
 const ignorar = [
   ".git",
   ".vscode",
   "node_modules",
-  "index.html",
-  "README.md",
   "Front",
+  ".github",
   "output"
 ];
 
-/* FORMATAR NOME */
-function formatarNome(nome) {
+
+/* FORMATAR */
+
+function formatarNome(nome){
 
   return nome
-    .replaceAll("_", " ")
-    .replaceAll("-", " - ");
+    .replaceAll("_"," ")
+    .replaceAll("-"," - ");
+
 }
 
-/* CONTAR ATIVIDADES */
-async function contarAtividades(pasta) {
 
-  if (cacheCount[pasta] !== undefined) {
-    return cacheCount[pasta];
-  }
+/* PEGAR NOME DA PASTA */
+
+function pegarPasta(path){
+
+  const partes = path.split("/");
+
+  partes.pop();
+
+  return partes.join("/");
+
+}
+
+
+/* ORDENAR */
+
+function ordenarItens(lista){
+
+  return lista.sort((a,b)=>{
+
+    if(a.tipo==="dir" && b.tipo!=="dir")
+      return -1;
+
+    if(a.tipo!=="dir" && b.tipo==="dir")
+      return 1;
+
+    return a.nome.localeCompare(
+      b.nome,
+      "pt-BR",
+      {numeric:true}
+    );
+
+  });
+
+}
+
+
+
+/* CARREGAR ÁRVORE */
+
+async function carregarArvore(){
 
   const url =
-    `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
+`https://api.github.com/repos/${usuario}/${repo}/git/trees/main?recursive=1`;
 
   const res = await fetch(url);
+
   const dados = await res.json();
+
+  arvoreRepositorio = dados.tree;
+
+}
+
+
+
+/* LISTAR ITENS DA PASTA */
+
+function listarItens(pasta=""){
+
+  const itens = [];
+
+  const adicionados = new Set();
+
+  for(const item of arvoreRepositorio){
+
+    const path = item.path;
+
+    if(
+      ignorar.some(x =>
+        path.startsWith(x)
+      )
+    ){
+      continue;
+    }
+
+    const partes = path.split("/");
+
+    /* HOME */
+
+    if(pasta===""){
+
+      const primeiro = partes[0];
+
+      if(
+        !adicionados.has(primeiro)
+      ){
+
+        adicionados.add(primeiro);
+
+        if(partes.length===1){
+
+          itens.push({
+            tipo:"file",
+            nome:primeiro,
+            path:path
+          });
+
+        }else{
+
+          itens.push({
+            tipo:"dir",
+            nome:primeiro,
+            path:primeiro
+          });
+
+        }
+
+      }
+
+    }
+
+    /* SUBPASTAS */
+
+    else{
+
+      if(
+        pegarPasta(path)===pasta
+      ){
+
+        const nome =
+          partes[partes.length-1];
+
+        itens.push({
+          tipo:
+            item.type==="tree"
+            ? "dir"
+            : "file",
+
+          nome:nome,
+
+          path:path
+        });
+
+      }
+
+    }
+
+  }
+
+  return ordenarItens(itens);
+
+}
+
+
+
+/* CONTAR ATIVIDADES */
+
+function contarAtividades(pasta){
 
   let total = 0;
 
-  for (const item of dados) {
+  for(const item of arvoreRepositorio){
 
-    if (item.type === "file") {
+    if(
 
-      if (
-        extensoesValidas.some(ext =>
-          item.name.endsWith(ext)
+      item.path.startsWith(
+        pasta + "/"
+      )
+
+    ){
+
+      if(
+
+        extensoesValidas.some(
+          ext =>
+          item.path.endsWith(ext)
         )
-      ) {
+
+      ){
+
         total++;
+
       }
+
     }
+
   }
 
-  cacheCount[pasta] = total;
-
   return total;
+
 }
 
-/* ORDENAR */
-function ordenarItens(lista) {
 
-  return lista.sort((a, b) => {
-
-    /* PASTAS PRIMEIRO */
-    if (a.type === "dir" && b.type !== "dir") return -1;
-    if (a.type !== "dir" && b.type === "dir") return 1;
-
-    /* PEGA NÚMEROS */
-    const numA =
-      parseInt(a.name.match(/\d+/));
-
-    const numB =
-      parseInt(b.name.match(/\d+/));
-
-    /* ORDENA NUMERICAMENTE */
-    if (!isNaN(numA) && !isNaN(numB)) {
-      return numA - numB;
-    }
-
-    /* FALLBACK */
-    return a.name.localeCompare(
-      b.name,
-      "pt-BR",
-      { numeric: true }
-    );
-  });
-}
 
 /* CARREGAR CONTEÚDO */
-async function carregarConteudo(pasta = "") {
+
+async function carregarConteudo(
+pasta=""
+){
 
   pastaAtual = pasta;
 
   const container =
-    document.getElementById("pastas");
+  document.getElementById(
+    "pastas"
+  );
 
   const caminho =
-    document.getElementById("caminho");
+  document.getElementById(
+    "caminho"
+  );
 
-  container.innerHTML = "Carregando...";
+  container.innerHTML =
+  "Carregando...";
 
-  let dados;
+  try{
 
-  try {
-
-    /* CACHE */
-    if (cache[pasta]) {
-
-      dados = cache[pasta];
-
-    } else {
-
-      const url =
-        `https://api.github.com/repos/${usuario}/${repo}/contents/${pasta}`;
-
-      const res = await fetch(url);
-
-      if (!res.ok) {
-        throw new Error("Erro API");
-      }
-
-      dados = await res.json();
-
-      cache[pasta] = dados;
-    }
+    const dados =
+    listarItens(pasta);
 
     container.innerHTML = "";
 
-    /* ORDENA */
-    dados = ordenarItens(dados);
-
     let totalGeral = 0;
 
-    for (const item of dados) {
-
-      if (ignorar.includes(item.name)) {
-        continue;
-      }
+    for(const item of dados){
 
       const div =
-        document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
       div.className = "card";
 
       /* PASTAS */
-      if (item.type === "dir") {
+
+      if(item.tipo==="dir"){
 
         const qtd =
-          await contarAtividades(item.path);
+        contarAtividades(
+          item.path
+        );
 
         totalGeral += qtd;
 
         div.innerHTML = `
-          <div class="card-icon">
-            📁
-          </div>
 
-          <div class="card-title">
-            ${formatarNome(item.name)}
-          </div>
+<div class="card-icon">
+📁
+</div>
 
-          <small>
-            ${qtd} atividades
-          </small>
-        `;
+<div class="card-title">
+${formatarNome(item.nome)}
+</div>
 
-        div.onclick = () => {
+<small>
+${qtd} atividades
+</small>
 
-          historico.push(pasta);
+`;
 
-          carregarConteudo(item.path);
+        div.onclick = ()=>{
+
+          historico.push(
+            pasta
+          );
+
+          carregarConteudo(
+            item.path
+          );
+
         };
 
-      } else {
+      }
 
-        /* ARQUIVOS */
+      /* ARQUIVOS */
 
-        if (
-          extensoesValidas.some(ext =>
-            item.name.endsWith(ext)
+      else{
+
+        if(
+
+          extensoesValidas.some(
+            ext =>
+            item.nome.endsWith(ext)
           )
-        ) {
+
+        ){
+
           totalGeral++;
+
         }
 
         div.innerHTML = `
-          <div class="card-icon">
-            📄
-          </div>
 
-          <div class="card-title">
-            ${item.name}
-          </div>
-        `;
+<div class="card-icon">
+📄
+</div>
 
-        div.onclick = () => {
-          window.open(
-            item.download_url,
-            "_blank"
+<div class="card-title">
+${item.nome}
+</div>
+
+`;
+
+        div.onclick = ()=>{
+
+          abrirCodigo(
+            item.path,
+            item.nome
           );
+
         };
+
       }
 
       container.appendChild(div);
+
     }
 
     /* CARD + */
-    const add =
-      document.createElement("div");
 
-    add.className = "card-add";
+    const add =
+    document.createElement(
+      "div"
+    );
+
+    add.className =
+    "card-add";
 
     add.innerHTML = "+";
 
-    add.onclick = () => {
+    add.onclick = ()=>{
 
       window.open(
-        `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
-        "_blank"
+
+`https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
+
+"_blank"
+
       );
+
     };
 
     container.appendChild(add);
 
-    /* HOME BUTTON */
-    document.getElementById("homeBtn").style.display =
-      historico.length
-        ? "flex"
-        : "none";
+
+    /* HOME */
+
+    document
+    .getElementById(
+      "homeBtn"
+    )
+    .style.display =
+
+    historico.length
+    ?
+    "flex"
+    :
+    "none";
+
 
     /* CAMINHO */
-    caminho.textContent =
-      pasta
-        ? formatarNome(pasta)
-        : `Home • ${totalGeral} atividades`;
 
-  } catch (erro) {
+    caminho.textContent =
+
+    pasta
+    ?
+    formatarNome(pasta)
+    :
+    `Home • ${totalGeral} atividades`;
+
+  }
+
+  catch(erro){
 
     container.innerHTML =
-      "<p>❌ Erro ao carregar dados.</p>";
+    "Erro ao carregar";
 
-    console.error(erro);
+    console.error(
+      erro
+    );
+
   }
+
 }
+
+
 
 /* VOLTAR */
-function voltar() {
 
-  const anterior = historico.pop();
+function voltar(){
 
-  carregarConteudo(anterior || "");
-}
+  const anterior =
+  historico.pop();
 
-/* LINKS */
-function irGithub() {
-
-  window.open(
-    "https://github.com/EduardoMotaSousa"
+  carregarConteudo(
+    anterior || ""
   );
+
 }
 
-function irLinkedin() {
 
-  window.open(
-    "https://www.linkedin.com/in/eduardomotaads/"
-  );
-}
 
 /* README */
-async function carregarReadme() {
 
-  try {
+async function carregarReadme(){
+
+  try{
 
     const url =
-      `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
+`https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
 
-    const res = await fetch(url);
+    const res =
+    await fetch(url);
 
     const markdown =
-      await res.text();
+    await res.text();
 
-    document.getElementById(
+    document
+    .getElementById(
       "readme-content"
-    ).innerHTML =
-      marked.parse(markdown);
+    )
+    .innerHTML =
 
-  } catch {
+    marked.parse(
+      markdown
+    );
 
-    document.getElementById(
-      "readme-content"
-    ).innerHTML =
-      "Erro ao carregar README";
   }
+
+  catch{
+
+    document
+    .getElementById(
+      "readme-content"
+    )
+    .innerHTML =
+    "Erro ao carregar README";
+
+  }
+
 }
 
+
+
+/* POPUP */
+
+async function abrirCodigo(
+path,
+nome
+){
+
+  arquivoAtual = nome;
+
+  document
+  .getElementById(
+    "nomeArquivo"
+  )
+  .innerText = nome;
+
+  const url =
+
+`https://raw.githubusercontent.com/${usuario}/${repo}/main/${path}`;
+
+  const resposta =
+  await fetch(url);
+
+  codigoAtual =
+  await resposta.text();
+
+  const codigo =
+  document.getElementById(
+    "codigo"
+  );
+
+  codigo.textContent =
+  codigoAtual;
+
+  hljs.highlightElement(
+    codigo
+  );
+
+  document
+  .getElementById(
+    "popup"
+  )
+  .style.display =
+  "flex";
+
+}
+
+
+
+/* FECHAR */
+
+function fecharPopup(){
+
+  document
+  .getElementById(
+    "popup"
+  )
+  .style.display =
+  "none";
+
+}
+
+
+
+/* COPIAR */
+
+function copiarCodigo(){
+
+  navigator.clipboard.writeText(
+    codigoAtual
+  );
+
+}
+
+
+
+/* DOWNLOAD */
+
+function baixarCodigo(){
+
+  const blob =
+  new Blob(
+    [codigoAtual],
+    {
+      type:"text/plain"
+    }
+  );
+
+  const link =
+  document.createElement(
+    "a"
+  );
+
+  link.href =
+  URL.createObjectURL(
+    blob
+  );
+
+  link.download =
+  arquivoAtual;
+
+  link.click();
+
+}
+
+
+
+/* LINKS */
+
+function irGithub(){
+
+  window.open(
+    "https://github.com/EduardoMotaSousa",
+    "_blank"
+  );
+
+}
+
+
+function irLinkedin(){
+
+  window.open(
+    "https://www.linkedin.com/in/eduardomotaads/",
+    "_blank"
+  );
+
+}
+
+
+
 /* INIT */
-carregarConteudo();
-carregarReadme();
+
+async function iniciar(){
+
+  await carregarArvore();
+
+  carregarConteudo();
+
+  carregarReadme();
+
+}
+
+iniciar();
