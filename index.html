@@ -143,7 +143,37 @@ Carregando README...
 
 </section>
 
+<!-- BOTÃO TERMINAL -->
+<button class="terminal-fab" onclick="toggleTerminal()" title="Terminal Linux">
+  <span>❯_</span>
+</button>
 
+<!-- TERMINAL FLUTUANTE -->
+<div class="terminal-float" id="terminal-float">
+
+  <div class="terminal-titlebar">
+    <div class="terminal-dots">
+      <span class="dot dot-close" onclick="toggleTerminal()"></span>
+      <span class="dot dot-min"></span>
+      <span class="dot dot-max"></span>
+    </div>
+    <span class="terminal-title">eduardo@university: ~</span>
+  </div>
+
+  <div class="terminal-body" id="terminal-body">
+    <div id="terminal-output"></div>
+    <div class="terminal-input-line">
+      <span id="terminal-prompt" class="terminal-prompt">eduardo@university:~$&nbsp;</span>
+      <input
+        type="text"
+        id="terminal-input"
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </div>
+  </div>
+
+</div>
 
 <section class="github">
 
