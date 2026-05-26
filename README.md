@@ -86,7 +86,7 @@ Arquivos usados para funcionamento do projeto web:
 ---
 
 ## ⚙️ Funcionamento
-
+ 
 O site consome dados diretamente da API do GitHub:
 
 - Lista pastas e arquivos dinamicamente
