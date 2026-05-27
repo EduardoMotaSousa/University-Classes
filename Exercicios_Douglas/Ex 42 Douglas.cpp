@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 //faça 5 perguntas para uma pessoa sobre um crime. As perguntas são: "Telefonou para a vítima?" "Esteve no local do crime?" "Mora perto da vítima?" "Devia para a vítima?" "Já trabalhou com a vítima?"
@@ -11,7 +10,11 @@ using namespace std;
 int main(){
     int culpa{};
     char resp;
-    std::string perguntas[5] = {"Telefonou para a vítima?", "Esteve no local do crime?", "Mora perto da vítima?", "Devia para a vítima?", "Já trabalhou com a vítima?"};
+    std::string perguntas[5] = {"Telefonou para a vítima?", 
+                                "Esteve no local do crime?", 
+                                "Mora perto da vítima?", 
+                                "Devia para a vítima?", 
+                                "Já trabalhou com a vítima?"};
 
     for(int i = 0; i < 5; i++){
         cout << perguntas[i] << "\nResponda (S/N): ";
@@ -22,11 +25,11 @@ int main(){
         }
     }
 
-    if(culpa == 0){
+    if(culpa <= 1){
         cout << "Inocente\n";
     }
 
-    else if(culpa <= 2){
+    else if(culpa == 2){
         cout << "Suspeito\n";
     }
 
