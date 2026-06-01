@@ -1,6 +1,6 @@
 {
-  "sha": "2e651699c552b8016dcaa4885d2640a653280236",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/2e651699c552b8016dcaa4885d2640a653280236",
+  "sha": "7ae845da74e312a1a21ebd1ef78b552201d698e9",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/7ae845da74e312a1a21ebd1ef78b552201d698e9",
   "tree": [
     {
       "path": ".github",
@@ -1812,8 +1812,8 @@
       "path": "SAVA_Vetores_&_Matrizes",
       "mode": "040000",
       "type": "tree",
-      "sha": "33991f4556c6fc74345feefc111d0094f759614f",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/33991f4556c6fc74345feefc111d0094f759614f"
+      "sha": "105481ba6d580e66defe213a69a70c58fcbdb155",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/105481ba6d580e66defe213a69a70c58fcbdb155"
     },
     {
       "path": "SAVA_Vetores_&_Matrizes/.vscode",
@@ -1874,8 +1874,16 @@
       "path": "SAVA_Vetores_&_Matrizes/output",
       "mode": "040000",
       "type": "tree",
-      "sha": "590f6c081fc37dad4f4843ee2b0fb2f69bb5ea74",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/590f6c081fc37dad4f4843ee2b0fb2f69bb5ea74"
+      "sha": "1d3eccd96ec7ba7a5c6d2de9bae8c68a8c75f7c9",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/1d3eccd96ec7ba7a5c6d2de9bae8c68a8c75f7c9"
+    },
+    {
+      "path": "SAVA_Vetores_&_Matrizes/output/Ex 1",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52b489048aa27eb0c8b284a4b9342bfe6e3c78b9",
+      "size": 45864,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/52b489048aa27eb0c8b284a4b9342bfe6e3c78b9"
     },
     {
       "path": "SAVA_Vetores_&_Matrizes/output/Ex 1.exe",
@@ -1886,12 +1894,36 @@
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/ced425c9eccc4efdac662937173641696c728689"
     },
     {
+      "path": "SAVA_Vetores_&_Matrizes/output/Ex 2",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5a68be4b627b54eca819555b8bb487938a874a3",
+      "size": 45920,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/e5a68be4b627b54eca819555b8bb487938a874a3"
+    },
+    {
       "path": "SAVA_Vetores_&_Matrizes/output/Ex 2.exe",
       "mode": "100644",
       "type": "blob",
       "sha": "adc9ffe8827d0c366289c4e81f2f24814249c331",
       "size": 372868,
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/adc9ffe8827d0c366289c4e81f2f24814249c331"
+    },
+    {
+      "path": "SAVA_Vetores_&_Matrizes/output/Ex 3",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a45aedc9e571410d196ae9679150f3cfcfc14a8",
+      "size": 45976,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/4a45aedc9e571410d196ae9679150f3cfcfc14a8"
+    },
+    {
+      "path": "SAVA_Vetores_&_Matrizes/output/Ex 4",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "36e720a70bf2cdcd92d5677a852410b316bfe2d2",
+      "size": 46104,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/36e720a70bf2cdcd92d5677a852410b316bfe2d2"
     },
     {
       "path": "SAVA_Vetores_&_Matrizes/output/Teste2Vetor.exe",
@@ -1913,9 +1945,9 @@
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "4cb35f57615041960dbde12c582aeccd66cbf128",
+      "sha": "2b4b802b6dd29f6516ecb791a3d924d6c7fb52dc",
       "size": 76325,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/4cb35f57615041960dbde12c582aeccd66cbf128"
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/2b4b802b6dd29f6516ecb791a3d924d6c7fb52dc"
     },
     {
       "path": "index.html",
