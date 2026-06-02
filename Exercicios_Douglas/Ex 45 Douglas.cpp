@@ -19,7 +19,7 @@ using namespace std;
 int main() {
     double valor{}, kilos{}, valordesconto{};
     char carne, cartao;
-    std::string desconto;
+    std::string desconto, tipocarne;
 
     // Exibe tabela
     cout << "_______________________\n"
@@ -44,7 +44,7 @@ int main() {
 
     if(kilos < 0.0){
         cout << "Somente valores positivos!";
-        return 1;
+        return 0;
     }
 
     cout << "O pagamento será com o cartão da loja? (S/N): ";
@@ -60,6 +60,7 @@ int main() {
             else{
                 valor = kilos * 5.8;
             }
+            tipocarne = "File Duplo";
             break;
 
         case 'A':
@@ -70,6 +71,7 @@ int main() {
             else{
                 valor = kilos * 6.8;
             }
+            tipocarne = "Alcatra";
             break;
 
         case 'P':
@@ -80,11 +82,12 @@ int main() {
             else{
                 valor = kilos * 7.8;
             }
+            tipocarne = "Picanha";
             break;
 
         default:
             cout << "Opção invalida";
-            return 1;
+            return 0;
     }
 
     //cartão
@@ -102,7 +105,7 @@ int main() {
 
         default:
             cout << "Opção invalida";
-            return 1;
+            return 0;
     }
 
 
@@ -114,7 +117,7 @@ int main() {
          << "Valor total: R$ " << valor  - valordesconto<< "\n"
          << "Valor do desconto: R$ " << valordesconto<< "\n"
          << "Peso total: " << kilos << " Kg\n"
-         << "Tipo de carne: " << carne
+         << "Tipo de carne: " << tipocarne
          << "\nDesconto: " << desconto
          << "\n_______________________\n";
 

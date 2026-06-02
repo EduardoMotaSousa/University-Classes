@@ -13,7 +13,7 @@ using namespace std;
 // receberá um desconto de 10% sobre o total.
 
 int main() {
-    double kgMaca, kgMorango, kilosTotal, valor = 0.0;
+    double kgMaca{}, kgMorango{}, kilosTotal{}, valor{};
 
     // Exibe tabela
     cout << "_______________________\n"
