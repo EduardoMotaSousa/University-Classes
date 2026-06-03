@@ -50,7 +50,7 @@ int main() {
         }
     }while(validacao == 1);
 
-    //idade
+    //Sexo
     do{ 
         validacao = 0;
         cout << "Qual seu Sexo: 'f' ou 'm'?";
