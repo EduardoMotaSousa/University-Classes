@@ -64,10 +64,18 @@ function ordenarItens(lista){
 /* CARREGAR ÁRVORE */
 
 async function carregarArvore(){
-  const url = `https://api.github.com/repos/${usuario}/${repo}/git/trees/main?recursive=1`;
-  const res = await fetch(url);
-  const dados = await res.json();
-  arvoreRepositorio = dados.tree;
+  try {
+    const res = await fetch("dados.json");
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const dados = await res.json();
+    arvoreRepositorio = dados.tree;
+
+  } catch (erro) {
+    console.error("Erro ao carregar árvore:", erro);
+    document.getElementById("pastas").innerHTML = "Erro ao carregar arquivos.";
+  }
 }
 
 
