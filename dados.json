@@ -1,6 +1,6 @@
 {
-  "sha": "bc566d9031b29f72c111141cc6ee301f59e1a593",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/bc566d9031b29f72c111141cc6ee301f59e1a593",
+  "sha": "38252025f095ea47418fbf6f7ae8f8a25b5ffaee",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/38252025f095ea47418fbf6f7ae8f8a25b5ffaee",
   "tree": [
     {
       "path": ".github",
@@ -801,8 +801,8 @@
       "path": "Exercicios_Douglas",
       "mode": "040000",
       "type": "tree",
-      "sha": "17fa21b03d08cdc4b39cdb9911befa4d743b4e5f",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/17fa21b03d08cdc4b39cdb9911befa4d743b4e5f"
+      "sha": "6f6781d7da082aaea26d5b1dd61c82331b1a3936",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/6f6781d7da082aaea26d5b1dd61c82331b1a3936"
     },
     {
       "path": "Exercicios_Douglas/Ex 1 Douglas.cpp",
@@ -1251,6 +1251,14 @@
       "sha": "008c04b53e91e245cec686d55cc8f4836e427a20",
       "size": 216,
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/008c04b53e91e245cec686d55cc8f4836e427a20"
+    },
+    {
+      "path": "Exercicios_Douglas/Ex 60 Douglas copy.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "48141c7f3d8eab2547562735aa688b8439897596",
+      "size": 541,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/48141c7f3d8eab2547562735aa688b8439897596"
     },
     {
       "path": "Exercicios_Douglas/Ex 60 Douglas.cpp",
@@ -2225,9 +2233,9 @@
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "965d316017778807d70cf7d50e611ade95081b2f",
+      "sha": "4d5cd1d588f5f64b50f9bc4f430515df8bbf7a66",
       "size": 88879,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/965d316017778807d70cf7d50e611ade95081b2f"
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/4d5cd1d588f5f64b50f9bc4f430515df8bbf7a66"
     },
     {
       "path": "index.html",
