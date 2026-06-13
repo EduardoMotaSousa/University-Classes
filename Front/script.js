@@ -249,15 +249,24 @@ function voltar(){
 
 /* README */
 
-async function carregarReadme(){
-  try{
+async function carregarReadme() {
+  try {
     const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
     const res = await fetch(url);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
     const markdown = await res.text();
-    document.getElementById("readme-content").innerHTML = marked.parse(markdown);
-  }
-  catch{
-    document.getElementById("readme-content").innerHTML = "Erro ao carregar README";
+
+    // converte Markdown → HTML, depois limpa o HTML antes de inserir
+    const htmlBruto = marked.parse(markdown);
+    const htmlLimpo = DOMPurify.sanitize(htmlBruto);
+
+    document.getElementById("readme-content").innerHTML = htmlLimpo;
+
+  } catch (erro) {
+    document.getElementById("readme-content").textContent = "Erro ao carregar README.";
+    console.error("Erro no README:", erro);
   }
 }
 
