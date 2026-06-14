@@ -742,3 +742,112 @@ body {
     color: #7dd3fc;
   }
 }
+
+/* HEATMAP */
+
+#heatmap-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#heatmap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.heatmap-meses {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+.heatmap-meses span {
+  font-size: 11px;
+  color: #94a3b8;
+  flex: 1;
+  text-align: left;
+}
+
+.heatmap-grid {
+  display: flex;
+  gap: 3px;
+  justify-content: flex-end; 
+}
+
+.heatmap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmap-cell {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: transform 0.1s;
+  flex-shrink: 0;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.3);
+}
+
+.heatmap-cell[data-level="0"] { background: #1e293b; }
+.heatmap-cell[data-level="1"] { background: #0e4429; }
+.heatmap-cell[data-level="2"] { background: #006d32; }
+.heatmap-cell[data-level="3"] { background: #26a641; }
+.heatmap-cell[data-level="4"] { background: #39d353; }
+
+/* TOOLTIP */
+
+.heatmap-tooltip {
+  position: fixed;
+  display: none;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  pointer-events: none;
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+/* LEGENDA */
+
+#heatmap-legenda {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.legenda-box {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+}
+
+.legenda-box[data-level="0"] { background: #161b22; }
+.legenda-box[data-level="1"] { background: #0e4429; }
+.legenda-box[data-level="2"] { background: #006d32; }
+.legenda-box[data-level="3"] { background: #26a641; }
+.legenda-box[data-level="4"] { background: #39d353; }
+
+.legenda-label {
+  font-size: 11px;
+}

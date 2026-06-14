@@ -321,7 +321,6 @@ async function carregarReadme() {
 /* POPUP CÓDIGO */
 
 async function abrirCodigo(path, nome){
-  // registra posição na lista de navegação
   arquivoIndex = arquivosNavegacao.findIndex(i => i.path === path);
 
   const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${path}`;
@@ -816,6 +815,141 @@ function navegarPopup(direcao){
   abrirCodigo(arquivo.path, arquivo.nome);
 }
 
+/* HEATMAP DE COMMITS */
+
+async function carregarHeatmap() {
+  const container = document.getElementById("heatmap");
+  const tooltip   = document.getElementById("heatmap-tooltip");
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${usuario}/events/public?per_page=100`
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const eventos = await res.json();
+
+    // usa UTC em tudo para evitar problemas de fuso horário
+    const commitsPorDia = {};
+    for (const evento of eventos) {
+      if (evento.type !== "PushEvent") continue;
+      if (evento.repo.name !== `${usuario}/${repo}`) continue;
+      const dia = evento.created_at.slice(0, 10); // já é UTC: YYYY-MM-DD
+      const qtd = evento.payload.commits?.length || 1;
+      commitsPorDia[dia] = (commitsPorDia[dia] || 0) + qtd;
+    }
+
+    // gera os últimos 90 dias em UTC
+    const hoje = new Date();
+    const hojeUTC = new Date(Date.UTC(hoje.getUTCFullYear(), hoje.getUTCMonth(), hoje.getUTCDate()));
+    const dias = [];
+    for (let i = 89; i >= 0; i--) {
+      const d = new Date(hojeUTC);
+      d.setUTCDate(hojeUTC.getUTCDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      dias.push({ key, data: d, qtd: commitsPorDia[key] || 0 });
+    }
+
+    const maxQtd = Math.max(...dias.map(d => d.qtd), 1);
+
+    function nivel(qtd) {
+      if (qtd === 0) return 0;
+      if (qtd <= maxQtd * 0.25) return 1;
+      if (qtd <= maxQtd * 0.50) return 2;
+      if (qtd <= maxQtd * 0.75) return 3;
+      return 4;
+    }
+
+    // agrupa por semana (0=dom, 6=sab) usando UTC
+    const semanas = [];
+    let semana = [];
+
+    const primeiroDia = dias[0].data.getUTCDay();
+    for (let i = 0; i < primeiroDia; i++) {
+      semana.push(null);
+    }
+
+    for (const dia of dias) {
+      semana.push(dia);
+      if (dia.data.getUTCDay() === 6) {
+        semanas.push(semana);
+        semana = [];
+      }
+    }
+    if (semana.length > 0) semanas.push(semana);
+
+    container.innerHTML = "";
+
+    // labels dos meses
+    const mesesDiv = document.createElement("div");
+    mesesDiv.className = "heatmap-meses";
+    let mesAtual = -1;
+    semanas.forEach((sem) => {
+      const primeiroValido = sem.find(d => d !== null);
+      const span = document.createElement("span");
+      if (primeiroValido) {
+        const mes = primeiroValido.data.getUTCMonth();
+        if (mes !== mesAtual) {
+          span.textContent = primeiroValido.data.toLocaleDateString("pt-BR", {
+            month: "short", timeZone: "UTC"
+          });
+          mesAtual = mes;
+        }
+      }
+      mesesDiv.appendChild(span);
+    });
+    container.appendChild(mesesDiv);
+
+    // grid
+    const grid = document.createElement("div");
+    grid.className = "heatmap-grid";
+
+    for (const sem of semanas) {
+      const col = document.createElement("div");
+      col.className = "heatmap-col";
+
+      for (const dia of sem) {
+        const cell = document.createElement("div");
+        cell.className = "heatmap-cell";
+
+        if (dia === null) {
+          cell.style.visibility = "hidden";
+        } else {
+          cell.dataset.level = nivel(dia.qtd);
+
+          cell.addEventListener("mouseenter", e => {
+            const dataFmt = dia.data.toLocaleDateString("pt-BR", {
+              weekday: "short", day: "2-digit", month: "short", timeZone: "UTC"
+            });
+            tooltip.textContent = dia.qtd === 0
+              ? `${dataFmt} — nenhum commit`
+              : `${dataFmt} — ${dia.qtd} commit${dia.qtd > 1 ? "s" : ""}`;
+            tooltip.style.display = "block";
+          });
+
+          cell.addEventListener("mousemove", e => {
+            tooltip.style.left = (e.pageX + 12) + "px";
+            tooltip.style.top  = (e.pageY - 28) + "px";
+          });
+
+          cell.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
+        }
+
+        col.appendChild(cell);
+      }
+      grid.appendChild(col);
+    }
+
+    container.appendChild(grid);
+
+  } catch (erro) {
+    console.error("Erro ao carregar heatmap:", erro);
+    container.innerHTML = `<p style="color:#94a3b8">Erro ao carregar commits.</p>`;
+  }
+}
+
+
 /* INIT */
 
 async function iniciar(){
@@ -823,6 +957,7 @@ async function iniciar(){
   await carregarFavoritos();
   carregarConteudo();
   carregarReadme();
+  carregarHeatmap();
   initTerminal();
 }
 
