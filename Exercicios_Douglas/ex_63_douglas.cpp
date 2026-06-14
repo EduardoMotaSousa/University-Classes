@@ -2,14 +2,21 @@
 
 using namespace std;
 
-//dado um conjunto de N números, determine o menor valor, o maior valor e a soma dos valores.
+//Altere o programa anterior para que ele aceite apenas números entre 0 e 1000.
 
 int main() {
     int i{}, num, menor, maior, soma{};
 
     do{
+        //entra dados
         cout << "Digite um número(Escreva '0' para finalizar): ";
         cin >> num;
+
+        //valida
+        if (num < 0 || num > 1000) {
+            cout << "Digite um numero valido\n";
+            continue;
+        }
 
         if(i == 0){ 
             maior = num;
@@ -29,6 +36,7 @@ int main() {
 
     }while(num != 0);
 
+    //exibe na tela
     cout << "O maior num é: " << maior
         << "\nO menor num é: " << menor
         << "\nA soma de todos é: " << soma;
