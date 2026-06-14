@@ -627,3 +627,21 @@ body {
     gap: 8px;
   }
 }
+
+/* CARD DOURADO */
+
+.card-dourado {
+  border: 1px solid #f0b429;
+  background: linear-gradient(135deg, #fffbea 0%, #fff8dc 100%);
+  box-shadow: 0 0 12px rgba(240, 180, 41, 0.3);
+  position: relative;
+}
+
+.card-dourado .card-title {
+  color: #92650a;
+  font-weight: 600;
+}
+
+.card-dourado small {
+  color: #b07d1a;
+}

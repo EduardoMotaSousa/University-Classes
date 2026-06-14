@@ -170,6 +170,7 @@ async function carregarConteudo(pasta=""){
   try{
 
     const dados = listarItens(pasta);
+    const dourados = calcularDourados(dados);
     container.innerHTML = "";
 
     let totalGeral = 0;
@@ -205,10 +206,17 @@ async function carregarConteudo(pasta=""){
           totalGeral++;
         }
 
+        const eDourado = dourados.has(item.path);
+        const node = arvoreRepositorio.find(n => n.path === item.path);
+        const linhasAprox = node?.size ? Math.round(node.size / 30) : null;
+
         div.innerHTML = `
-          <div class="card-icon">📄</div>
+          <div class="card-icon">${eDourado ? "⭐" : "📄"}</div>
           <div class="card-title">${item.nome}</div>
+          ${linhasAprox ? `<small>~${linhasAprox} linhas</small>` : ""}
         `;
+
+        if (eDourado) div.classList.add("card-dourado");
 
         div.onclick = () => {
           abrirCodigo(item.path, item.nome);
@@ -235,9 +243,14 @@ async function carregarConteudo(pasta=""){
       historico.length ? "flex" : "none";
 
     /* CAMINHO */
-    caminho.textContent = pasta
-      ? formatarNome(pasta)
-      : `Home • ${totalGeral} atividades`;
+    const tituloPagina = pasta
+    ? formatarNome(pasta)
+    : `Home • ${totalGeral} atividades`;
+
+  caminho.textContent = tituloPagina;
+  document.title = pasta
+    ? `${formatarNome(pasta)} — University Classes`
+    : "University Classes";
 
   }
   catch(erro){
@@ -283,20 +296,21 @@ async function carregarReadme() {
 
 async function abrirCodigo(path, nome){
 
-  arquivoAtual = nome;
-  document.getElementById("nomeArquivo").innerText = nome;
-
   const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${path}`;
   const resposta = await fetch(url);
   codigoAtual = await resposta.text();
 
+  // agora codigoAtual já está preenchido
+  const linhas = codigoAtual.split("\n").length;
+  document.getElementById("nomeArquivo").innerText = `${nome} • ${linhas} linhas`;
+  arquivoAtual = nome;
+
   const codigo = document.getElementById("codigo");
-
   delete codigo.dataset.highlighted;
-
   codigo.textContent = codigoAtual;
   hljs.highlightElement(codigo);
 
+  document.title = `${nome} — University Classes`;
   document.getElementById("popup").style.display = "flex";
 }
 
@@ -305,6 +319,9 @@ async function abrirCodigo(path, nome){
 
 function fecharPopup(){
   document.getElementById("popup").style.display = "none";
+  document.title = pastaAtual
+    ? `${formatarNome(pastaAtual)} — University Classes`
+    : "University Classes";
 }
 
 
@@ -393,6 +410,7 @@ async function terminalExecute(cmd){
   const args = parts.slice(1).join(" ").trim();
 
   switch(command){
+    case "grep":     await cmdGrep(args); break;
     case "help":     cmdHelp();          break;
     case "ls":       cmdLs();            break;
     case "cd":       cmdCd(args);        break;
@@ -415,6 +433,7 @@ async function terminalExecute(cmd){
 function cmdHelp(){
   terminalPrint(`
 <span class="t-orange">Comandos disponíveis:</span>
+  <span class="t-green">grep &lt;texto&gt; [arquivo]</span>  Busca texto nos arquivos
   <span class="t-green">ls</span>               Lista arquivos e pastas
   <span class="t-green">cd &lt;pasta&gt;</span>        Entra na pasta (cd .. para voltar)
   <span class="t-green">cat &lt;arquivo&gt;</span>    Mostra conteúdo do arquivo
@@ -450,7 +469,7 @@ function cmdLs(){
 function cmdCd(args){
 
   /* ✅ remove emojis, espaços extras e barra final */
-  args = args.replace(/[^\w\d.\-\/]/g, "").replace(/\/$/, "").trim();
+  args = args.replace(/['";&|`$]/g, "").trim().replace(/\/$/, "");
 
   if(!args || args === "~"){
     terminalPath = "";
@@ -630,8 +649,126 @@ function initTerminal(){
   });
 }
 
+/* CALCULAR ARQUIVOS DOURADOS */
+
+function calcularDourados(itens) {
+  const arquivos = itens.filter(i =>
+    i.tipo === "file" &&
+    extensoesValidas.some(ext => i.nome.endsWith(ext))
+  );
+
+  if (arquivos.length === 0) return new Set();
+
+  // pega o size em bytes do dados.json
+  const comSize = arquivos.map(i => {
+    const node = arvoreRepositorio.find(n => n.path === i.path);
+    return { path: i.path, size: node?.size || 0 };
+  });
+
+  // ordena do maior pro menor
+  comSize.sort((a, b) => b.size - a.size);
+
+  // pelo menos 1, ou 10% arredondado pra cima
+  const qtdDourados = Math.max(1, Math.ceil(comSize.length * 0.1));
+
+  return new Set(comSize.slice(0, qtdDourados).map(i => i.path));
+}
+
+/* GREP */
+
+async function cmdGrep(args) {
+  if (!args) {
+    terminalPrint(`<span class="t-red">grep: uso: grep &lt;texto&gt; [arquivo]</span>`);
+    return;
+  }
+
+  const partes = args.match(/^"([^"]+)"\s*(.*)|^(\S+)\s*(.*)$/);
+  const termo  = (partes[1] || partes[3]).toLowerCase();
+  const arquivo = (partes[2] || partes[4] || "").trim();
+
+  // arquivos a buscar
+  let alvos = [];
+
+  if (arquivo) {
+    // grep termo arquivo.cpp
+    const target = terminalPath ? `${terminalPath}/${arquivo}` : arquivo;
+    const existe = arvoreRepositorio.find(i => i.path === target && i.type === "blob");
+    if (!existe) {
+      terminalPrint(`<span class="t-red">grep: ${escapeHtml(arquivo)}: arquivo não encontrado</span>`);
+      return;
+    }
+    alvos = [{ path: target, nome: arquivo }];
+  } else {
+    // grep termo — busca em todos os .cpp da pasta atual
+    alvos = listarItens(terminalPath)
+      .filter(i => i.tipo === "file" && extensoesValidas.some(ext => i.nome.endsWith(ext)))
+      .map(i => ({ path: i.path, nome: i.nome }));
+
+    if (!alvos.length) {
+      terminalPrint(`<span class="t-gray">Nenhum arquivo encontrado na pasta atual.</span>`);
+      return;
+    }
+  }
+
+  terminalPrint(`<span class="t-gray">Buscando "${escapeHtml(termo)}"...</span>`);
+
+  let totalResultados = 0;
+
+  for (const alvo of alvos) {
+    try {
+      const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${alvo.path}`;
+      const res = await fetch(url);
+      if (!res.ok) continue;
+      const texto = await res.text();
+
+      const linhas = texto.split("\n");
+      const encontradas = [];
+
+      linhas.forEach((linha, idx) => {
+        if (linha.toLowerCase().includes(termo)) {
+          encontradas.push({ num: idx + 1, linha });
+        }
+      });
+
+      if (encontradas.length) {
+        totalResultados += encontradas.length;
+
+        let html = `<span class="t-orange t-bold">${escapeHtml(alvo.nome)}</span>\n`;
+        for (const r of encontradas) {
+          const linhaSafe = escapeHtml(r.linha);
+          const destacada = linhaSafe.replace(
+            new RegExp(escapeHtml(termo), "gi"),
+            match => `<span class="t-yellow t-bold">${match}</span>`
+          );
+          html += `<span class="t-gray">${String(r.num).padStart(4, " ")}:</span>  ${destacada}\n`;
+        }
+
+        terminalPrint(`<pre class="t-cat">${html}</pre>`);
+      }
+
+    } catch {
+      terminalPrint(`<span class="t-red">Erro ao ler ${escapeHtml(alvo.nome)}</span>`);
+    }
+  }
+
+  // remove o "Buscando..."
+  document.getElementById("terminal-output").children[
+    document.getElementById("terminal-output").children.length - (totalResultados > 0 ? totalResultados + 1 : 1)
+  ]?.remove();
+
+  if (totalResultados === 0) {
+    terminalPrint(`<span class="t-gray">Nenhuma ocorrência encontrada.</span>`);
+  } else {
+    terminalPrint(`<span class="t-green">${totalResultados} ocorrência(s) encontrada(s).</span>`);
+  }
+}
 
 /* INIT */
+
+/* FECHAR POPUP COM ESCAPE */
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") fecharPopup();
+});
 
 async function iniciar(){
   await carregarArvore();
