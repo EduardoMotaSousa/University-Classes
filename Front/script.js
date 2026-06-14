@@ -1,8 +1,13 @@
 const usuario = "EduardoMotaSousa";
 const repo = "University-Classes";
 
+let arquivosFavoritos = new Set();
+
 let historico = [];
 let pastaAtual = "";
+
+let arquivosNavegacao = [];
+let arquivoIndex = 0;
 
 let codigoAtual = "";
 let arquivoAtual = "";
@@ -60,6 +65,19 @@ function ordenarItens(lista){
   });
 }
 
+
+/* CARREGAR FAVORITOS */
+
+async function carregarFavoritos(){
+  try {
+    const res = await fetch("favoritos.json");
+    if (!res.ok) return;
+    const dados = await res.json();
+    arquivosFavoritos = new Set(dados.favoritos);
+  } catch {
+    arquivosFavoritos = new Set();
+  }
+}
 
 /* CARREGAR ÁRVORE */
 
@@ -171,6 +189,11 @@ async function carregarConteudo(pasta=""){
 
     const dados = listarItens(pasta);
     const dourados = calcularDourados(dados);
+    // guarda lista de arquivos para navegação no popup
+    arquivosNavegacao = dados.filter(i =>
+      i.tipo === "file" &&
+      extensoesValidas.some(ext => i.nome.endsWith(ext))
+    );
     container.innerHTML = "";
 
     let totalGeral = 0;
@@ -200,27 +223,30 @@ async function carregarConteudo(pasta=""){
       }
 
       /* ARQUIVOS */
-      else{
-
+      else {
         if(extensoesValidas.some(ext => item.nome.endsWith(ext))){
           totalGeral++;
         }
 
-        const eDourado = dourados.has(item.path);
-        const node = arvoreRepositorio.find(n => n.path === item.path);
+        const eDourado   = dourados.has(item.path);
+        const eFavorito  = arquivosFavoritos.has(item.path);
+        const node       = arvoreRepositorio.find(n => n.path === item.path);
         const linhasAprox = node?.size ? Math.round(node.size / 30) : null;
 
+        let icone = "📄";
+        if (eFavorito) icone = "💎";
+        else if (eDourado) icone = "⭐";
+
         div.innerHTML = `
-          <div class="card-icon">${eDourado ? "⭐" : "📄"}</div>
+          <div class="card-icon">${icone}</div>
           <div class="card-title">${item.nome}</div>
           ${linhasAprox ? `<small>~${linhasAprox} linhas</small>` : ""}
         `;
 
-        if (eDourado) div.classList.add("card-dourado");
+        if (eFavorito) div.classList.add("card-favorito");
+        else if (eDourado) div.classList.add("card-dourado");
 
-        div.onclick = () => {
-          abrirCodigo(item.path, item.nome);
-        };
+        div.onclick = () => abrirCodigo(item.path, item.nome);
       }
 
       container.appendChild(div);
@@ -294,6 +320,8 @@ async function carregarReadme() {
 /* POPUP CÓDIGO */
 
 async function abrirCodigo(path, nome){
+  // registra posição na lista de navegação
+  arquivoIndex = arquivosNavegacao.findIndex(i => i.path === path);
 
   const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${path}`;
   const resposta = await fetch(url);
@@ -310,6 +338,7 @@ async function abrirCodigo(path, nome){
 
   atualizarTitulo(`${nome} — University Classes`);
   document.getElementById("popup").style.display = "flex";
+  atualizarBotoesNavegacao();
 }
 
 
@@ -765,14 +794,32 @@ function atualizarTitulo(titulo) {
 /* FECHAR POPUP COM ESCAPE */
 
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") fecharPopup();
+  const popupAberto = document.getElementById("popup").style.display === "flex";
+
+  if(e.key === "Escape" && popupAberto) fecharPopup();
+  if(e.key === "ArrowLeft"  && popupAberto) navegarPopup(-1);
+  if(e.key === "ArrowRight" && popupAberto) navegarPopup(1);
 });
 
+/* NAVEGAÇÃO NO POPUP */
+
+function atualizarBotoesNavegacao(){
+  document.getElementById("btnAnterior").disabled = arquivoIndex <= 0;
+  document.getElementById("btnProximo").disabled  = arquivoIndex >= arquivosNavegacao.length - 1;
+}
+
+function navegarPopup(direcao){
+  const novoIndex = arquivoIndex + direcao;
+  if(novoIndex < 0 || novoIndex >= arquivosNavegacao.length) return;
+  const arquivo = arquivosNavegacao[novoIndex];
+  abrirCodigo(arquivo.path, arquivo.nome);
+}
 
 /* INIT */
 
 async function iniciar(){
   await carregarArvore();
+  await carregarFavoritos();
   carregarConteudo();
   carregarReadme();
   initTerminal();

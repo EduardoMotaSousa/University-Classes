@@ -201,10 +201,25 @@ class="btn-linkedin">
 
 <div id="popup">
 
-<div class="popup-content">
+  <div class="popup-content">
 
-<div class="popup-top">
+    <div id="popup-top">
+      <button id="btnAnterior" onclick="navegarPopup(-1)">&#8592;</button>
+      <span id="nomeArquivo">arquivo.cpp</span>
+      <button id="btnProximo" onclick="navegarPopup(1)">&#8594;</button>
+      <button class="btn-fechar" onclick="fecharPopup()">✕</button>
+    </div>
 
+    <div id="popup-actions">
+      <button onclick="copiarCodigo()">Copiar</button>
+      <button onclick="baixarCodigo()">Download</button>
+    </div>
+
+    <pre><code id="codigo" class="language-cpp"></code></pre>
+
+  </div>
+
+</div>
 <span id="nomeArquivo">
 
 arquivo.cpp
