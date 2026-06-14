@@ -244,13 +244,13 @@ async function carregarConteudo(pasta=""){
 
     /* CAMINHO */
     const tituloPagina = pasta
-    ? formatarNome(pasta)
-    : `Home • ${totalGeral} atividades`;
+      ? formatarNome(pasta)
+      : `Home • ${totalGeral} atividades`;
 
-  caminho.textContent = tituloPagina;
-  document.title = pasta
-    ? `${formatarNome(pasta)} — University Classes`
-    : "University Classes";
+    caminho.textContent = tituloPagina;
+    atualizarTitulo(pasta
+      ? `${formatarNome(pasta)} — University Classes`
+      : "University Classes");
 
   }
   catch(erro){
@@ -279,7 +279,6 @@ async function carregarReadme() {
 
     const markdown = await res.text();
 
-    // converte Markdown → HTML, depois limpa o HTML antes de inserir
     const htmlBruto = marked.parse(markdown);
     const htmlLimpo = DOMPurify.sanitize(htmlBruto);
 
@@ -300,7 +299,6 @@ async function abrirCodigo(path, nome){
   const resposta = await fetch(url);
   codigoAtual = await resposta.text();
 
-  // agora codigoAtual já está preenchido
   const linhas = codigoAtual.split("\n").length;
   document.getElementById("nomeArquivo").innerText = `${nome} • ${linhas} linhas`;
   arquivoAtual = nome;
@@ -310,7 +308,7 @@ async function abrirCodigo(path, nome){
   codigo.textContent = codigoAtual;
   hljs.highlightElement(codigo);
 
-  document.title = `${nome} — University Classes`;
+  atualizarTitulo(`${nome} — University Classes`);
   document.getElementById("popup").style.display = "flex";
 }
 
@@ -319,9 +317,9 @@ async function abrirCodigo(path, nome){
 
 function fecharPopup(){
   document.getElementById("popup").style.display = "none";
-  document.title = pastaAtual
+  atualizarTitulo(pastaAtual
     ? `${formatarNome(pastaAtual)} — University Classes`
-    : "University Classes";
+    : "University Classes");
 }
 
 
@@ -360,7 +358,6 @@ let terminalPath = "";
 let terminalHistory = [];
 let terminalHistoryIndex = -1;
 
-/* ✅ abre/fecha o terminal flutuante */
 function toggleTerminal(){
   document.getElementById("terminal-float").classList.toggle("open");
   setTimeout(() => document.getElementById("terminal-input").focus(), 50);
@@ -467,8 +464,6 @@ function cmdLs(){
 }
 
 function cmdCd(args){
-
-  /* ✅ remove emojis, espaços extras e barra final */
   args = args.replace(/['";&|`$]/g, "").trim().replace(/\/$/, "");
 
   if(!args || args === "~"){
@@ -649,6 +644,7 @@ function initTerminal(){
   });
 }
 
+
 /* CALCULAR ARQUIVOS DOURADOS */
 
 function calcularDourados(itens) {
@@ -659,20 +655,18 @@ function calcularDourados(itens) {
 
   if (arquivos.length === 0) return new Set();
 
-  // pega o size em bytes do dados.json
   const comSize = arquivos.map(i => {
     const node = arvoreRepositorio.find(n => n.path === i.path);
     return { path: i.path, size: node?.size || 0 };
   });
 
-  // ordena do maior pro menor
   comSize.sort((a, b) => b.size - a.size);
 
-  // pelo menos 1, ou 10% arredondado pra cima
   const qtdDourados = Math.max(1, Math.ceil(comSize.length * 0.1));
 
   return new Set(comSize.slice(0, qtdDourados).map(i => i.path));
 }
+
 
 /* GREP */
 
@@ -686,11 +680,9 @@ async function cmdGrep(args) {
   const termo  = (partes[1] || partes[3]).toLowerCase();
   const arquivo = (partes[2] || partes[4] || "").trim();
 
-  // arquivos a buscar
   let alvos = [];
 
   if (arquivo) {
-    // grep termo arquivo.cpp
     const target = terminalPath ? `${terminalPath}/${arquivo}` : arquivo;
     const existe = arvoreRepositorio.find(i => i.path === target && i.type === "blob");
     if (!existe) {
@@ -699,7 +691,6 @@ async function cmdGrep(args) {
     }
     alvos = [{ path: target, nome: arquivo }];
   } else {
-    // grep termo — busca em todos os .cpp da pasta atual
     alvos = listarItens(terminalPath)
       .filter(i => i.tipo === "file" && extensoesValidas.some(ext => i.nome.endsWith(ext)))
       .map(i => ({ path: i.path, nome: i.nome }));
@@ -751,7 +742,6 @@ async function cmdGrep(args) {
     }
   }
 
-  // remove o "Buscando..."
   document.getElementById("terminal-output").children[
     document.getElementById("terminal-output").children.length - (totalResultados > 0 ? totalResultados + 1 : 1)
   ]?.remove();
@@ -763,12 +753,23 @@ async function cmdGrep(args) {
   }
 }
 
-/* INIT */
+
+/* ATUALIZAR TÍTULO */
+
+function atualizarTitulo(titulo) {
+  document.title = titulo + "\u200B";
+  setTimeout(() => { document.title = titulo; }, 50);
+}
+
 
 /* FECHAR POPUP COM ESCAPE */
+
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") fecharPopup();
 });
+
+
+/* INIT */
 
 async function iniciar(){
   await carregarArvore();
