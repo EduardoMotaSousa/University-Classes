@@ -31,6 +31,7 @@ const ignorar = [
   "Front",
   ".github",
   "dados.json",
+  "favoritos.json",
   "output",
   "README.md",
   "index.html"
