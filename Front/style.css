@@ -745,44 +745,75 @@ body {
 
 /* HEATMAP */
 
+/* 1. O CONTAINER PRINCIPAL (Abraça tudo: Título, Grid e Legenda) */
 #heatmap-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 20px;
+  gap: 15px;
+  
+  /* O fundo escuro e as bordas ficam aqui, englobando a legenda perfeitamente */
   background: rgba(15, 23, 42, 0.75);
   border: 1px solid #1e293b;
   border-radius: 14px;
-  width: 90%;
-  max-width: 900px;
+  
+  /* Faz o retângulo se ajustar exatamente ao tamanho do conteúdo */
+  width: fit-content;
+  max-width: 95%;
   margin: 0 auto;
-  position: relative;
+  
+  /* 🛠️ ESPAÇO DE RESPIRO: 25px vertical e 35px nas laterais para nada esmagar */
+  padding: 25px 35px; 
+  
+  /* 🛠️ REMOVIDO: Tiramos o 'position: relative' daqui. 
+     Isso faz seu Tooltip voltar a obedecer o mouse perfeitamente! */
 }
 
+/* 2. O QUADRADO DA GRID (Onde os meses e quadradinhos são gerados) */
 #heatmap {
-  width: 100%;
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  /* 🛠️ O TRUQUE DO HOVER: Um pequeno padding de 6px aqui dentro.
+     Quando você passar o mouse e o quadradinho aumentar, ele tem essa 
+     "folga" para crescer sem empurrar as bordas e sem criar barras de rolagem! */
+  padding: 6px; 
+}
+
+/* 3. O BALÃO DA MENSAGEM (Tooltip) */
+#heatmap-tooltip {
+  position: absolute;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid #334155;
+  display: none;
+  white-space: nowrap;
+  z-index: 9999;
+  
+  /* Impede que o balão interfira no movimento do mouse */
+  pointer-events: none; 
 }
 
 .heatmap-meses {
   display: flex;
-  gap: 2px;
-  margin-bottom: 4px;
-  padding-left: 2px;
+  justify-content: center; /* Centraliza o único mês perfeitamente no meio */
+  width: 100%;             /* Garante que o container ocupe toda a largura da grid */
+  margin-bottom: 5px;      /* Um espacinho entre o mês e os quadradinhos */
 }
 
 .heatmap-meses span {
-  font-size: 11px;
-  color: #94a3b8;
-  flex: 1;
-  text-align: left;
+  font-weight: bold;       /* Opcional: deixa o mês em destaque */
+  text-transform: capitalize; /* Garante a primeira letra maiúscula (ex: Junho) */
 }
 
 .heatmap-grid {
   display: flex;
   gap: 3px;
-  justify-content: flex-end; 
+  justify-content: center;
 }
 
 .heatmap-col {
@@ -792,8 +823,8 @@ body {
 }
 
 .heatmap-cell {
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
   border-radius: 3px;
   cursor: pointer;
   transition: transform 0.1s;
@@ -837,8 +868,8 @@ body {
 }
 
 .legenda-box {
-  width: 13px;
-  height: 13px;
+  width: 20px;
+  height: 20px;
   border-radius: 3px;
 }
 

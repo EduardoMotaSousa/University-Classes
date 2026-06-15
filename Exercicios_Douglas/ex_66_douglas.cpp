@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-//peça um número inteiro e determine se ele é ou não um número primo. Um número primo é aquele que é divisível somente por ele mesmo e por 1.
+//Altere o programa de cálculo dos números primos, informando, caso o número não seja primo, por quais número ele é divisível.
 
 int main() {
     int num;
@@ -17,7 +17,6 @@ int main() {
     for(int i = 2; i <= num/2; i++){
         if(num % i == 0){
             primo = false;
-	    break;
         }
     }
 

@@ -2,7 +2,7 @@ const usuario = "EduardoMotaSousa";
 const repo = "University-Classes";
 
 let arquivosFavoritos = new Set();
-let arquivosEspeciais = new Set(); // 🔮 categoria roxa (favorito + dourado)
+
 
 let historico = [];
 let pastaAtual = "";
@@ -58,10 +58,8 @@ async function carregarFavoritos(){
     if (!res.ok) return;
     const dados = await res.json();
     arquivosFavoritos = new Set(dados.favoritos || []);
-    arquivosEspeciais = new Set(dados.especiais || []);
   } catch {
     arquivosFavoritos = new Set();
-    arquivosEspeciais = new Set();
   }
 }
 
@@ -191,9 +189,9 @@ async function carregarConteudo(pasta=""){
         }));
         const douradosPasta = calcularDourados(filhosItens);
 
-        const dPasta = filhos.filter(n => douradosPasta.has(n.path)).length;
-        const fPasta = filhos.filter(n => arquivosFavoritos.has(n.path)).length;
-        const ePasta = filhos.filter(n => arquivosEspeciais.has(n.path)).length;
+        const ePasta = filhos.filter(n => arquivosFavoritos.has(n.path) && douradosPasta.has(n.path)).length;
+        const fPasta = filhos.filter(n => arquivosFavoritos.has(n.path) && !douradosPasta.has(n.path)).length;
+        const dPasta = filhos.filter(n => douradosPasta.has(n.path) && !arquivosFavoritos.has(n.path)).length;
 
         let badges = "";
         if (ePasta > 0) badges += `<span class="badge badge-especial">🔮 ${ePasta}</span>`;
@@ -217,7 +215,7 @@ async function carregarConteudo(pasta=""){
 
         const eDourado  = dourados.has(item.path);
         const eFavorito = arquivosFavoritos.has(item.path);
-        const eEspecial = arquivosEspeciais.has(item.path);
+        const eEspecial = eFavorito && eDourado;
         const node      = arvoreRepositorio.find(n => n.path === item.path);
         const linhasAprox = node?.size ? Math.round(node.size / 30) : null;
 
@@ -813,29 +811,40 @@ async function carregarHeatmap() {
         semana = [];
       }
     }
-    if (semana.length > 0) semanas.push(semana); // última semana incompleta
+    // última semana incompleta: completa com null no final
+    if (semana.length > 0) {
+      while (semana.length < 7) semana.push(null);
+      semanas.push(semana);
+    }
 
     // renderiza
     container.innerHTML = "";
 
     // labels dos meses
+    // labels dos meses
     const mesesDiv = document.createElement("div");
     mesesDiv.className = "heatmap-meses";
-    let mesAtual = -1;
-    for (const sem of semanas) {
-      const span = document.createElement("span");
-      const primeiroValido = sem.find(d => d !== null);
+
+    // 1. Descobrir qual é a data do último mês presente (de trás para frente)
+    let ultimaDataValida = null;
+    for (let i = semanas.length - 1; i >= 0; i--) {
+      const primeiroValido = semanas[i].find(d => d !== null);
       if (primeiroValido) {
-        const mes = primeiroValido.data.getUTCMonth();
-        if (mes !== mesAtual) {
-          span.textContent = primeiroValido.data.toLocaleDateString("pt-BR", {
-            month: "short", timeZone: "UTC"
-          });
-          mesAtual = mes;
-        }
+        ultimaDataValida = primeiroValido.data;
+        break; // Achou o último mês, pode parar o loop
       }
+    }
+
+    // 2. Cria APENAS UM span para o último mês (sem spans vazios para trás)
+    if (ultimaDataValida) {
+      const span = document.createElement("span");
+      span.textContent = ultimaDataValida.toLocaleDateString("pt-BR", {
+        month: "long", // Mudei para "long" (ex: "Junho") porque centralizado fica mais bonito por extenso, mas pode manter "short" se preferir!
+        timeZone: "UTC"
+      });
       mesesDiv.appendChild(span);
     }
+
     container.appendChild(mesesDiv);
 
     // grid
@@ -890,6 +899,8 @@ async function carregarHeatmap() {
 
 /* INIT */
 
+/* Procure a sua função iniciar() no final do arquivo e deixe assim: */
+
 async function iniciar(){
   await carregarArvore();
   await carregarFavoritos();
@@ -897,6 +908,18 @@ async function iniciar(){
   carregarReadme();
   carregarHeatmap();
   initTerminal();
+
+  // 🛠️ ADICIONE ESTE BLOCO AQUI EMBAIXO:
+  document.getElementById("homeBtn").addEventListener("click", () => {
+    historico = [];        // Limpa o histórico de pastas para o botão sumir
+    carregarConteudo("");  // Voltar para a raiz da estrutura de pastas
+    
+    // Faz a página subir para o topo de forma suave
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"   // "smooth" faz o efeito de rolagem deslizar. Se preferir instantâneo, use "instant"
+    });
+  });
 }
 
 iniciar();
