@@ -2,6 +2,7 @@ const usuario = "EduardoMotaSousa";
 const repo = "University-Classes";
 
 let arquivosFavoritos = new Set();
+let arquivosEspeciais = new Set(); // 🔮 categoria roxa (favorito + dourado)
 
 let historico = [];
 let pastaAtual = "";
@@ -16,36 +17,20 @@ let arvoreRepositorio = [];
 
 /* EXTENSÕES */
 
-const extensoesValidas = [
-  ".cpp",
-  ".c",
-  ".h"
-];
+const extensoesValidas = [".cpp", ".c", ".h"];
 
 /* IGNORAR */
 
 const ignorar = [
-  ".git",
-  ".vscode",
-  "node_modules",
-  "Front",
-  ".github",
-  "dados.json",
-  "favoritos.json",
-  "output",
-  "README.md",
-  "index.html"
+  ".git", ".vscode", "node_modules", "Front", ".github",
+  "dados.json", "favoritos.json", "output", "README.md", "index.html"
 ];
-
 
 /* FORMATAR */
 
 function formatarNome(nome){
-  return nome
-  .replaceAll("_"," ")
-  .replaceAll("-"," - ");
+  return nome.replaceAll("_"," ").replaceAll("-"," - ");
 }
-
 
 /* PEGAR PASTA PAI */
 
@@ -54,7 +39,6 @@ function pegarPasta(path){
   partes.pop();
   return partes.join("/");
 }
-
 
 /* ORDENAR */
 
@@ -66,7 +50,6 @@ function ordenarItens(lista){
   });
 }
 
-
 /* CARREGAR FAVORITOS */
 
 async function carregarFavoritos(){
@@ -74,9 +57,11 @@ async function carregarFavoritos(){
     const res = await fetch("favoritos.json");
     if (!res.ok) return;
     const dados = await res.json();
-    arquivosFavoritos = new Set(dados.favoritos);
+    arquivosFavoritos = new Set(dados.favoritos || []);
+    arquivosEspeciais = new Set(dados.especiais || []);
   } catch {
     arquivosFavoritos = new Set();
+    arquivosEspeciais = new Set();
   }
 }
 
@@ -85,68 +70,40 @@ async function carregarFavoritos(){
 async function carregarArvore(){
   try {
     const res = await fetch("dados.json");
-
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
     const dados = await res.json();
     arvoreRepositorio = dados.tree;
-
   } catch (erro) {
     console.error("Erro ao carregar árvore:", erro);
     document.getElementById("pastas").innerHTML = "Erro ao carregar arquivos.";
   }
 }
 
-
 /* LISTAR ITENS */
 
 function listarItens(pasta=""){
-
   let itens = [];
   let adicionados = new Set();
 
   for(const item of arvoreRepositorio){
-
     const path = item.path;
     const partes = path.split("/");
 
-    /* ignora */
-    if(partes.some(p => ignorar.includes(p))){
-      continue;
-    }
+    if(partes.some(p => ignorar.includes(p))) continue;
 
-    /* HOME */
     if(pasta === ""){
-
       const primeiro = partes[0];
-
       if(!adicionados.has(primeiro)){
         adicionados.add(primeiro);
-
         if(item.type === "tree" || partes.length > 1){
-          itens.push({
-            tipo: "dir",
-            nome: primeiro,
-            path: primeiro
-          });
+          itens.push({ tipo: "dir", nome: primeiro, path: primeiro });
         } else {
-          itens.push({
-            tipo: "file",
-            nome: primeiro,
-            path: path
-          });
+          itens.push({ tipo: "file", nome: primeiro, path: path });
         }
       }
-
-    }
-
-    /* SUBPASTA */
-    else{
-
+    } else {
       if(pegarPasta(path) === pasta){
-
         const nome = partes[partes.length - 1];
-
         itens.push({
           tipo: item.type === "tree" ? "dir" : "file",
           nome: nome,
@@ -159,61 +116,95 @@ function listarItens(pasta=""){
   return ordenarItens(itens);
 }
 
-
 /* CONTAR EXERCÍCIOS */
 
 function contarAtividades(pasta){
   let total = 0;
   for(const item of arvoreRepositorio){
     if(item.path.startsWith(pasta + "/")){
-      if(extensoesValidas.some(ext => item.path.endsWith(ext))){
-        total++;
-      }
+      if(extensoesValidas.some(ext => item.path.endsWith(ext))) total++;
     }
   }
   return total;
 }
 
+/* CALCULAR ARQUIVOS DOURADOS */
+
+function calcularDourados(itens) {
+  const arquivos = itens.filter(i =>
+    i.tipo === "file" && extensoesValidas.some(ext => i.nome.endsWith(ext))
+  );
+
+  if (arquivos.length === 0) return new Set();
+
+  const comSize = arquivos.map(i => {
+    const node = arvoreRepositorio.find(n => n.path === i.path);
+    return { path: i.path, size: node?.size || 0 };
+  });
+
+  comSize.sort((a, b) => b.size - a.size);
+  const qtdDourados = Math.max(1, Math.ceil(comSize.length * 0.1));
+  return new Set(comSize.slice(0, qtdDourados).map(i => i.path));
+}
 
 /* CARREGAR CONTEÚDO */
 
 async function carregarConteudo(pasta=""){
-
   pastaAtual = pasta;
 
   const container = document.getElementById("pastas");
-  const caminho = document.getElementById("caminho");
+  const caminho   = document.getElementById("caminho");
 
   container.innerHTML = "Carregando...";
 
-  try{
-
-    const dados = listarItens(pasta);
+  try {
+    const dados   = listarItens(pasta);
     const dourados = calcularDourados(dados);
-    // guarda lista de arquivos para navegação no popup
-    arquivosNavegacao = dados.filter(i =>
-      i.tipo === "file" &&
-      extensoesValidas.some(ext => i.nome.endsWith(ext))
-    );
-    container.innerHTML = "";
 
+    arquivosNavegacao = dados.filter(i =>
+      i.tipo === "file" && extensoesValidas.some(ext => i.nome.endsWith(ext))
+    );
+
+    container.innerHTML = "";
     let totalGeral = 0;
 
-    for(const item of dados){
+    // contadores para o cabeçalho
+    let totalDourados  = 0;
+    let totalFavoritos = 0;
+    let totalEspeciais = 0;
 
+    for(const item of dados){
       const div = document.createElement("div");
       div.className = "card";
 
-      /* PASTAS */
       if(item.tipo === "dir"){
-
         const qtd = contarAtividades(item.path);
         totalGeral += qtd;
+
+        // conta badges dentro da pasta
+        const filhos = arvoreRepositorio.filter(n =>
+          n.path.startsWith(item.path + "/") &&
+          extensoesValidas.some(ext => n.path.endsWith(ext))
+        );
+        const filhosItens = filhos.map(n => ({
+          tipo: "file", nome: n.path.split("/").pop(), path: n.path
+        }));
+        const douradosPasta = calcularDourados(filhosItens);
+
+        const dPasta = filhos.filter(n => douradosPasta.has(n.path)).length;
+        const fPasta = filhos.filter(n => arquivosFavoritos.has(n.path)).length;
+        const ePasta = filhos.filter(n => arquivosEspeciais.has(n.path)).length;
+
+        let badges = "";
+        if (ePasta > 0) badges += `<span class="badge badge-especial">🔮 ${ePasta}</span>`;
+        if (fPasta > 0) badges += `<span class="badge badge-favorito">💎 ${fPasta}</span>`;
+        if (dPasta > 0) badges += `<span class="badge badge-dourado">⭐ ${dPasta}</span>`;
 
         div.innerHTML = `
           <div class="card-icon">📁</div>
           <div class="card-title">${formatarNome(item.nome)}</div>
           <small>${qtd} atividades</small>
+          ${badges ? `<div class="card-badges">${badges}</div>` : ""}
         `;
 
         div.onclick = () => {
@@ -221,22 +212,23 @@ async function carregarConteudo(pasta=""){
           carregarConteudo(item.path);
         };
 
-      }
+      } else {
+        if(extensoesValidas.some(ext => item.nome.endsWith(ext))) totalGeral++;
 
-      /* ARQUIVOS */
-      else {
-        if(extensoesValidas.some(ext => item.nome.endsWith(ext))){
-          totalGeral++;
-        }
-
-        const eDourado   = dourados.has(item.path);
-        const eFavorito  = arquivosFavoritos.has(item.path);
-        const node       = arvoreRepositorio.find(n => n.path === item.path);
+        const eDourado  = dourados.has(item.path);
+        const eFavorito = arquivosFavoritos.has(item.path);
+        const eEspecial = arquivosEspeciais.has(item.path);
+        const node      = arvoreRepositorio.find(n => n.path === item.path);
         const linhasAprox = node?.size ? Math.round(node.size / 30) : null;
 
+        if (eEspecial) { totalEspeciais++; }
+        else if (eFavorito) { totalFavoritos++; }
+        else if (eDourado)  { totalDourados++;  }
+
         let icone = "📄";
-        if (eFavorito) icone = "💎";
-        else if (eDourado) icone = "⭐";
+        if (eEspecial)      icone = "🔮";
+        else if (eFavorito) icone = "💎";
+        else if (eDourado)  icone = "⭐";
 
         div.innerHTML = `
           <div class="card-icon">${icone}</div>
@@ -244,8 +236,9 @@ async function carregarConteudo(pasta=""){
           ${linhasAprox ? `<small>~${linhasAprox} linhas</small>` : ""}
         `;
 
-        if (eFavorito) div.classList.add("card-favorito");
-        else if (eDourado) div.classList.add("card-dourado");
+        if (eEspecial)      div.classList.add("card-especial");
+        else if (eFavorito) div.classList.add("card-favorito");
+        else if (eDourado)  div.classList.add("card-dourado");
 
         div.onclick = () => abrirCodigo(item.path, item.nome);
       }
@@ -257,35 +250,39 @@ async function carregarConteudo(pasta=""){
     const add = document.createElement("div");
     add.className = "card-add";
     add.innerHTML = "+";
-    add.onclick = () => {
-      window.open(
-        `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`,
-        "_blank"
-      );
-    };
+    add.onclick = () => window.open(
+      `https://github.com/${usuario}/${repo}/tree/main/${pastaAtual}`, "_blank"
+    );
     container.appendChild(add);
 
     /* HOME BUTTON */
     document.getElementById("homeBtn").style.display =
       historico.length ? "flex" : "none";
 
-    /* CAMINHO */
+    /* CAMINHO + CONTADOR */
+    let contadores = "";
+    if (!pasta) {
+      // na home não mostra contadores de arquivo (mostra nas pastas)
+    } else {
+      if (totalEspeciais > 0) contadores += ` · 🔮 ${totalEspeciais}`;
+      if (totalFavoritos > 0) contadores += ` · 💎 ${totalFavoritos}`;
+      if (totalDourados  > 0) contadores += ` · ⭐ ${totalDourados}`;
+    }
+
     const tituloPagina = pasta
-      ? formatarNome(pasta)
-      : `Home • ${totalGeral} atividades`;
+      ? `${formatarNome(pasta)}${contadores}`
+      : `Home · ${totalGeral} atividades`;
 
     caminho.textContent = tituloPagina;
     atualizarTitulo(pasta
       ? `${formatarNome(pasta)} — University Classes`
       : "University Classes");
 
-  }
-  catch(erro){
+  } catch(erro) {
     container.innerHTML = "Erro ao carregar";
     console.log(erro);
   }
 }
-
 
 /* VOLTAR */
 
@@ -294,29 +291,22 @@ function voltar(){
   carregarConteudo(anterior || "");
 }
 
-
 /* README */
 
 async function carregarReadme() {
   try {
     const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/README.md`;
     const res = await fetch(url);
-
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
     const markdown = await res.text();
-
     const htmlBruto = marked.parse(markdown);
     const htmlLimpo = DOMPurify.sanitize(htmlBruto);
-
     document.getElementById("readme-content").innerHTML = htmlLimpo;
-
   } catch (erro) {
     document.getElementById("readme-content").textContent = "Erro ao carregar README.";
     console.error("Erro no README:", erro);
   }
 }
-
 
 /* POPUP CÓDIGO */
 
@@ -341,7 +331,6 @@ async function abrirCodigo(path, nome){
   atualizarBotoesNavegacao();
 }
 
-
 /* FECHAR */
 
 function fecharPopup(){
@@ -351,13 +340,11 @@ function fecharPopup(){
     : "University Classes");
 }
 
-
 /* COPIAR */
 
 function copiarCodigo(){
   navigator.clipboard.writeText(codigoAtual);
 }
-
 
 /* DOWNLOAD */
 
@@ -369,7 +356,6 @@ function baixarCodigo(){
   link.click();
 }
 
-
 /* LINKS */
 
 function irGithub(){
@@ -379,7 +365,6 @@ function irGithub(){
 function irLinkedin(){
   window.open("https://www.linkedin.com/in/eduardomotaads/", "_blank");
 }
-
 
 /* TERMINAL */
 
@@ -431,24 +416,24 @@ async function terminalExecute(cmd){
   terminalHistoryIndex = -1;
   printCommandLine(cmd);
 
-  const parts = cmd.split(" ");
+  const parts   = cmd.split(" ");
   const command = parts[0].toLowerCase();
-  const args = parts.slice(1).join(" ").trim();
+  const args    = parts.slice(1).join(" ").trim();
 
   switch(command){
     case "grep":     await cmdGrep(args); break;
-    case "help":     cmdHelp();          break;
-    case "ls":       cmdLs();            break;
-    case "cd":       cmdCd(args);        break;
-    case "cat":      await cmdCat(args); break;
-    case "pwd":      cmdPwd();           break;
-    case "whoami":   cmdWhoami();        break;
-    case "uname":    cmdUname();         break;
-    case "echo":     cmdEcho(args);      break;
-    case "date":     cmdDate();          break;
-    case "history":  cmdHistory();       break;
-    case "neofetch": cmdNeofetch();      break;
-    case "clear":    cmdClear();         break;
+    case "help":     cmdHelp();           break;
+    case "ls":       cmdLs();             break;
+    case "cd":       cmdCd(args);         break;
+    case "cat":      await cmdCat(args);  break;
+    case "pwd":      cmdPwd();            break;
+    case "whoami":   cmdWhoami();         break;
+    case "uname":    cmdUname();          break;
+    case "echo":     cmdEcho(args);       break;
+    case "date":     cmdDate();           break;
+    case "history":  cmdHistory();        break;
+    case "neofetch": cmdNeofetch();       break;
+    case "clear":    cmdClear();          break;
     default:
       terminalPrint(
         `<span class="t-red">bash: ${escapeHtml(command)}: command not found — tente <span class="t-green">help</span></span>`
@@ -512,9 +497,7 @@ function cmdCd(args){
   }
 
   const target = terminalPath ? `${terminalPath}/${args}` : args;
-  const existe = arvoreRepositorio.some(
-    i => i.path === target && i.type === "tree"
-  );
+  const existe = arvoreRepositorio.some(i => i.path === target && i.type === "tree");
 
   if(existe){
     terminalPath = target;
@@ -533,14 +516,10 @@ async function cmdCat(args){
   }
 
   const target = terminalPath ? `${terminalPath}/${args}` : args;
-  const existe = arvoreRepositorio.some(
-    i => i.path === target && i.type === "blob"
-  );
+  const existe = arvoreRepositorio.some(i => i.path === target && i.type === "blob");
 
   if(!existe){
-    terminalPrint(
-      `<span class="t-red">cat: ${escapeHtml(args)}: No such file or directory</span>`
-    );
+    terminalPrint(`<span class="t-red">cat: ${escapeHtml(args)}: No such file or directory</span>`);
     return;
   }
 
@@ -548,9 +527,8 @@ async function cmdCat(args){
 
   try {
     const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${target}`;
-    const res = await fetch(url);
+    const res  = await fetch(url);
     const text = await res.text();
-
     document.getElementById("terminal-output").lastChild.remove();
     terminalPrint(`<pre class="t-cat">${escapeHtml(text)}</pre>`);
   } catch {
@@ -565,9 +543,7 @@ function cmdPwd(){
   terminalPrint(`<span class="t-white">${path}</span>`);
 }
 
-function cmdWhoami(){
-  terminalPrint(`<span class="t-green">eduardo</span>`);
-}
+function cmdWhoami(){ terminalPrint(`<span class="t-green">eduardo</span>`); }
 
 function cmdUname(){
   terminalPrint(
@@ -575,13 +551,9 @@ function cmdUname(){
   );
 }
 
-function cmdEcho(args){
-  terminalPrint(`<span class="t-white">${escapeHtml(args)}</span>`);
-}
+function cmdEcho(args){ terminalPrint(`<span class="t-white">${escapeHtml(args)}</span>`); }
 
-function cmdDate(){
-  terminalPrint(`<span class="t-white">${new Date().toString()}</span>`);
-}
+function cmdDate(){ terminalPrint(`<span class="t-white">${new Date().toString()}</span>`); }
 
 function cmdHistory(){
   if(!terminalHistory.length) return;
@@ -592,15 +564,12 @@ function cmdHistory(){
   terminalPrint(`<pre>${html}</pre>`);
 }
 
-function cmdClear(){
-  document.getElementById("terminal-output").innerHTML = "";
-}
+function cmdClear(){ document.getElementById("terminal-output").innerHTML = ""; }
 
 function cmdNeofetch(){
   const total = arvoreRepositorio.filter(i =>
     extensoesValidas.some(ext => i.path.endsWith(ext))
   ).length;
-
   const pastas = arvoreRepositorio.filter(
     i => i.type === "tree" && !i.path.includes("/")
   ).length;
@@ -624,16 +593,13 @@ function cmdNeofetch(){
     <span><span class="t-orange">Arquivos:</span> <span class="t-white">${total} exercícios</span></span>
     <span><span class="t-orange">GitHub:</span>   <span class="t-white">EduardoMotaSousa</span></span>
   </div>
-</div>
-  `);
+</div>`);
 }
-
 
 /* INICIALIZAR TERMINAL */
 
 function initTerminal(){
   updateTerminalPrompt();
-
   terminalPrint(`<span class="t-orange">University-Classes Terminal</span> — Ubuntu 24.04 LTS`);
   terminalPrint(`Digite <span class="t-green">help</span> para ver os comandos disponíveis.`);
   terminalPrint(``);
@@ -641,13 +607,11 @@ function initTerminal(){
   const input = document.getElementById("terminal-input");
 
   input.addEventListener("keydown", async function(e){
-
     if(e.key === "Enter"){
       const cmd = this.value;
       this.value = "";
       await terminalExecute(cmd);
     }
-
     if(e.key === "ArrowUp"){
       e.preventDefault();
       if(terminalHistoryIndex < terminalHistory.length - 1){
@@ -655,7 +619,6 @@ function initTerminal(){
         this.value = terminalHistory[terminalHistoryIndex];
       }
     }
-
     if(e.key === "ArrowDown"){
       e.preventDefault();
       if(terminalHistoryIndex > 0){
@@ -673,30 +636,6 @@ function initTerminal(){
   });
 }
 
-
-/* CALCULAR ARQUIVOS DOURADOS */
-
-function calcularDourados(itens) {
-  const arquivos = itens.filter(i =>
-    i.tipo === "file" &&
-    extensoesValidas.some(ext => i.nome.endsWith(ext))
-  );
-
-  if (arquivos.length === 0) return new Set();
-
-  const comSize = arquivos.map(i => {
-    const node = arvoreRepositorio.find(n => n.path === i.path);
-    return { path: i.path, size: node?.size || 0 };
-  });
-
-  comSize.sort((a, b) => b.size - a.size);
-
-  const qtdDourados = Math.max(1, Math.ceil(comSize.length * 0.1));
-
-  return new Set(comSize.slice(0, qtdDourados).map(i => i.path));
-}
-
-
 /* GREP */
 
 async function cmdGrep(args) {
@@ -705,8 +644,8 @@ async function cmdGrep(args) {
     return;
   }
 
-  const partes = args.match(/^"([^"]+)"\s*(.*)|^(\S+)\s*(.*)$/);
-  const termo  = (partes[1] || partes[3]).toLowerCase();
+  const partes  = args.match(/^"([^"]+)"\s*(.*)|^(\S+)\s*(.*)$/);
+  const termo   = (partes[1] || partes[3]).toLowerCase();
   const arquivo = (partes[2] || partes[4] || "").trim();
 
   let alvos = [];
@@ -736,23 +675,22 @@ async function cmdGrep(args) {
 
   for (const alvo of alvos) {
     try {
-      const url = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${alvo.path}`;
-      const res = await fetch(url);
+      const url  = `https://raw.githubusercontent.com/${usuario}/${repo}/main/${alvo.path}`;
+      const res  = await fetch(url);
       if (!res.ok) continue;
       const texto = await res.text();
 
-      const linhas = texto.split("\n");
+      const linhas     = texto.split("\n");
       const encontradas = [];
 
       linhas.forEach((linha, idx) => {
-        if (linha.toLowerCase().includes(termo)) {
+        if (linha.toLowerCase().includes(termo)){
           encontradas.push({ num: idx + 1, linha });
         }
       });
 
       if (encontradas.length) {
         totalResultados += encontradas.length;
-
         let html = `<span class="t-orange t-bold">${escapeHtml(alvo.nome)}</span>\n`;
         for (const r of encontradas) {
           const linhaSafe = escapeHtml(r.linha);
@@ -762,10 +700,8 @@ async function cmdGrep(args) {
           );
           html += `<span class="t-gray">${String(r.num).padStart(4, " ")}:</span>  ${destacada}\n`;
         }
-
         terminalPrint(`<pre class="t-cat">${html}</pre>`);
       }
-
     } catch {
       terminalPrint(`<span class="t-red">Erro ao ler ${escapeHtml(alvo.nome)}</span>`);
     }
@@ -782,7 +718,6 @@ async function cmdGrep(args) {
   }
 }
 
-
 /* ATUALIZAR TÍTULO */
 
 function atualizarTitulo(titulo) {
@@ -790,13 +725,11 @@ function atualizarTitulo(titulo) {
   setTimeout(() => { document.title = titulo; }, 50);
 }
 
-
 /* FECHAR POPUP COM ESCAPE */
 
 document.addEventListener("keydown", e => {
   const popupAberto = document.getElementById("popup").style.display === "flex";
-
-  if(e.key === "Escape" && popupAberto) fecharPopup();
+  if(e.key === "Escape"     && popupAberto) fecharPopup();
   if(e.key === "ArrowLeft"  && popupAberto) navegarPopup(-1);
   if(e.key === "ArrowRight" && popupAberto) navegarPopup(1);
 });
@@ -815,7 +748,10 @@ function navegarPopup(direcao){
   abrirCodigo(arquivo.path, arquivo.nome);
 }
 
-/* HEATMAP DE COMMITS */
+/* HEATMAP DE COMMITS
+   Estratégia: gera 90 dias em UTC puro e compara com as datas
+   dos eventos (que vêm em ISO 8601 UTC da API do GitHub).
+   Evita qualquer conversão de fuso para não dessincronizar. */
 
 async function carregarHeatmap() {
   const container = document.getElementById("heatmap");
@@ -828,24 +764,27 @@ async function carregarHeatmap() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const eventos = await res.json();
 
-    // usa UTC em tudo para evitar problemas de fuso horário
+    // agrupa commits por dia (YYYY-MM-DD em UTC, igual à API)
     const commitsPorDia = {};
     for (const evento of eventos) {
       if (evento.type !== "PushEvent") continue;
       if (evento.repo.name !== `${usuario}/${repo}`) continue;
-      const dia = evento.created_at.slice(0, 10); // já é UTC: YYYY-MM-DD
+      const dia = evento.created_at.slice(0, 10); // UTC date
       const qtd = evento.payload.commits?.length || 1;
       commitsPorDia[dia] = (commitsPorDia[dia] || 0) + qtd;
     }
 
-    // gera os últimos 90 dias em UTC
-    const hoje = new Date();
-    const hojeUTC = new Date(Date.UTC(hoje.getUTCFullYear(), hoje.getUTCMonth(), hoje.getUTCDate()));
+    // gera os últimos 90 dias usando aritmética UTC pura
+    // evita new Date() com setDate() que pode cruzar meia-noite local
+    const agoraMs  = Date.now();
+    const umDiaMs  = 86400000;
+    const hojeMs   = agoraMs - (agoraMs % umDiaMs); // meia-noite UTC de hoje
+
     const dias = [];
     for (let i = 89; i >= 0; i--) {
-      const d = new Date(hojeUTC);
-      d.setUTCDate(hojeUTC.getUTCDate() - i);
-      const key = d.toISOString().slice(0, 10);
+      const ts  = hojeMs - i * umDiaMs;
+      const d   = new Date(ts);
+      const key = d.toISOString().slice(0, 10); // YYYY-MM-DD UTC
       dias.push({ key, data: d, qtd: commitsPorDia[key] || 0 });
     }
 
@@ -859,33 +798,33 @@ async function carregarHeatmap() {
       return 4;
     }
 
-    // agrupa por semana (0=dom, 6=sab) usando UTC
+    // agrupa em semanas (domingo=0 … sábado=6) usando getUTCDay()
     const semanas = [];
     let semana = [];
 
-    const primeiroDia = dias[0].data.getUTCDay();
-    for (let i = 0; i < primeiroDia; i++) {
-      semana.push(null);
-    }
+    // preenche o início da primeira semana com null
+    const primeiroDiaUTC = dias[0].data.getUTCDay();
+    for (let i = 0; i < primeiroDiaUTC; i++) semana.push(null);
 
     for (const dia of dias) {
       semana.push(dia);
-      if (dia.data.getUTCDay() === 6) {
+      if (dia.data.getUTCDay() === 6) { // sábado → fecha a semana
         semanas.push(semana);
         semana = [];
       }
     }
-    if (semana.length > 0) semanas.push(semana);
+    if (semana.length > 0) semanas.push(semana); // última semana incompleta
 
+    // renderiza
     container.innerHTML = "";
 
     // labels dos meses
     const mesesDiv = document.createElement("div");
     mesesDiv.className = "heatmap-meses";
     let mesAtual = -1;
-    semanas.forEach((sem) => {
-      const primeiroValido = sem.find(d => d !== null);
+    for (const sem of semanas) {
       const span = document.createElement("span");
+      const primeiroValido = sem.find(d => d !== null);
       if (primeiroValido) {
         const mes = primeiroValido.data.getUTCMonth();
         if (mes !== mesAtual) {
@@ -896,7 +835,7 @@ async function carregarHeatmap() {
         }
       }
       mesesDiv.appendChild(span);
-    });
+    }
     container.appendChild(mesesDiv);
 
     // grid
@@ -948,7 +887,6 @@ async function carregarHeatmap() {
     container.innerHTML = `<p style="color:#94a3b8">Erro ao carregar commits.</p>`;
   }
 }
-
 
 /* INIT */
 

@@ -1,5 +1,6 @@
 {
-  "favoritos": [
+  "favoritos": ["..."],
+  "especiais": [
     "03-Loop/ex4.cpp",
     "04-Vetor/ex2.cpp",
     "04-Vetor/ex4.cpp",

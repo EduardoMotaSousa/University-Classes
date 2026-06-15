@@ -851,3 +851,69 @@ body {
 .legenda-label {
   font-size: 11px;
 }
+
+
+/* CARD ESPECIAL (🔮 roxa — favorito + dourado) */
+
+.card-especial {
+  border: 1px solid #a855f7;
+  background: linear-gradient(135deg, #1e0a2e 0%, #150520 100%);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.4);
+  position: relative;
+}
+
+.card-especial .card-title {
+  color: #c084fc;
+  font-weight: 600;
+}
+
+.card-especial small {
+  color: #a855f7;
+}
+
+/* BADGES NOS CARDS DE PASTA */
+
+.card-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.badge-especial {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.badge-favorito {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badge-dourado {
+  background: rgba(240, 180, 41, 0.15);
+  color: #f0b429;
+  border: 1px solid rgba(240, 180, 41, 0.3);
+}
+
+/* HEATMAP — ajustes de cor das células */
+
+.heatmap-cell[data-level="0"] {
+  background: #1e293b;
+  border: 1px solid #263447;
+}
+
+.legenda-box[data-level="0"] {
+  background: #1e293b;
+  border: 1px solid #263447;
+}
