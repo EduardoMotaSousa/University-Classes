@@ -7,7 +7,7 @@ int main() {
     int num;
     bool primo = true;
 
-    cout << "Escreva um num:";
+    cout << "Escreva um num: ";
     cin >> num;
 
     if(num <= 1){
@@ -17,6 +17,7 @@ int main() {
     for(int i = 2; i <= num/2; i++){
         if(num % i == 0){
             primo = false;
+            cout << "É divisível por: " << i << endl;
         }
     }
 
