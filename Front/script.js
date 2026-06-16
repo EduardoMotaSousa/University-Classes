@@ -821,7 +821,6 @@ async function carregarHeatmap() {
     container.innerHTML = "";
 
     // labels dos meses
-    // labels dos meses
     const mesesDiv = document.createElement("div");
     mesesDiv.className = "heatmap-meses";
 
