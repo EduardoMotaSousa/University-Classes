@@ -746,37 +746,24 @@ function navegarPopup(direcao){
   abrirCodigo(arquivo.path, arquivo.nome);
 }
 
-/* HEATMAP DE COMMITS — versão corrigida
-   Busca até 3 páginas da API para pegar mais commits antigos.
-   Labels dos 3 últimos meses alinhadas com o grid via CSS grid. */
+/* HEATMAP DE COMMITS
+   Lê commits.json gerado pelo GitHub Actions — sem limitação de API pública. */
 
 async function carregarHeatmap() {
   const container = document.getElementById("heatmap");
   const tooltip   = document.getElementById("heatmap-tooltip");
 
   try {
-    // busca até 3 páginas (300 eventos) para pegar commits mais antigos
-    const paginas = [1, 2, 3];
-    let todosEventos = [];
-
-    for (const pagina of paginas) {
-      const res = await fetch(
-        `https://api.github.com/users/${usuario}/events/public?per_page=100&page=${pagina}`
-      );
-      if (!res.ok) break;
-      const eventos = await res.json();
-      if (!eventos.length) break;
-      todosEventos = todosEventos.concat(eventos);
-    }
+    // lê o commits.json gerado pelo Actions (sem rate limit)
+    const res = await fetch("commits.json");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const dados = await res.json();
 
     // agrupa commits por dia (YYYY-MM-DD em UTC)
     const commitsPorDia = {};
-    for (const evento of todosEventos) {
-      if (evento.type !== "PushEvent") continue;
-      if (evento.repo.name !== `${usuario}/${repo}`) continue;
-      const dia = evento.created_at.slice(0, 10);
-      const qtd = evento.payload.commits?.length || 1;
-      commitsPorDia[dia] = (commitsPorDia[dia] || 0) + qtd;
+    for (const commit of dados.commits) {
+      const dia = commit.date.slice(0, 10);
+      commitsPorDia[dia] = (commitsPorDia[dia] || 0) + 1;
     }
 
     // gera os últimos 90 dias em UTC puro
@@ -825,15 +812,15 @@ async function carregarHeatmap() {
     // renderiza
     container.innerHTML = "";
 
-    // labels dos meses — alinhadas com o grid via CSS grid
+    // labels dos meses alinhadas com o grid via CSS grid
     const mesesDiv = document.createElement("div");
     mesesDiv.className = "heatmap-meses";
     mesesDiv.style.gridTemplateColumns = `repeat(${colCount}, 20px)`;
 
     let mesAtual = -1;
-    for (let i = 0; i < semanas.length; i++) {
+    for (const sem of semanas) {
       const span = document.createElement("span");
-      const primeiroValido = semanas[i].find(d => d !== null);
+      const primeiroValido = sem.find(d => d !== null);
       if (primeiroValido) {
         const mes = primeiroValido.data.getUTCMonth();
         if (mes !== mesAtual) {
