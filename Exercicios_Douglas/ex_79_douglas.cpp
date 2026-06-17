@@ -13,6 +13,9 @@ using namespace std;
 
 
 int main() {
+    double salario = 1000;
 
+    cout << fixed << setprecision(2);
+    
     return 0;
 }
