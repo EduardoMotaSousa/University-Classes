@@ -112,6 +112,7 @@ University-Classes/
 
 ### Fluxo de atualização automática
 
+``` 
 Push no GitHub
      ↓
 GitHub Actions executa com histórico completo (fetch-depth: 0)
