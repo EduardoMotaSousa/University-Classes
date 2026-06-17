@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
-          fetch-depth: 0 # Garante que todo o histórico de commits seja baixado localmente
+          fetch-depth: 0 # Baixa o histórico completo da branch atual
 
       - name: Baixar árvore
         run: |
@@ -21,8 +21,11 @@ jobs:
           https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/main?recursive=1 \
           > dados.json
 
-      - name: Gerar commits dos últimos 365 dias (Via Git Local)
+      - name: Gerar commits dos últimos 365 dias (Via Git Local - Todas as Branches)
         run: |
+          # Sincroniza todas as branches remotas para o runner conhecê-las
+          git fetch --all --quiet
+
           python3 -c "
           import subprocess
           import json
@@ -31,27 +34,29 @@ jobs:
           # Calcula a data de 365 dias atrás
           since_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
 
-          # Executa o git log local filtrando pela data
-          # %H = Hash do commit (SHA)
-          # %aI = Data do autor em formato estrito ISO 8601 (igual ao padrão da API)
+          # '--all' faz o git log varrer todas as branches existentes local e remotamente
           result = subprocess.run(
-              ['git', 'log', f'--since={since_date}', '--pretty=format:%H|%aI'],
+              ['git', 'log', '--all', f'--since={since_date}', '--pretty=format:%H|%aI'],
               capture_output=True,
               text=True,
               check=True
           )
 
           commits = []
+          seen_shas = set() # Evita duplicar commits que estejam presentes em mais de uma branch
+          
           if result.stdout.strip():
               for line in result.stdout.strip().split('\n'):
                   if '|' in line:
                       sha, date = line.split('|', 1)
-                      commits.append({
-                          'sha': sha,
-                          'date': date
-                      })
+                      if sha not in seen_shas:
+                          seen_shas.add(sha)
+                          commits.append({
+                              'sha': sha,
+                              'date': date
+                          })
 
-          # Guarda o resultado estruturado no commits.json
+          # Salva tudo bonitinho no formato esperado
           with open('commits.json', 'w') as f:
               json.dump({'commits': commits}, f)
           "
@@ -63,5 +68,5 @@ jobs:
 
           git add dados.json commits.json
 
-          # Evita erro caso não haja mudanças nos arquivos e previne loop infinito de commits usando [skip ci]
+          # Comita as alterações apenas se houver mudanças reais para evitar loops infinitos
           git diff --quiet && git diff --staged --quiet || (git commit -m "Atualizar JSON [skip ci]" && git push)
