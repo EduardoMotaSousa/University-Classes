@@ -17,27 +17,34 @@ using namespace std;
 //A saída deve ser conforme o exemplo abaixo: Lojas Tabajara Produto 1: R$ 2.20 Produto 2: R$ 5.80 Produto 3: R$ 0 Total: R$ 9.00 Dinheiro: R$ 20.00 Troco: R$ 11.00
 
 int main() {
-    int local{};
-    double valor[1000], valortotal{}, dinheiro;
+    double valor[1000], dinheiro;
+    char denovo;
     std::string produto[1000];
 
-    for(int i = 0; i < 1000; i++){ 
-        cout << "Nome do produto: ";
-        cin >> produto[i];
+    cout << "\n========== LOJAS TABAJARA ==========\n";
 
-        cout << "Valor do " << produto[i] << ": ";
+    do{
+     int local{};
+     double valortotal{};
+    
+    //Escreve nos vetores
+    for(int i = 0; i < 1000; i++){ 
+
+        cout << "Valor do produto " << i+1 << "°: ";
         cin >> valor[i];
 
-        if(valor[1] < 0){
+        if(valor[i] < 0){
             cout << "Digite um valor valido!\n";
             i--;
             continue;
         }
 
         else if(valor[i] == 0){
-            local--;
             break;
         }
+
+        cout << "Nome do produto: ";
+        cin >> produto[i];
 
         valortotal += valor[i];
         local++;
@@ -45,24 +52,34 @@ int main() {
 
     cout << fixed << setprecision(2);
 
+    //entrada de dinheiro
     do{ 
-        cout << "Valor total: R$" << valortotal
+        cout << "\nValor total: R$" << valortotal
             << "\nValor pago? ";
         cin >> dinheiro;
 
-        if(dinheiro<valortotal){
+        if(dinheiro < valortotal){
             cout << "Dinheiro insuficiente!\n";
         }
 
     }while(dinheiro < valortotal);
 
-    while(local >= 0){
-        cout << produto[local] << ": R$"
-            << valor[local] << endl;
-        local--;
+    cout << "\n========== LOJAS TABAJARA ==========\n";
+
+    //Detalhas os itens
+    for(int i = 0; i < local; i++){ 
+        cout << produto[i] << ": R$"
+            << valor[i] << endl;
     }
-    cout << "O valor total: " << valortotal
-        << "Troco: " << valortotal - dinheiro;
+
+    //Exibe na tela
+    cout << "\nO valor total: R$" << valortotal
+	    << "\nDinheiro: R$" << dinheiro
+        << "\nTroco: R$" << dinheiro - valortotal
+	    << "\n\nProxima compra?(S para continuar)";
+    cin >> denovo;
+
+    }while(denovo == 'S' || denovo == 's');
 
     return 0;
 }

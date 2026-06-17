@@ -746,43 +746,48 @@ function navegarPopup(direcao){
   abrirCodigo(arquivo.path, arquivo.nome);
 }
 
-/* HEATMAP DE COMMITS
-   Estratégia: gera 90 dias em UTC puro e compara com as datas
-   dos eventos (que vêm em ISO 8601 UTC da API do GitHub).
-   Evita qualquer conversão de fuso para não dessincronizar. */
+/* HEATMAP DE COMMITS — versão corrigida
+   Busca até 3 páginas da API para pegar mais commits antigos.
+   Labels dos 3 últimos meses alinhadas com o grid via CSS grid. */
 
 async function carregarHeatmap() {
   const container = document.getElementById("heatmap");
   const tooltip   = document.getElementById("heatmap-tooltip");
 
   try {
-    const res = await fetch(
-      `https://api.github.com/users/${usuario}/events/public?per_page=100`
-    );
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const eventos = await res.json();
+    // busca até 3 páginas (300 eventos) para pegar commits mais antigos
+    const paginas = [1, 2, 3];
+    let todosEventos = [];
 
-    // agrupa commits por dia (YYYY-MM-DD em UTC, igual à API)
+    for (const pagina of paginas) {
+      const res = await fetch(
+        `https://api.github.com/users/${usuario}/events/public?per_page=100&page=${pagina}`
+      );
+      if (!res.ok) break;
+      const eventos = await res.json();
+      if (!eventos.length) break;
+      todosEventos = todosEventos.concat(eventos);
+    }
+
+    // agrupa commits por dia (YYYY-MM-DD em UTC)
     const commitsPorDia = {};
-    for (const evento of eventos) {
+    for (const evento of todosEventos) {
       if (evento.type !== "PushEvent") continue;
       if (evento.repo.name !== `${usuario}/${repo}`) continue;
-      const dia = evento.created_at.slice(0, 10); // UTC date
+      const dia = evento.created_at.slice(0, 10);
       const qtd = evento.payload.commits?.length || 1;
       commitsPorDia[dia] = (commitsPorDia[dia] || 0) + qtd;
     }
 
-    // gera os últimos 90 dias usando aritmética UTC pura
-    // evita new Date() com setDate() que pode cruzar meia-noite local
-    const agoraMs  = Date.now();
-    const umDiaMs  = 86400000;
-    const hojeMs   = agoraMs - (agoraMs % umDiaMs); // meia-noite UTC de hoje
+    // gera os últimos 90 dias em UTC puro
+    const agoraMs = Date.now();
+    const umDiaMs = 86400000;
+    const hojeMs  = agoraMs - (agoraMs % umDiaMs);
 
     const dias = [];
     for (let i = 89; i >= 0; i--) {
-      const ts  = hojeMs - i * umDiaMs;
-      const d   = new Date(ts);
-      const key = d.toISOString().slice(0, 10); // YYYY-MM-DD UTC
+      const d   = new Date(hojeMs - i * umDiaMs);
+      const key = d.toISOString().slice(0, 10);
       dias.push({ key, data: d, qtd: commitsPorDia[key] || 0 });
     }
 
@@ -796,59 +801,56 @@ async function carregarHeatmap() {
       return 4;
     }
 
-    // agrupa em semanas (domingo=0 … sábado=6) usando getUTCDay()
+    // agrupa em semanas (dom=0 … sab=6) usando UTC
     const semanas = [];
     let semana = [];
 
-    // preenche o início da primeira semana com null
     const primeiroDiaUTC = dias[0].data.getUTCDay();
     for (let i = 0; i < primeiroDiaUTC; i++) semana.push(null);
 
     for (const dia of dias) {
       semana.push(dia);
-      if (dia.data.getUTCDay() === 6) { // sábado → fecha a semana
+      if (dia.data.getUTCDay() === 6) {
         semanas.push(semana);
         semana = [];
       }
     }
-    // última semana incompleta: completa com null no final
     if (semana.length > 0) {
       while (semana.length < 7) semana.push(null);
       semanas.push(semana);
     }
 
+    const colCount = semanas.length;
+
     // renderiza
     container.innerHTML = "";
 
-    // labels dos meses
+    // labels dos meses — alinhadas com o grid via CSS grid
     const mesesDiv = document.createElement("div");
     mesesDiv.className = "heatmap-meses";
+    mesesDiv.style.gridTemplateColumns = `repeat(${colCount}, 20px)`;
 
-    // 1. Descobrir qual é a data do último mês presente (de trás para frente)
-    let ultimaDataValida = null;
-    for (let i = semanas.length - 1; i >= 0; i--) {
+    let mesAtual = -1;
+    for (let i = 0; i < semanas.length; i++) {
+      const span = document.createElement("span");
       const primeiroValido = semanas[i].find(d => d !== null);
       if (primeiroValido) {
-        ultimaDataValida = primeiroValido.data;
-        break; // Achou o último mês, pode parar o loop
+        const mes = primeiroValido.data.getUTCMonth();
+        if (mes !== mesAtual) {
+          span.textContent = primeiroValido.data.toLocaleDateString("pt-BR", {
+            month: "long", timeZone: "UTC"
+          });
+          mesAtual = mes;
+        }
       }
-    }
-
-    // 2. Cria APENAS UM span para o último mês (sem spans vazios para trás)
-    if (ultimaDataValida) {
-      const span = document.createElement("span");
-      span.textContent = ultimaDataValida.toLocaleDateString("pt-BR", {
-        month: "long", // Mudei para "long" (ex: "Junho") porque centralizado fica mais bonito por extenso, mas pode manter "short" se preferir!
-        timeZone: "UTC"
-      });
       mesesDiv.appendChild(span);
     }
-
     container.appendChild(mesesDiv);
 
-    // grid
+    // grid de células
     const grid = document.createElement("div");
     grid.className = "heatmap-grid";
+    grid.style.gridTemplateColumns = `repeat(${colCount}, 20px)`;
 
     for (const sem of semanas) {
       const col = document.createElement("div");

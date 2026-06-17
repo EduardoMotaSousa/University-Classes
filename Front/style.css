@@ -743,47 +743,32 @@ body {
   }
 }
 
+
 /* HEATMAP */
 
-/* 1. O CONTAINER PRINCIPAL (Abraça tudo: Título, Grid e Legenda) */
 #heatmap-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  
-  /* O fundo escuro e as bordas ficam aqui, englobando a legenda perfeitamente */
   background: rgba(15, 23, 42, 0.75);
   border: 1px solid #1e293b;
   border-radius: 14px;
-  
-  /* Faz o retângulo se ajustar exatamente ao tamanho do conteúdo */
   width: fit-content;
   max-width: 95%;
   margin: 0 auto;
-  
-  /* 🛠️ ESPAÇO DE RESPIRO: 25px vertical e 35px nas laterais para nada esmagar */
-  padding: 25px 35px; 
-  
-  /* 🛠️ REMOVIDO: Tiramos o 'position: relative' daqui. 
-     Isso faz seu Tooltip voltar a obedecer o mouse perfeitamente! */
+  padding: 25px 35px;
 }
 
-/* 2. O QUADRADO DA GRID (Onde os meses e quadradinhos são gerados) */
 #heatmap {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  
-  /* 🛠️ O TRUQUE DO HOVER: Um pequeno padding de 6px aqui dentro.
-     Quando você passar o mouse e o quadradinho aumentar, ele tem essa 
-     "folga" para crescer sem empurrar as bordas e sem criar barras de rolagem! */
-  padding: 6px; 
+  align-items: flex-start; /* alinha à esquerda para o grid bater com os meses */
+  padding: 6px;
 }
 
-/* 3. O BALÃO DA MENSAGEM (Tooltip) */
 #heatmap-tooltip {
-  position: absolute;
+  position: fixed;
   background: #0f172a;
   color: #ffffff;
   padding: 6px 10px;
@@ -793,27 +778,29 @@ body {
   display: none;
   white-space: nowrap;
   z-index: 9999;
-  
-  /* Impede que o balão interfira no movimento do mouse */
-  pointer-events: none; 
+  pointer-events: none;
 }
 
+/* labels dos meses — CSS grid, alinha 1 span por coluna */
 .heatmap-meses {
-  display: flex;
-  justify-content: center; /* Centraliza o único mês perfeitamente no meio */
-  width: 100%;             /* Garante que o container ocupe toda a largura da grid */
-  margin-bottom: 5px;      /* Um espacinho entre o mês e os quadradinhos */
+  display: grid;
+  gap: 3px;
+  margin-bottom: 5px;
 }
 
 .heatmap-meses span {
-  font-weight: bold;       /* Opcional: deixa o mês em destaque */
-  text-transform: capitalize; /* Garante a primeira letra maiúscula (ex: Junho) */
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: bold;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: visible;
 }
 
+/* grid de semanas — CSS grid, alinha 1 coluna por semana */
 .heatmap-grid {
-  display: flex;
+  display: grid;
   gap: 3px;
-  justify-content: center;
 }
 
 .heatmap-col {
@@ -835,7 +822,7 @@ body {
   transform: scale(1.3);
 }
 
-.heatmap-cell[data-level="0"] { background: #1e293b; }
+.heatmap-cell[data-level="0"] { background: #1e293b; border: 1px solid #263447; }
 .heatmap-cell[data-level="1"] { background: #0e4429; }
 .heatmap-cell[data-level="2"] { background: #006d32; }
 .heatmap-cell[data-level="3"] { background: #26a641; }
@@ -873,7 +860,7 @@ body {
   border-radius: 3px;
 }
 
-.legenda-box[data-level="0"] { background: #161b22; }
+.legenda-box[data-level="0"] { background: #1e293b; border: 1px solid #263447; }
 .legenda-box[data-level="1"] { background: #0e4429; }
 .legenda-box[data-level="2"] { background: #006d32; }
 .legenda-box[data-level="3"] { background: #26a641; }
@@ -882,7 +869,6 @@ body {
 .legenda-label {
   font-size: 11px;
 }
-
 
 /* CARD ESPECIAL (🔮 roxa — favorito + dourado) */
 
