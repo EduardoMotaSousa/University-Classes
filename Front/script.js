@@ -598,8 +598,8 @@ function cmdNeofetch(){
 
 function initTerminal(){
   updateTerminalPrompt();
-  terminalPrint(`<span class="t-orange">University-Classes Terminal</span> — Ubuntu 24.04 LTS`);
-  terminalPrint(`Digite <span class="t-green">help</span> para ver os comandos disponíveis.`);
+  terminalPrint(`<div style="text-align:center"><span class="t-orange">University-Classes Terminal</span> — Ubuntu 24.04 LTS</div>`);
+  terminalPrint(`<div style="text-align:center">Digite <span class="t-green">help</span> para ver os comandos disponíveis.</div>`);
   terminalPrint(``);
 
   const input = document.getElementById("terminal-input");
@@ -885,6 +885,45 @@ async function carregarHeatmap() {
   }
 }
 
+/* ESTATÍSTICAS */
+
+function carregarStats() {
+  // total de arquivos
+  const arquivos = arvoreRepositorio.filter(i =>
+    extensoesValidas.some(ext => i.path.endsWith(ext))
+  );
+  document.getElementById("stat-arquivos").textContent = arquivos.length;
+
+  // total de linhas estimadas (size / 30)
+  const totalLinhas = arquivos.reduce((acc, i) => acc + Math.round((i.size || 0) / 30), 0);
+  document.getElementById("stat-linhas").textContent =
+    totalLinhas.toLocaleString("pt-BR");
+
+  // pasta mais ativa (mais arquivos)
+  const contagem = {};
+  for (const item of arquivos) {
+    const pasta = item.path.split("/")[0];
+    contagem[pasta] = (contagem[pasta] || 0) + 1;
+  }
+  const pastaMaisAtiva = Object.entries(contagem)
+    .sort((a, b) => b[1] - a[1])[0];
+  if (pastaMaisAtiva) {
+    document.getElementById("stat-pasta").textContent =
+      `${formatarNome(pastaMaisAtiva[0])} (${pastaMaisAtiva[1]})`;
+  }
+
+  // arquivo mais longo
+  const maior = arquivos.reduce((max, i) =>
+    (i.size || 0) > (max.size || 0) ? i : max, arquivos[0]
+  );
+  if (maior) {
+    const nome = maior.path.split("/").pop();
+    const linhas = Math.round((maior.size || 0) / 30);
+    document.getElementById("stat-maior").textContent =
+      `${nome} (~${linhas} linhas)`;
+  }
+}
+
 /* INIT */
 
 /* Procure a sua função iniciar() no final do arquivo e deixe assim: */
@@ -895,6 +934,7 @@ async function iniciar(){
   carregarConteudo();
   carregarReadme();
   carregarHeatmap();
+  carregarStats();
   initTerminal();
 
   // 🛠️ ADICIONE ESTE BLOCO AQUI EMBAIXO:
