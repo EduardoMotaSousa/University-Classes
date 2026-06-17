@@ -5,20 +5,16 @@ on:
   workflow_dispatch:
 
 jobs:
-
   gerar-json:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
 
       - name: Baixar árvore
-
         run: |
           curl \
           -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
@@ -26,53 +22,62 @@ jobs:
           > dados.json
 
       - name: Baixar commits dos últimos 90 dias
-
         run: |
           # Data de 90 dias atrás em formato ISO 8601
           SINCE=$(date -u -d '90 days ago' '+%Y-%m-%dT%H:%M:%SZ')
 
-          # Busca até 3 páginas de commits (300 commits no total)
-          PAGE1=$(curl -s \
-            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            "https://api.github.com/repos/EduardoMotaSousa/University-Classes/commits?per_page=100&page=1&since=${SINCE}")
+          # Limpa o diretório temporário se necessário e cria uma pasta para as páginas
+          mkdir -p paginas_json
 
-          PAGE2=$(curl -s \
-            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            "https://api.github.com/repos/EduardoMotaSousa/University-Classes/commits?per_page=100&page=2&since=${SINCE}")
+          # Busca até 10 páginas de commits (1000 commits no total)
+          for PAGE in {1..10}; do
+            RESULT=$(curl -s \
+              -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+              "https://api.github.com/repos/EduardoMotaSousa/University-Classes/commits?per_page=100&page=${PAGE}&since=${SINCE}")
+            
+            # Para se a página vier vazia ou nula
+            if [ -z "$RESULT" ] || [ "$RESULT" = "[]" ]; then
+              break
+            fi
+            
+            # Salva a página atual em um arquivo numerado
+            echo "$RESULT" > "paginas_json/page_${PAGE}.json"
+          done
 
-          PAGE3=$(curl -s \
-            -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-            "https://api.github.com/repos/EduardoMotaSousa/University-Classes/commits?per_page=100&page=3&since=${SINCE}")
-
-          # Combina as 3 páginas num único array JSON e salva
-          echo "[$PAGE1, $PAGE2, $PAGE3]" | \
+          # Passa os arquivos gerados para o script Python tratar
           python3 -c "
-          import json, sys
-          pages = json.load(sys.stdin)
+          import json, glob
+
           commits = []
           seen = set()
-          for page in pages:
-            if isinstance(page, list):
-              for c in page:
-                sha = c.get('sha','')
-                if sha and sha not in seen:
-                  seen.add(sha)
-                  commits.append({
-                    'sha': sha,
-                    'date': c['commit']['author']['date']
-                  })
-          print(json.dumps({'commits': commits}))
-          " > commits.json
+          
+          # Carrega cada um dos arquivos gerados pelo loop do Bash
+          for file_path in sorted(glob.glob('paginas_json/page_*.json')):
+              with open(file_path, 'r') as f:
+                  page = json.load(f)
+                  if isinstance(page, list):
+                      for c in page:
+                          sha = c.get('sha', '')
+                          if sha and sha not in seen:
+                              seen.add(sha)
+                              commits.append({
+                                  'sha': sha,
+                                  'date': c['commit']['author']['date']
+                              })
+
+          with open('commits.json', 'w') as f:
+              json.dump({'commits': commits}, f)
+          "
+          
+          # Limpa a pasta temporária
+          rm -rf paginas_json
 
       - name: Commit JSONs
-
         run: |
-
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add dados.json commits.json
 
-          git diff --quiet && git diff --staged --quiet || git commit -m "Atualizar JSON"
-
-          git push
+          # Evita erro caso não haja mudanças nos arquivos e previne loop infinito de commits usando [skip ci]
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Atualizar JSON [skip ci]" && git push)
