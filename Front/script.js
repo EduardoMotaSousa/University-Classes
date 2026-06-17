@@ -23,7 +23,7 @@ const extensoesValidas = [".cpp", ".c", ".h"];
 
 const ignorar = [
   ".git", ".vscode", "node_modules", "Front", ".github",
-  "dados.json", "favoritos.json", "output", "README.md", "index.html"
+  "dados.json", "favoritos.json", "output", "README.md", "commits.json", "index.html"
 ];
 
 /* FORMATAR */
