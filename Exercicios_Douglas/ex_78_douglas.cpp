@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 // Uma academia deseja fazer um senso entre seus clientes para descobrir o mais alto, o mais baixo, a mais gordo e o mais magro, 
@@ -15,6 +16,7 @@ int main() {
     
     //Entra dados
     while(true){
+        //limite de clientes
         if(local >= 100){
             cout << "Limite de clientes atingido!";
             break;
@@ -30,13 +32,13 @@ int main() {
         }
 
         if(codigo[local] < 0){
-            cout << "Digite um valor valido!";
+            cout << "Digite um valor valido!\n";
             continue;
         }
 
         //Entra altura
         do{
-            cout << "Qual sua altura? ";
+            cout << "Qual sua altura(M)? ";
             cin >> altura[local];
         }while(altura[local] < 0);
 
@@ -53,7 +55,7 @@ int main() {
 
         //Entra peso
         do{
-            cout << "Qual seu peso? ";
+            cout << "Qual seu peso(Kg)? ";
             cin >> peso[local];
         }while(peso[local] < 0);
 
@@ -71,28 +73,37 @@ int main() {
         local++;
     }
 
+    //Para se não entrou nenhum cliente
+    if(local == 0){
+        cout << "Nenhum cliente cadastrado!\n";
+        return 0;
+    }
+
     mediapeso /= local;
     mediaaltura/= local;
 
     //Escreve dados
+    cout << fixed << setprecision(2);
+
+
     cout << "\nMais alto: " << codigo[alto]
 	 << "\nAltura: " << altura[alto]
-	 << "\nPeso: " << peso[alto];
+	 << "Cm\nPeso: Kg" << peso[alto] << endl;
 
     cout << "\nMais baixo: " << codigo[baixo]
 	 << "\nAltura: " << altura[baixo]
-	 << "\nPeso: " << peso[baixo];
+	 << "Cm\nPeso: Kg" << peso[baixo] << endl;
 
     cout << "\nMais magro: " << codigo[magro]
 	 << "\nAltura: " << altura[magro]
-	 << "\nPeso: " << peso[magro];
+	 << "Cm\nPeso: Kg" << peso[magro] << endl;
 
     cout << "\nMais gordo: " << codigo[gordo]
 	 << "\nAltura: " << altura[gordo]
-	 << "\nPeso: " << peso[gordo];
+	 << "Cm\nPeso: Kg" << peso[gordo] << endl;
 
     cout << "\nMedia altura: " << mediaaltura
-	 << "\nMedia peso: " << mediapeso;
+	 << "Cm\nMedia peso: Kg" << mediapeso;
   
     return 0;
 }
