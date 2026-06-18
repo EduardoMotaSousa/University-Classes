@@ -36,7 +36,9 @@ jobs:
 
           # '--all' faz o git log varrer todas as branches existentes local e remotamente
           result = subprocess.run(
-              ['git', 'log', '--all', f'--since={since_date}', '--pretty=format:%H|%aI'],
+              ['git', 'log', '--all', f'--since={since_date}', 
+              '--pretty=format:%H|%aI|%ae',  # adiciona email do autor
+              '--invert-grep', '--grep=Atualizar JSON'],  # exclui commits do Actions
               capture_output=True,
               text=True,
               check=True
@@ -46,15 +48,16 @@ jobs:
           seen_shas = set() # Evita duplicar commits que estejam presentes em mais de uma branch
           
           if result.stdout.strip():
-              for line in result.stdout.strip().split('\n'):
-                  if '|' in line:
-                      sha, date = line.split('|', 1)
-                      if sha not in seen_shas:
-                          seen_shas.add(sha)
-                          commits.append({
-                              'sha': sha,
-                              'date': date
-                          })
+            for line in result.stdout.strip().split('\n'):
+                if '|' in line:
+                    parts = line.split('|', 2)
+                    sha, date = parts[0], parts[1]
+                    if sha not in seen_shas:
+                        seen_shas.add(sha)
+                        commits.append({
+                            'sha': sha,
+                            'date': date
+                        })
 
           # Salva tudo bonitinho no formato esperado
           with open('commits.json', 'w') as f:

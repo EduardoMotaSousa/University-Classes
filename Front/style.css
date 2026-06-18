@@ -512,35 +512,31 @@ body {
   }
 }
 
-/* MOBILE */
-
+/* README MOBILE */
 @media (max-width: 600px) {
 
-  .hero h1 {
-    font-size: 35px;
-  }
-
-  .card,
-  .card-add {
-    width: 140px;
-    min-height: 140px;
-  }
-
-  .home-btn {
-    width: 210px;
-  }
-
   #readme-content {
-    padding: 20px;
+    padding: 15px;
+    font-size: 14px;
   }
 
-  .popup-top button {
-    padding: 7px 10px;
-    font-size: 12px;
+  #readme-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 13px;
   }
 
-  #popup code {
-    font-size: 12px;
+  #readme-content pre {
+    overflow-x: auto;
+    white-space: pre;
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  #readme-content code {
+    font-size: 11px;
+    word-break: break-all;
   }
 }
 

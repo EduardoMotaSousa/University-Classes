@@ -11,7 +11,7 @@
 
 **Repositório de estudos em C++ com interface web interativa integrada ao GitHub.**
 
-[🌐 Acessar o site](https://eduardomotasousa.github.io/University-Classes/) · [👤 Meu GitHub](https://github.com/EduardoMotaSousa) · [💼 LinkedIn](https://www.linkedin.com/in/eduardomotaads/)
+[🌐 Acessar o site](https://eduardomotasousa.github.io/University-Classes/) 
 
 </div>
 
