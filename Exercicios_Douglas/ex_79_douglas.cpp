@@ -13,7 +13,13 @@ using namespace std;
 
 
 int main() {
+    int ano;
     double salario = 1000, aumento = 1.5;
+
+    cout << "Ano: ";
+    cin >> ano;
+
+    if(int i = 0)
 
     cout << fixed << setprecision(2);
 
