@@ -1,0 +1,13 @@
+# Binários compilados de C/C++
+# No Linux/Mac o executavel sai sem extensao; no Windows sai como .exe.
+# Hoje os 150 binarios do projeto estao todos dentro de pastas "output/",
+# entao essa unica regra ja cobre tudo (qualquer pasta chamada output, em qualquer nivel).
+output/
+
+# Garantia extra: caso algum .exe seja gerado fora de uma pasta output/
+*.exe
+
+# Outros artefatos comuns de compilacao C/C++, pra evitar o mesmo problema no futuro
+*.o
+*.obj
+*.out
