@@ -1,6 +1,6 @@
 {
-  "sha": "1818c060bdccf5fda66352f20bdee7d59ba9ef50",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/1818c060bdccf5fda66352f20bdee7d59ba9ef50",
+  "sha": "463579ad9ea21ed81645f403cdb58bb306cc85b5",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/463579ad9ea21ed81645f403cdb58bb306cc85b5",
   "tree": [
     {
       "path": ".github",
@@ -23,6 +23,14 @@
       "sha": "fe237e5ba1523e42ac76d9e10294bbc4b2947d33",
       "size": 2466,
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/fe237e5ba1523e42ac76d9e10294bbc4b2947d33"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "36f5cc537f101b816ec46cdbdab9539c7389df65",
+      "size": 458,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/36f5cc537f101b816ec46cdbdab9539c7389df65"
     },
     {
       "path": ".vscode",
@@ -2466,17 +2474,17 @@
       "path": "commits.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "23946e581b0d609ee4615c3d90f889a6364f2600",
-      "size": 15503,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/23946e581b0d609ee4615c3d90f889a6364f2600"
+      "sha": "d07b23ab178958451927618b7caf461cf06e6498",
+      "size": 15678,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/d07b23ab178958451927618b7caf461cf06e6498"
     },
     {
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "86680ecd94b5b4b8cdf6f995bcb9166de29522db",
-      "size": 98738,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/86680ecd94b5b4b8cdf6f995bcb9166de29522db"
+      "sha": "17e42e7395a14ba9c2a3caae90c0d14fededa7ba",
+      "size": 99043,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/17e42e7395a14ba9c2a3caae90c0d14fededa7ba"
     },
     {
       "path": "favoritos.json",
