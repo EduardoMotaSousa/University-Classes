@@ -90,9 +90,6 @@ Terminal interativo com estética Ubuntu acessível por um botão flutuante. Sup
 | `neofetch` | Estatísticas do projeto em arte ASCII |
 | `echo`, `date`, `history`, `clear` | Comandos utilitários |
 
-### 🔤 Título dinâmico da aba
-O título do navegador muda conforme a navegação: pasta atual, arquivo aberto ou página inicial.
-
 ---
 
 ## ⚙️ Arquitetura técnica
@@ -101,23 +98,55 @@ O título do navegador muda conforme a navegação: pasta atual, arquivo aberto 
 University-Classes/
 ├── .github/
 │   └── workflows/
-│       └── github-api.yml   # Automação: gera dados.json e commits.json a cada push
+│       └── github-api.yml          # Automação via GitHub Actions:
+│                                   # gera dados do repositório e histórico de commits
+│                                   # automaticamente a cada push
+│
 ├── Front/
-│   ├── script.js            # Toda a lógica da interface
-│   ├── style.css            # Estilos
-│   └── icon.png             # Ícone do site
-├── dados.json               # Árvore do repositório (gerado pelo Actions)
-├── commits.json             # Histórico de commits para o heatmap (gerado pelo Actions)
-├── favoritos.json           # Curadoria manual de arquivos favoritos
-├── index.html               # Página principal
-├── 01-Logica/               # Exercícios de lógica
-├── 02-Code/                 # Exercícios introdutórios
-├── 03-Loop/                 # Estruturas de repetição
-├── 04-Vetor/                # Vetores
-├── 05-Matrizes/             # Matrizes
-├── SAVA_Loop/               # Exercícios complementares de loop
-├── SAVA_Vetores_&_Matrizes/ # Exercícios complementares
-└── Exercicios_Douglas/      # Lista de exercícios do professor
+│   ├── script.js                   # Lógica da aplicação web:
+│   │                               # navegação, filtros, favoritos,
+│   │                               # carregamento dos dados e interação da interface
+│   │
+│   ├── style.css                   # Estilização completa da interface
+│   │
+│   └── icon.png                    # Ícone da aplicação
+│
+├── dados.json                      # Estrutura do repositório gerada automaticamente
+│                                   # pelo GitHub Actions para alimentar a interface
+│
+├── commits.json                    # Histórico de commits utilizado no heatmap
+│                                   # de evolução do projeto
+│
+├── favoritos.json                  # Curadoria manual:
+│                                   # exercícios selecionados como destaque
+│
+├── index.html                      # Página principal da aplicação
+│                                   # responsável pela apresentação do projeto
+│
+├── Exercicios/                     # Organização principal dos estudos
+│
+│   ├── 01-Logica/                  # Fundamentos:
+│   │                               # entrada, saída, operadores e decisões
+│
+│   ├── 02-Code/                    # Exercícios introdutórios
+│   │                               # primeiros contatos com programação
+│
+│   ├── 03-Loop/                    # Estruturas de repetição:
+│   │                               # while, for, do while
+│
+│   ├── 04-Vetor/                   # Manipulação de vetores e coleções
+│
+│   ├── 05-Matrizes/                # Estruturas bidimensionais e lógica com matrizes
+│
+│   ├── SAVA_Loop/                  # Exercícios complementares focados em repetição
+│
+│   ├── SAVA_Vetores_Matrizes/      # Exercícios complementares:
+│   │                               # vetores, matrizes e manipulação de dados
+│
+│   └── Exercicios_Douglas/         # Lista de exercícios proposta pelo professor
+│
+└── README.md                       # Documentação do projeto:
+                                    # objetivo, evolução, tecnologias e funcionamento
 ```
 
 ### Fluxo de atualização automática
