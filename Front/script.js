@@ -863,12 +863,17 @@ async function carregarHeatmap() {
           });
 
           cell.addEventListener("mousemove", e => {
-            tooltip.style.left = (e.pageX + 12) + "px";
-            tooltip.style.top  = (e.pageY - 28) + "px";
-          });
+            const larguraTooltip = tooltip.offsetWidth;
+            const larguraTela = window.innerWidth;
 
-          cell.addEventListener("mouseleave", () => {
-            tooltip.style.display = "none";
+            // se não couber à direita, mostra à esquerda do cursor
+            if (e.pageX + 12 + larguraTooltip > larguraTela) {
+              tooltip.style.left = (e.pageX - larguraTooltip - 12) + "px";
+            } else {
+              tooltip.style.left = (e.pageX + 12) + "px";
+            }
+
+            tooltip.style.top = (e.pageY - 28) + "px";
           });
         }
 
