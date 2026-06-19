@@ -99,6 +99,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-d
 
 <body>
 
+<main>
+
 <header class="hero">
 
 <h1>
@@ -230,6 +232,8 @@ Carregando README...
 
 </section>
 
+</main>
+
 <!-- BOTÃO TERMINAL -->
 <button class="terminal-fab" onclick="toggleTerminal()" title="Terminal Linux">
   <span>❯_</span>
@@ -254,6 +258,7 @@ Carregando README...
       <input
         type="text"
         id="terminal-input"
+        aria-label="Comando do terminal"
         autocomplete="off"
         spellcheck="false"
       >
@@ -308,16 +313,10 @@ class="btn-linkedin">
 
 </div>
 
-
-
-<!-- já existem esses dois: -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-<!-- adiciona este: -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
-
-<script src="Front/script.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script defer src="Front/script.js"></script>
 
 </body>
 
