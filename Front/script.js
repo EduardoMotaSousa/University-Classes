@@ -286,7 +286,7 @@ async function carregarConteudo(pasta=""){
 
 function voltar(){
   const anterior = historico.pop();
-  carregarConteudo(anterior || "");
+  carregarConteudo(anterior || "Exercicios");
 }
 
 /* README */
@@ -479,7 +479,7 @@ function cmdCd(args){
   args = args.replace(/['";&|`$]/g, "").trim().replace(/\/$/, "");
 
   if(!args || args === "~"){
-    terminalPath = "";
+    terminalPath = "Exercicios";
     updateTerminalPrompt();
     return;
   }
@@ -936,7 +936,7 @@ function carregarStats() {
 async function iniciar(){
   await carregarArvore();
   await carregarFavoritos();
-  carregarConteudo();
+  carregarConteudo("Exercicios"); 
   carregarReadme();
   carregarHeatmap();
   carregarStats();
