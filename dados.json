@@ -1,6 +1,6 @@
 {
-  "sha": "7a0eb21aecd05617c8a9b7dcc116acba7376378d",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/7a0eb21aecd05617c8a9b7dcc116acba7376378d",
+  "sha": "6e9a0252c682819e970dbab5ec800f02a0ec903d",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/6e9a0252c682819e970dbab5ec800f02a0ec903d",
   "tree": [
     {
       "path": ".github",
@@ -397,8 +397,8 @@
       "path": "Exercicios_Douglas",
       "mode": "040000",
       "type": "tree",
-      "sha": "6dea2987f8fecf9015040cd66858293e7dff09a1",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/6dea2987f8fecf9015040cd66858293e7dff09a1"
+      "sha": "dcc4fdd00c661f1b1fbbaf71aba076f65d4b4f39",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/dcc4fdd00c661f1b1fbbaf71aba076f65d4b4f39"
     },
     {
       "path": "Exercicios_Douglas/Ex 1 Douglas.cpp",
@@ -1028,9 +1028,33 @@
       "path": "Exercicios_Douglas/ex_79_douglas.cpp",
       "mode": "100644",
       "type": "blob",
-      "sha": "d11cdd32289817a39c8e71286dc2b2b60ff0c9d9",
-      "size": 792,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/d11cdd32289817a39c8e71286dc2b2b60ff0c9d9"
+      "sha": "b6a1bb057f8414d507881bb3d5fd7ea3383cf36e",
+      "size": 1142,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/b6a1bb057f8414d507881bb3d5fd7ea3383cf36e"
+    },
+    {
+      "path": "Exercicios_Douglas/ex_79_douglasV2.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f15ba86df92b6d293ece44736d2dd88d4d0bac4",
+      "size": 1262,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/7f15ba86df92b6d293ece44736d2dd88d4d0bac4"
+    },
+    {
+      "path": "Exercicios_Douglas/ex_80_douglas.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c02e6880df6bcd48eeb91bfbcc9e019e9dfdce5",
+      "size": 1619,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/8c02e6880df6bcd48eeb91bfbcc9e019e9dfdce5"
+    },
+    {
+      "path": "Exercicios_Douglas/ex_81_douglas.cpp",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1101ad6a3ec3f0ca43dc5a4fb8f0e28f9ce4b7e0",
+      "size": 1604,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/1101ad6a3ec3f0ca43dc5a4fb8f0e28f9ce4b7e0"
     },
     {
       "path": "Front",
@@ -1233,17 +1257,17 @@
       "path": "commits.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "41ef3c7c294dfcb319a5e7454eaa15e621c0c231",
-      "size": 16473,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/41ef3c7c294dfcb319a5e7454eaa15e621c0c231"
+      "sha": "509369b3e1fcbcbff0fce43e4fe0e2cd1792f510",
+      "size": 12148,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/509369b3e1fcbcbff0fce43e4fe0e2cd1792f510"
     },
     {
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "7fc45c0dfbb3a408fa86d6a955b0633536feabcb",
+      "sha": "371579d006f46ab3c4c095d0e35f4a1ccdbfe7f0",
       "size": 49439,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/7fc45c0dfbb3a408fa86d6a955b0633536feabcb"
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/371579d006f46ab3c4c095d0e35f4a1ccdbfe7f0"
     },
     {
       "path": "favoritos.json",
