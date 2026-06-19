@@ -14,17 +14,28 @@ using namespace std;
 
 int main() {
     int anoatual;
-    double salario = 1000, aumento = 1.5;
+    double salario, aumento = 1.5;
+
+    while(true){
+    	cout << "Salario Inicial: ";
+    	cin >> salario;
+	
+		if(salario > 0){
+			break;
+		}
+
+		cout << "Valor invalido!\n";
+    }
 
     while(true){
     	cout << "Ano: ";
     	cin >> anoatual;
 
-        if(anoatual > 1995){
-            break;
-        }
+		if(anoatual > 1995){
+			break;
+		}
 
-        cout << "Ano invalido!\n";
+		cout << "Ano invalido!\n";
     }
 
     int anoi = anoatual - 1995; 
@@ -32,7 +43,7 @@ int main() {
     salario *= 1 + aumento / 100;
 
     for(int i = 1; i < anoi; i++){
-	    aumento *= 2;
+		aumento *= 2;
     	salario *= 1 + aumento / 100;
     }
 
