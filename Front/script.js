@@ -942,10 +942,9 @@ async function iniciar(){
   carregarStats();
   initTerminal();
 
-  // 🛠️ ADICIONE ESTE BLOCO AQUI EMBAIXO:
   document.getElementById("homeBtn").addEventListener("click", () => {
     historico = [];        // Limpa o histórico de pastas para o botão sumir
-    carregarConteudo("");  // Voltar para a raiz da estrutura de pastas
+    carregarConteudo("Exercicios");  // Voltar para a raiz da estrutura de pastas
     
     // Faz a página subir para o topo de forma suave
     window.scrollTo({
