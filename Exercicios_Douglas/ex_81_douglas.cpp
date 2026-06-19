@@ -11,16 +11,16 @@ using namespace std;
 
 int main() {
     std::string cidades[5] = {"Curitiba", "São_Paulo", "Londrina", "Rio_De_Janeiro", "Cuiaba"};
-    int veiculos[5] = {0}, acidentes[5] = {0}, mediaveiculos{}, mediaacidentes{}, numacidentes{},
+    int veiculos[5] = {0}, acidentes[5] = {0}, mediaveiculos{}, mediaacidentes{}, maior, menor, numacidentes{};
 
     //Escreve nos vetores
     for(int i = 0; i < 5; i++){
 	    //Escreve veiculos[i]
         do{
-            cout << "==" << cidades[i] << "=="
-            << "\nQual a quantidade de veiculos da cidade? ";
+            cout << "======" << cidades[i] << "======"
+                << "\nQual a quantidade de veiculos da cidade? ";
             cin >> veiculos[i];
-        }While(veiculos < 0);
+        }while(veiculos[i] < 0);
 
         mediaveiculos += veiculos[i];
         
@@ -28,17 +28,20 @@ int main() {
         do{
             cout << "\nQual a quantidade de acidentes da cidade? ";
             cin >> acidentes[i];
-        }While(acidentes< 0);
+        }while(acidentes[i] < 0);
         
         if(i == 0){
-            int maior = menor = acidente[i];
+            maior = menor = acidentes[i];
         }
         
         //Se menor que 2mil add
-        if(acidente[i] < 2000){
+        if(veiculos[i] < 2000){
             mediaacidentes += acidentes[i];
             numacidentes++;
         }
+
+        //transforma o total em indice
+        acidentes[i] /= veiculos[i];
 
         //valida maior e menor
         if(acidentes[i] > acidentes[maior]){
@@ -50,6 +53,10 @@ int main() {
         }
     }
 
-    cout << "A cidade "
+    cout << "Maior indice de acidentes: " << cidades[maior]
+        << "\nMenor indice de acidentes: " << cidades[menor]
+        << "\nMedia de veiculos das cidades: " << mediaacidentes / 5
+        << "\nMedia de acidentes em cidades com menos de 2k de veiculos: " << mediaacidentes / numacidentes;
+        
     return 0;
 }
