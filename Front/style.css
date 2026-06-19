@@ -89,6 +89,21 @@ body {
   box-shadow: 0 0 25px rgba(59, 130, 246, 0.7);
 }
 
+/* CARDS MOBILE — 2 por linha */
+@media (max-width: 600px) {
+
+  .nav {
+    gap: 12px;
+    padding: 20px 12px;
+  }
+
+  .card,
+  .card-add {
+    width: calc(50% - 6px);
+    min-height: 140px;
+  }
+}
+
 /* ÍCONE */
 
 .card-icon {

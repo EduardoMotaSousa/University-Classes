@@ -40,8 +40,16 @@ int main() {
             numacidentes++;
         }
 
-        cout << endl;
+        //valida maior e menor
+        if(acidentes[i] > acidentes[maior]){
+            maior = i;
+        }
+
+        if(acidentes[i] < acidentes[menor]){
+            menor = i;
+        }
     }
 
+    cout << "A cidade "
     return 0;
 }
