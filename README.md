@@ -33,6 +33,16 @@ A interface detecta automaticamente os arquivos do repositório e os exibe sem n
 
 ---
 
+---
+
+## 🤖 Uso de Inteligência Artificial
+
+A parte da interface web foi desenvolvida com auxílio de IA, com foco em aprender ferramentas como Git, GitHub e integração web.
+
+O processo sempre foi com o objetivo de aprendizado: entendia o código gerado, testava, depurava e solicitava ajustes. A IA foi uma `ferramenta` de aprendizado, não um substituto para o entendimento.
+
+---
+
 ## ✨ Funcionalidades
 
 ### 📁 Navegação automática por repositório
@@ -153,16 +163,6 @@ Essa arquitetura elimina o rate limit da API pública (60 req/hora) e garante qu
 | **highlight.js** | Destaque de sintaxe C++ no visualizador |
 | **marked.js** | Renderização do README em Markdown |
 | **DOMPurify** | Sanitização de HTML para segurança |
-
----
-
-## 🤖 Uso de Inteligência Artificial
-
-Parte significativa da interface web foi desenvolvida com auxílio de IA.
-
-O processo foi sempre colaborativo: eu definia o que queria, entendia o código gerado, testava, depurava e solicitava ajustes. A IA foi uma ferramenta de aprendizado, não um substituto para o entendimento.
-
----
 
 ## 📚 Conteúdo do repositório
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 using namespace std;
 
@@ -10,28 +11,29 @@ using namespace std;
 //Qual a média de acidentes de trânsito nas cidades com menos de 2.000 veículos de passeio.
 
 int main() {
-    std::string cidades[5] = {"Curitiba", "São_Paulo", "Londrina", "Rio_De_Janeiro", "Cuiaba"};
-    int veiculos[5] = {0}, acidentes[5] = {0}, mediaveiculos{}, mediaacidentes{}, maior, menor, numacidentes{};
+    std::string cidades[5] = {"Curitiba", "São Paulo", "Londrina", "Rio De Janeiro", "Cuiaba"};
+    int veiculos[5] = {0}, mediaveiculos{}, mediaacidentes{}, maior, menor, numacidentes{};
+    double acidentes[5] = {0.0}; //Double para futuramente calcular o indice 
 
     //Escreve nos vetores
     for(int i = 0; i < 5; i++){
 	    //Escreve veiculos[i]
         do{
-            cout << "======" << cidades[i] << "======"
+            cout << "\n==========" << cidades[i] << "=========="
                 << "\nQual a quantidade de veiculos da cidade? ";
             cin >> veiculos[i];
-        }while(veiculos[i] < 0);
+        }while(veiculos[i] <= 0);
 
         mediaveiculos += veiculos[i];
         
         //Escreve acidentes[i]
         do{
-            cout << "\nQual a quantidade de acidentes da cidade? ";
+            cout << "Qual a quantidade de acidentes da cidade? ";
             cin >> acidentes[i];
         }while(acidentes[i] < 0);
         
         if(i == 0){
-            maior = menor = acidentes[i];
+            maior = menor = i;
         }
         
         //Se menor que 2mil add
@@ -44,18 +46,21 @@ int main() {
         acidentes[i] /= veiculos[i];
 
         //valida maior e menor
-        if(acidentes[i] > acidentes[maior]){
+        if(acidentes[i] >= acidentes[maior]){
             maior = i;
         }
 
-        if(acidentes[i] < acidentes[menor]){
+        if(acidentes[i] <= acidentes[menor]){
             menor = i;
         }
     }
 
-    cout << "Maior indice de acidentes: " << cidades[maior]
-        << "\nMenor indice de acidentes: " << cidades[menor]
-        << "\nMedia de veiculos das cidades: " << mediaacidentes / 5
+    cout << fixed << setprecision(4);
+
+    cout << "\n========Estatística========"
+        << "\nMaior indice de acidentes: " << acidentes[maior] << " em: " << cidades[maior]
+        << "\nMenor indice de acidentes: " << acidentes[menor] << " em: " << cidades[menor]
+        << "\nMedia de veiculos das cidades: " << mediaveiculos / 5
         << "\nMedia de acidentes em cidades com menos de 2k de veiculos: " << mediaacidentes / numacidentes;
         
     return 0;
