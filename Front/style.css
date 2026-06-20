@@ -59,6 +59,7 @@ body {
   justify-content: center;
   gap: 20px;
   padding: 30px;
+  min-height: 300px;
 }
 
 /* CARDS */
@@ -290,7 +291,8 @@ body {
 #readme-content img {
   max-width: 100%;
   border-radius: 10px;
-  min-height: 20px;
+  height: 20px;
+  width: auto;
 }
 
 /* BOTÕES */
@@ -482,6 +484,7 @@ body {
   gap: 16px;
   width: 90%;
   max-width: 900px;
+  min-height: 320px;
 }
 
 .stat-card {
@@ -567,7 +570,7 @@ body {
   height: 56px;
   border-radius: 50%;
   border: none;
-  background: #e95420;
+  background: #d1480f;
   color: white;
   font-size: 18px;
   font-weight: bold;
