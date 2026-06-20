@@ -907,7 +907,7 @@ function carregarStats() {
   // pasta mais ativa (mais arquivos)
   const contagem = {};
   for (const item of arquivos) {
-    const pasta = item.path.split("/")[0];
+    const pasta = item.path.split("/")[1];
     contagem[pasta] = (contagem[pasta] || 0) + 1;
   }
   const pastaMaisAtiva = Object.entries(contagem)
