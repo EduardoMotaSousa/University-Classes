@@ -1,6 +1,6 @@
 {
-  "sha": "3e69e1fe9fd6bc5d9f1bf08600f4be841c54ad53",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/3e69e1fe9fd6bc5d9f1bf08600f4be841c54ad53",
+  "sha": "035bd11429f08f40593b58b8cc49fa1813694973",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/035bd11429f08f40593b58b8cc49fa1813694973",
   "tree": [
     {
       "path": ".github",
@@ -1210,8 +1210,8 @@
       "path": "Front",
       "mode": "040000",
       "type": "tree",
-      "sha": "d2607417c146354282399a23d6f3fdf86bcb4b13",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/d2607417c146354282399a23d6f3fdf86bcb4b13"
+      "sha": "dded716300b8a5dd82f46258a433e99df3e45e70",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/dded716300b8a5dd82f46258a433e99df3e45e70"
     },
     {
       "path": "Front/icon.webp",
@@ -1233,17 +1233,17 @@
       "path": "Front/script.js",
       "mode": "100644",
       "type": "blob",
-      "sha": "2cc7d1ee61f4765f2da752b2098af10a9fc2bf2a",
-      "size": 30946,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/2cc7d1ee61f4765f2da752b2098af10a9fc2bf2a"
+      "sha": "80cb247b4f4995b8a350eb1c9eaf2098c4e9350c",
+      "size": 31063,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/80cb247b4f4995b8a350eb1c9eaf2098c4e9350c"
     },
     {
       "path": "Front/style.css",
       "mode": "100644",
       "type": "blob",
-      "sha": "e7751435cad54f594c80650b136be9794847ed21",
-      "size": 17852,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/e7751435cad54f594c80650b136be9794847ed21"
+      "sha": "0268afb7baf20a19e26a12aad6c24ef36e8bfec4",
+      "size": 17911,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/0268afb7baf20a19e26a12aad6c24ef36e8bfec4"
     },
     {
       "path": "README.md",
@@ -1257,17 +1257,17 @@
       "path": "commits.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "756eaeef7d82a686a8b704220c4f620fbdaead75",
-      "size": 13858,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/756eaeef7d82a686a8b704220c4f620fbdaead75"
+      "sha": "9f6a0e84c70c0f88e5bc355a397a1b0dcb2dc454",
+      "size": 14038,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/9f6a0e84c70c0f88e5bc355a397a1b0dcb2dc454"
     },
     {
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "dd38be8ef5fb87907a1beefddbe42f29bc2b35d8",
-      "size": 51950,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/dd38be8ef5fb87907a1beefddbe42f29bc2b35d8"
+      "sha": "a64f3372af8127fd0811053cf8a6497af80a5ab4",
+      "size": 51949,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/a64f3372af8127fd0811053cf8a6497af80a5ab4"
     },
     {
       "path": "favoritos.json",
