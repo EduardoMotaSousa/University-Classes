@@ -875,6 +875,10 @@ async function carregarHeatmap() {
 
             tooltip.style.top = (e.pageY - 28) + "px";
           });
+
+          cell.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
         }
 
         col.appendChild(cell);

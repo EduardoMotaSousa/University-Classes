@@ -56,10 +56,11 @@ body {
 .nav {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start; 
   justify-content: center;
   gap: 20px;
   padding: 30px;
-  min-height: 300px;
+  min-height: 200px;
 }
 
 /* CARDS */
@@ -484,7 +485,6 @@ body {
   gap: 16px;
   width: 90%;
   max-width: 900px;
-  min-height: 320px;
 }
 
 .stat-card {
@@ -497,6 +497,8 @@ body {
   align-items: center;
   gap: 8px;
   transition: 0.3s;
+  min-height: 170px;
+  justify-content: center;
 }
 
 .stat-card:hover {
