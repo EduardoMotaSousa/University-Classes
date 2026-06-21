@@ -1,0 +1,25 @@
+{
+  "name": "University Classes",
+  "short_name": "Uni Classes",
+  "description": "Projeto pessoal de estudos em C++ do curso de ADS, com interface web que lê o próprio repositório, heatmap de commits e terminal Linux simulado.",
+  "start_url": "/University-Classes/",
+  "scope": "/University-Classes/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "Front/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "Front/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

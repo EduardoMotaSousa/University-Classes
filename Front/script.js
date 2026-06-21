@@ -852,31 +852,55 @@ async function carregarHeatmap() {
         } else {
           cell.dataset.level = nivel(dia.qtd);
 
-          cell.addEventListener("mouseenter", e => {
+          const textoTooltip = () => {
             const dataFmt = dia.data.toLocaleDateString("pt-BR", {
               weekday: "short", day: "2-digit", month: "short", timeZone: "UTC"
             });
-            tooltip.textContent = dia.qtd === 0
+            return dia.qtd === 0
               ? `${dataFmt} — nenhum commit`
               : `${dataFmt} — ${dia.qtd} commit${dia.qtd > 1 ? "s" : ""}`;
-            tooltip.style.display = "block";
-          });
+          };
 
-          cell.addEventListener("mousemove", e => {
+          // tooltip é position:fixed (relativo à viewport), então usamos
+          // clientX/clientY — pageX/pageY incluem o scroll e desalinham
+          // o tooltip assim que a página é rolada.
+          const posicionarTooltip = (x, y) => {
             const larguraTooltip = tooltip.offsetWidth;
             const larguraTela = window.innerWidth;
 
-            // se não couber à direita, mostra à esquerda do cursor
-            if (e.pageX + 12 + larguraTooltip > larguraTela) {
-              tooltip.style.left = (e.pageX - larguraTooltip - 12) + "px";
+            // se não couber à direita, mostra à esquerda do cursor/dedo
+            if (x + 12 + larguraTooltip > larguraTela) {
+              tooltip.style.left = (x - larguraTooltip - 12) + "px";
             } else {
-              tooltip.style.left = (e.pageX + 12) + "px";
+              tooltip.style.left = (x + 12) + "px";
             }
 
-            tooltip.style.top = (e.pageY - 28) + "px";
+            tooltip.style.top = (y - 28) + "px";
+          };
+
+          cell.addEventListener("mouseenter", e => {
+            tooltip.textContent = textoTooltip();
+            tooltip.style.display = "block";
+            posicionarTooltip(e.clientX, e.clientY);
+          });
+
+          cell.addEventListener("mousemove", e => {
+            posicionarTooltip(e.clientX, e.clientY);
           });
 
           cell.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+          });
+
+          // suporte a toque (mobile) — mousemove não existe em touch
+          cell.addEventListener("touchstart", e => {
+            const toque = e.touches[0];
+            tooltip.textContent = textoTooltip();
+            tooltip.style.display = "block";
+            posicionarTooltip(toque.clientX, toque.clientY);
+          }, { passive: true });
+
+          cell.addEventListener("touchend", () => {
             tooltip.style.display = "none";
           });
         }
