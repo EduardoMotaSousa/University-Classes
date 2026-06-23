@@ -172,30 +172,24 @@ University-Classes/
 
 # ⚙️ Fluxo automático
 
-
+```text
 Push no GitHub
-
-↓
-
+       |
+       v
 GitHub Actions executa
-
-↓
-
-Consulta API / histórico Git
-
-↓
-
+       |
+       v
+Consulta API do GitHub e histórico Git
+       |
+       v
 Gera dados.json e commits.json
-
-↓
-
+       |
+       v
 Atualiza o repositório
-
-↓
-
+       |
+       v
 GitHub Pages publica a aplicação
-
-
+```
 ---
 
 # 🔒 Segurança
