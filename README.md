@@ -174,15 +174,25 @@ University-Classes/
 
 
 Push no GitHub
+
 ↓
+
 GitHub Actions executa
+
 ↓
+
 Consulta API / histórico Git
+
 ↓
+
 Gera dados.json e commits.json
+
 ↓
+
 Atualiza o repositório
+
 ↓
+
 GitHub Pages publica a aplicação
 
 
