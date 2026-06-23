@@ -15,203 +15,214 @@
 
 </div>
 
----
+------------------------------------------------------------------------
 
-## 🎯 Sobre o Projeto
+# 🎯 Sobre o projeto
 
-Este repositório nasceu como um simples organizador de exercícios de C++ do curso de **Análise e Desenvolvimento de Sistemas (ADS)**. Com o tempo, evoluiu para algo muito além do esperado. Uma **plataforma web** que lê o próprio repositório, exibe os exercícios com destaque de sintaxe, rastreia minha evolução por commits e oferece até um terminal Linux simulado.
+O **University C++ Classes** começou como um repositório para armazenar
+exercícios da graduação em **Análise e Desenvolvimento de Sistemas
+(ADS)**.
 
-O projeto une lógica de programação estudada em sala com desenvolvimento web, automação via GitHub Actions e consumo de APIs.
+Com a evolução do projeto, ele se tornou uma pequena plataforma de
+aprendizado, o próprio repositório é interpretado por uma aplicação web,
+exibindo exercícios, estatísticas, histórico de desenvolvimento e
+ferramentas interativas.
 
----
+O objetivo principal é unir:
 
-## 🌐 Interface Web
+-   Prática de programação em C++;
+-   Organização de estudos;
+-   Desenvolvimento front-end;
+-   Automação;
+-   Integração com APIs;
+-   Boas práticas de versionamento.
 
-Acesse em: **[eduardomotasousa.github.io/University-Classes](https://eduardomotasousa.github.io/University-Classes/)**
+------------------------------------------------------------------------
 
-A interface detecta automaticamente os arquivos do repositório e os exibe sem necessidade de atualizar o HTML manualmente. Basta criar um novo exercício, fazer push, e ele aparece no site.
+# ✨ Funcionalidades
 
----
+## 📁 Explorador automático de exercícios
 
----
+A interface não depende de cadastro manual.
 
-## 🤖 Uso de Inteligência Artificial
+O fluxo é:
 
-A parte da interface web foi desenvolvida com auxílio de IA, com foco em aprender ferramentas como Git, GitHub e integração web.
+1.  Novo arquivo `.cpp` é adicionado;
+2.  GitHub Actions identifica a alteração;
+3.  A estrutura do repositório é transformada em `dados.json`;
+4.  O site atualiza automaticamente.
 
-O processo sempre foi com o objetivo de aprendizado: entendia o código gerado, testava, depurava e solicitava ajustes. A IA foi uma `ferramenta` de aprendizado, não um substituto para o entendimento.
+Novos exercícios aparecem sem modificar o HTML.
 
----
+------------------------------------------------------------------------
 
-## ✨ Funcionalidades
+## 💻 Visualizador de código
 
-### 📁 Navegação automática por repositório
-Os arquivos e pastas são carregados dinamicamente a partir de um `dados.json` gerado pelo **GitHub Actions** a cada push. Zero configuração manual para adicionar novos exercícios.
+Arquivos C/C++ possuem uma visualização integrada com:
 
-### 💻 Visualizador de código
-Cada arquivo `.cpp` ou `.c` pode ser aberto num popup com:
-- Destaque de sintaxe via **highlight.js**
-- Contagem de linhas do arquivo
-- Navegação entre arquivos com as setas ← → do teclado ou botões na tela
-- Botão de copiar e download
-- Fechar com **Escape**
+-   Syntax highlight;
+-   Contador de linhas;
+-   Navegação entre arquivos;
+-   Copiar código;
+-   Download;
+-   Atalhos de teclado;
+-   Visualização organizada em modal.
 
-### 🏅 Sistema de destaque por relevância
-Os arquivos recebem categorias visuais automáticas e manuais:
+------------------------------------------------------------------------
 
-| Ícone | Categoria | Critério |
-|-------|-----------|----------|
-| ⭐ | **Dourado** | Top 10% maiores arquivos da pasta (automático) |
-| 💎 | **Favorito** | Curadoria manual via `favoritos.json` |
-| 🔮 | **Especial** | Arquivo que é favorito E dourado ao mesmo tempo |
+## ⭐ Sistema de destaque
 
-### 📊 Heatmap de commits
-Gráfico de calor dos últimos 90 dias de atividade no repositório, com tooltip interativo ao passar o mouse em cada dia. Os dados são gerados pelo GitHub Actions com autenticação, sem limitações da API pública.
+Os exercícios podem receber classificações:
 
-### 📈 Estatísticas do repositório
-Painel com métricas calculadas automaticamente:
-- Total de arquivos de código
-- Total de linhas estimadas
-- Pasta mais ativa
-- Arquivo mais longo
+  Ícone   Tipo                  Funcionamento
+  ------- --------------------- -------------------------------------------
+  ⭐      Destaque automático   Arquivos maiores ou mais relevantes
+  💎      Favorito              Definidos manualmente em `favoritos.json`
+  🔮      Especial              Combinação de favorito + destaque
 
-### 🐧 Terminal Linux simulado
-Terminal interativo com estética Ubuntu acessível por um botão flutuante. Suporta comandos reais integrados ao repositório:
+------------------------------------------------------------------------
 
-| Comando | Descrição |
-|---------|-----------|
-| `ls` | Lista arquivos e pastas |
-| `cd <pasta>` | Navega entre pastas |
-| `cat <arquivo>` | Exibe conteúdo de um arquivo |
-| `grep <texto> [arquivo]` | Busca texto nos arquivos `.cpp` |
-| `pwd` | Exibe caminho atual |
-| `whoami` | Exibe usuário |
-| `uname -a` | Informações do sistema simulado |
-| `neofetch` | Estatísticas do projeto em arte ASCII |
-| `echo`, `date`, `history`, `clear` | Comandos utilitários |
+## 📊 Histórico de evolução
 
----
+O projeto acompanha a própria evolução através de:
 
-## ⚙️ Arquitetura técnica
+-   Heatmap de commits;
+-   Atividade ao longo do tempo;
+-   Histórico gerado automaticamente.
 
-```
-University-Classes/
-├── .github/
-│   └── workflows/
-│       └── github-api.yml          # Automação via GitHub Actions:
-│                                   # gera dados do repositório e histórico de commits
-│                                   # automaticamente a cada push
-│
-├── Front/
-│   ├── script.js                   # Lógica da aplicação web:
-│   │                               # navegação, filtros, favoritos,
-│   │                               # carregamento dos dados e interação da interface
-│   │
-│   ├── style.css                   # Estilização completa da interface
-│   │
-│   └── icon.png                    # Ícone da aplicação
-│
-├── dados.json                      # Estrutura do repositório gerada automaticamente
-│                                   # pelo GitHub Actions para alimentar a interface
-│
-├── commits.json                    # Histórico de commits utilizado no heatmap
-│                                   # de evolução do projeto
-│
-├── favoritos.json                  # Curadoria manual:
-│                                   # exercícios selecionados como destaque
-│
-├── index.html                      # Página principal da aplicação
-│                                   # responsável pela apresentação do projeto
-│
-├── Exercicios/                     # Organização principal dos estudos
-│
-│   ├── 01-Logica/                  # Fundamentos:
-│   │                               # entrada, saída, operadores e decisões
-│
-│   ├── 02-Code/                    # Exercícios introdutórios
-│   │                               # primeiros contatos com programação
-│
-│   ├── 03-Loop/                    # Estruturas de repetição:
-│   │                               # while, for, do while
-│
-│   ├── 04-Vetor/                   # Manipulação de vetores e coleções
-│
-│   ├── 05-Matrizes/                # Estruturas bidimensionais e lógica com matrizes
-│
-│   ├── SAVA_Loop/                  # Exercícios complementares focados em repetição
-│
-│   ├── SAVA_Vetores_Matrizes/      # Exercícios complementares:
-│   │                               # vetores, matrizes e manipulação de dados
-│
-│   └── Exercicios_Douglas/         # Lista de exercícios proposta pelo professor
-│
-└── README.md                       # Documentação do projeto:
-                                    # objetivo, evolução, tecnologias e funcionamento
-```
+Os dados vêm de `commits.json`.
 
-### Fluxo de atualização automática
+------------------------------------------------------------------------
 
-``` 
-Push no GitHub
-     ↓
-GitHub Actions executa com histórico completo (fetch-depth: 0)
-     ↓
-Gera dados.json  ←  Árvore completa via API autenticada
-Gera commits.json ←  git log --all (últimos 365 dias, todas as branches, sem limite)
-     ↓
-Commit automático com [skip ci] para evitar loops
-     ↓
-Site lê os arquivos locais — sem chamadas diretas à API
-```
+## 📈 Estatísticas do projeto
 
-Essa arquitetura elimina o rate limit da API pública (60 req/hora) e garante que o site funcione mesmo offline, usando os dados em cache.
+Painel com informações como:
 
----
+-   Quantidade de arquivos;
+-   Linhas de código;
+-   Arquivos de maior tamanho;
+-   Organização das pastas;
+-   Evolução do repositório.
 
-## 🔒 Segurança
+------------------------------------------------------------------------
 
-| Medida | Implementação |
-|--------|---------------|
-| Token de API protegido | Fica exclusivamente nos **GitHub Secrets**, nunca exposto no front-end |
-| Proteção contra XSS | Conteúdo do README sanitizado com **DOMPurify** antes de ser inserido no DOM |
-| Terminal sem execução real | Todos os comandos são processados em JavaScript local — nada é executado no servidor |
-| Inputs do terminal sanitizados | Função `escapeHtml()` aplicada em todos os inputs antes de renderizar |
+## 🐧 Terminal Linux simulado
 
----
+Uma interface de terminal foi criada em JavaScript para interagir com os
+dados do projeto.
 
-## 🛠️ Tecnologias utilizadas
+Comandos disponíveis:
 
-| Tecnologia | Uso |
-|------------|-----|
-| **C++** | Linguagem principal dos exercícios |
-| **HTML5 / CSS3** | Estrutura e estilo da interface |
-| **JavaScript (ES2022+)** | Toda a lógica da interface (fetch, DOM, async/await) |
-| **GitHub API** | Fonte dos dados do repositório e commits |
-| **GitHub Actions** | Automação da geração dos JSONs a cada push |
-| **GitHub Pages** | Hospedagem gratuita do site |
-| **highlight.js** | Destaque de sintaxe C++ no visualizador |
-| **marked.js** | Renderização do README em Markdown |
-| **DOMPurify** | Sanitização de HTML para segurança |
+  Comando      Função
+  ------------ ------------------------------
+  `ls`         Lista arquivos
+  `cd`         Navega entre pastas
+  `cat`        Exibe arquivos
+  `grep`       Pesquisa conteúdo
+  `pwd`        Mostra localização atual
+  `whoami`     Usuário simulado
+  `neofetch`   Exibe informações do projeto
+  `history`    Histórico de comandos
+  `clear`      Limpa terminal
 
-## 📚 Conteúdo do repositório
+O terminal é apenas uma simulação local e não executa comandos reais no
+sistema.
 
-Os exercícios estão organizados por módulo, acompanhando a progressão do curso:
+------------------------------------------------------------------------
 
-| Pasta | Conteúdo |
-|-------|----------|
-| `01-Logica` | Lógica de programação básica |
-| `02-Code` | Primeiros programas em C++ |
-| `03-Loop` | Estruturas de repetição (`for`, `while`, `do while`) |
-| `04-Vetor` | Arrays e vetores |
-| `05-Matrizes` | Matrizes bidimensionais |
-| `SAVA_Loop` | Exercícios complementares de repetição |
-| `SAVA_Vetores_&_Matrizes` | Exercícios complementares de estruturas |
-| `Exercicios_Douglas` | Lista de exercícios do professor Douglas |
+# 🏗️ Arquitetura
 
----
+    University-Classes/
+
+    ├── .github/
+    │   └── workflows/
+    │       └── github-api.yml
+    │           └── Geração automática dos dados
+
+    ├── Front/
+    │   ├── script.js
+    │   │   └── Lógica da aplicação
+    │   ├── style.css
+    │   │   └── Interface visual
+    │   └── icons
+    │
+    ├── Exercicios/
+    │   └── Exercícios C++
+    │
+    ├── dados.json
+    │   └── Estrutura automática do repositório
+    │
+    ├── commits.json
+    │   └── Histórico de commits
+    │
+    ├── favoritos.json
+    │   └── Curadoria manual
+    │
+    └── index.html
+        └── Aplicação principal
+
+------------------------------------------------------------------------
+
+# ⚙️ Fluxo automático
+
+    Push no GitHub
+            ↓
+    GitHub Actions executa
+            ↓
+    Consulta API / histórico Git
+            ↓
+    Gera dados.json e commits.json
+            ↓
+    Atualiza o repositório
+            ↓
+    GitHub Pages publica a aplicação
+
+------------------------------------------------------------------------
+
+# 🔒 Segurança
+
+Medidas aplicadas:
+
+-   Tokens protegidos por GitHub Secrets;
+-   Sanitização de conteúdo HTML;
+-   Proteção contra injeção no terminal;
+-   Processamento local dos comandos.
+
+------------------------------------------------------------------------
+
+# 🛠️ Tecnologias
+
+  Tecnologia       Uso
+  ---------------- ------------------------
+  C++              Exercícios e estudos
+  HTML5            Estrutura da aplicação
+  CSS3             Interface
+  JavaScript       Sistema interativo
+  GitHub API       Dados do projeto
+  GitHub Actions   Automação
+  GitHub Pages     Hospedagem
+  highlight.js     Código colorido
+  marked.js        Markdown
+  DOMPurify        Segurança
+
+------------------------------------------------------------------------
+
+# 📚 Organização dos estudos
+
+Os exercícios acompanham a evolução do aprendizado:
+
+-   `01-Logica` --- Fundamentos;
+-   `02-Code` --- Primeiros programas;
+-   `03-Loop` --- Estruturas de repetição;
+-   `04-Vetor` --- Arrays;
+-   `05-Matrizes` --- Estruturas bidimensionais;
+-   `SAVA_Loop` --- Exercícios complementares;
+-   `SAVA_Vetores_Matrizes` --- Manipulação de dados;
+-   `Exercicios_Douglas` --- Listas acadêmicas.
+
+------------------------------------------------------------------------
 
 <div align="center">
-
-Desenvolvido por **Eduardo Mota** · ADS — Estácio · 2026
-
+Desenvolvido por Eduardo Mota
+ADS --- Estácio · 2026
 </div>
