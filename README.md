@@ -47,10 +47,10 @@ A interface não depende de cadastro manual.
 
 O fluxo é:
 
- 1.  Novo arquivo `.cpp` é adicionado;
- 2.  GitHub Actions identifica a alteração;
- 3.  A estrutura do repositório é transformada em `dados.json`;
- 4.  O site atualiza automaticamente.
+  1.  Novo arquivo `.cpp` é adicionado;
+  2.  GitHub Actions identifica a alteração;
+  3.  A estrutura do repositório é transformada em `dados.json`;
+  4.  O site atualiza automaticamente.
 
 Novos exercícios aparecem sem modificar o HTML.
 
@@ -77,7 +77,9 @@ Os exercícios podem receber classificações:
   Ícone   Tipo                  Funcionamento
   ------- --------------------- -------------------------------------------
   ⭐      Destaque automático   Arquivos maiores ou mais relevantes
+  
   💎      Favorito              Definidos manualmente em `favoritos.json`
+  
   🔮      Especial              Combinação de favorito + destaque
 
 ------------------------------------------------------------------------
@@ -223,6 +225,7 @@ Os exercícios acompanham a evolução do aprendizado:
 ------------------------------------------------------------------------
 
 <div align="center">
+ 
 Desenvolvido por Eduardo Mota
 ADS --- Estácio · 2026
 </div>
