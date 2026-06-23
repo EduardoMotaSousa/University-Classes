@@ -47,10 +47,10 @@ A interface não depende de cadastro manual.
 
 O fluxo é:
 
-1.  Novo arquivo `.cpp` é adicionado;
-2.  GitHub Actions identifica a alteração;
-3.  A estrutura do repositório é transformada em `dados.json`;
-4.  O site atualiza automaticamente.
+ 1.  Novo arquivo `.cpp` é adicionado;
+ 2.  GitHub Actions identifica a alteração;
+ 3.  A estrutura do repositório é transformada em `dados.json`;
+ 4.  O site atualiza automaticamente.
 
 Novos exercícios aparecem sem modificar o HTML.
 
