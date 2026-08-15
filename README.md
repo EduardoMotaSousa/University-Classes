@@ -1,15 +1,14 @@
 <div align="center">
-
-# University C++ Classes
+    
+# University Classes
 
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-blue?style=flat)
-![Linguagem](https://img.shields.io/badge/C++-00599C?style=flat&logo=c%2B%2B&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat&logo=githubactions&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat\&logo=html5\&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat\&logo=css3\&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat\&logo=javascript\&logoColor=black)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat\&logo=githubactions\&logoColor=white)
 
-**Repositório de estudos em C++ com interface web interativa integrada ao GitHub.**
+**Repositório de estudos e exercícios de programação com interface web interativa integrada ao GitHub.**
 
 [🌐 Acessar site](https://eduardomotasousa.github.io/University-Classes/)
 
@@ -19,7 +18,7 @@
 
 # 🎯 Sobre o projeto
 
-O **University C++ Classes** começou como um repositório para armazenar exercícios da graduação em **Análise e Desenvolvimento de Sistemas (ADS)**.
+O **University Classes** começou como um repositório para armazenar exercícios da graduação em **Análise e Desenvolvimento de Sistemas (ADS)**.
 
 Com o tempo, o projeto evoluiu para uma pequena plataforma de aprendizado, onde o próprio repositório é interpretado por uma aplicação web.
 
@@ -27,12 +26,12 @@ Através dela é possível visualizar exercícios, códigos, estatísticas, hist
 
 O objetivo principal é unir:
 
-- Prática de programação em C++;
-- Organização de estudos;
-- Desenvolvimento front-end;
-- Automação;
-- Integração com APIs;
-- Boas práticas de versionamento.
+* Prática de programação;
+* Organização de estudos;
+* Desenvolvimento front-end;
+* Automação;
+* Integração com APIs;
+* Boas práticas de versionamento.
 
 ---
 
@@ -44,15 +43,15 @@ A interface funciona de forma dinâmica, sem necessidade de cadastrar manualment
 
 Fluxo:
 
-
-Novo arquivo .cpp
+```text
+Novo arquivo de exercício
 ↓
 GitHub Actions identifica alteração
 ↓
 Estrutura gera dados.json
 ↓
 Site atualiza automaticamente
-
+```
 
 Novos exercícios aparecem sem precisar modificar o HTML.
 
@@ -60,15 +59,15 @@ Novos exercícios aparecem sem precisar modificar o HTML.
 
 ## 💻 Visualizador de código
 
-Os arquivos C/C++ possuem visualização integrada com:
+Os arquivos de programação possuem visualização integrada com:
 
-- Syntax Highlight;
-- Contador de linhas;
-- Navegação entre arquivos;
-- Copiar código;
-- Download;
-- Atalhos de teclado;
-- Visualização organizada em modal.
+* Syntax Highlight;
+* Contador de linhas;
+* Navegação entre arquivos;
+* Copiar código;
+* Download;
+* Atalhos de teclado;
+* Visualização organizada em modal.
 
 ---
 
@@ -76,11 +75,11 @@ Os arquivos C/C++ possuem visualização integrada com:
 
 Os exercícios podem receber classificações:
 
-| Ícone | Tipo | Funcionamento |
-|---|---|---|
-| ⭐ | Destaque automático | Arquivos maiores ou mais relevantes |
-| 💎 | Favorito | Definidos manualmente em `favoritos.json` |
-| 🔮 | Especial | Combinação de favorito + destaque |
+| Ícone | Tipo                | Funcionamento                             |
+| ----- | ------------------- | ----------------------------------------- |
+| ⭐     | Destaque automático | Arquivos maiores ou mais relevantes       |
+| 💎    | Favorito            | Definidos manualmente em `favoritos.json` |
+| 🔮    | Especial            | Combinação de favorito + destaque         |
 
 ---
 
@@ -88,15 +87,15 @@ Os exercícios podem receber classificações:
 
 O projeto acompanha sua própria evolução através de:
 
-- Heatmap de commits;
-- Atividade ao longo do tempo;
-- Histórico gerado automaticamente.
+* Heatmap de commits;
+* Atividade ao longo do tempo;
+* Histórico gerado automaticamente.
 
 Os dados são armazenados em:
 
-
+```text
 commits.json
-
+```
 
 ---
 
@@ -104,11 +103,11 @@ commits.json
 
 Painel contendo informações como:
 
-- Quantidade de arquivos;
-- Linhas de código;
-- Arquivos de maior tamanho;
-- Organização das pastas;
-- Evolução do repositório.
+* Quantidade de arquivos;
+* Linhas de código;
+* Arquivos de maior tamanho;
+* Organização das pastas;
+* Evolução do repositório.
 
 ---
 
@@ -118,17 +117,17 @@ Uma interface de terminal foi criada em JavaScript para interagir com os dados d
 
 Comandos disponíveis:
 
-| Comando | Função |
-|---|---|
-| `ls` | Lista arquivos |
-| `cd` | Navega entre pastas |
-| `cat` | Exibe arquivos |
-| `grep` | Pesquisa conteúdo |
-| `pwd` | Mostra localização atual |
-| `whoami` | Usuário simulado |
+| Comando    | Função                       |
+| ---------- | ---------------------------- |
+| `ls`       | Lista arquivos               |
+| `cd`       | Navega entre pastas          |
+| `cat`      | Exibe arquivos               |
+| `grep`     | Pesquisa conteúdo            |
+| `pwd`      | Mostra localização atual     |
+| `whoami`   | Usuário simulado             |
 | `neofetch` | Exibe informações do projeto |
-| `history` | Histórico de comandos |
-| `clear` | Limpa terminal |
+| `history`  | Histórico de comandos        |
+| `clear`    | Limpa terminal               |
 
 > O terminal é apenas uma simulação local e não executa comandos reais no sistema.
 
@@ -152,7 +151,7 @@ University-Classes/
 │   └── icons/
 
 ├── Exercicios/
-│   └── Exercícios C++
+│   └── Exercícios de programação
 
 ├── dados.json
 │   └── Estrutura automática do repositório
@@ -166,7 +165,6 @@ University-Classes/
 └── index.html
     └── Aplicação principal
 ```
-
 
 ---
 
@@ -190,48 +188,50 @@ Atualiza o repositório
        v
 GitHub Pages publica a aplicação
 ```
+
 ---
 
 # 🔒 Segurança
 
 Medidas aplicadas:
 
-- Tokens protegidos por GitHub Secrets;
-- Sanitização de conteúdo HTML;
-- Proteção contra injeção no terminal;
-- Processamento local dos comandos.
+* Tokens protegidos por GitHub Secrets;
+* Sanitização de conteúdo HTML;
+* Proteção contra injeção no terminal;
+* Processamento local dos comandos.
 
 ---
 
 # 🛠️ Tecnologias
 
-| Tecnologia | Uso |
-|---|---|
-| C++ | Exercícios e estudos |
-| HTML5 | Estrutura da aplicação |
-| CSS3 | Interface |
-| JavaScript | Sistema interativo |
-| GitHub API | Dados do projeto |
-| GitHub Actions | Automação |
-| GitHub Pages | Hospedagem |
-| highlight.js | Código colorido |
-| marked.js | Markdown |
-| DOMPurify | Segurança |
+| Tecnologia     | Uso                    |
+| -------------- | ---------------------- |
+| HTML5          | Estrutura da aplicação |
+| CSS3           | Interface              |
+| JavaScript     | Sistema interativo     |
+| GitHub API     | Dados do projeto       |
+| GitHub Actions | Automação              |
+| GitHub Pages   | Hospedagem             |
+| highlight.js   | Código colorido        |
+| marked.js      | Markdown               |
+| DOMPurify      | Segurança              |
 
 ---
 
 # 📚 Organização dos estudos
 
-Os exercícios acompanham a evolução do aprendizado:
+Os exercícios acompanham a evolução do aprendizado e podem abranger diferentes conceitos e linguagens de programação.
 
-- `01-Logica` — Fundamentos;
-- `02-Code` — Primeiros programas;
-- `03-Loop` — Estruturas de repetição;
-- `04-Vetor` — Arrays;
-- `05-Matrizes` — Estruturas bidimensionais;
-- `SAVA_Loop` — Exercícios complementares;
-- `SAVA_Vetores_Matrizes` — Manipulação de dados;
-- `Exercicios_Douglas` — Listas acadêmicas.
+Exemplos de organização:
+
+* `01-Logica` — Fundamentos;
+* `02-Code` — Primeiros programas;
+* `03-Loop` — Estruturas de repetição;
+* `04-Vetor` — Arrays;
+* `05-Matrizes` — Estruturas bidimensionais;
+* `SAVA_Loop` — Exercícios complementares;
+* `SAVA_Vetores_Matrizes` — Manipulação de dados;
+* `Exercicios_Douglas` — Listas acadêmicas.
 
 ---
 
