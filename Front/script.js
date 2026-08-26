@@ -17,7 +17,7 @@ let arvoreRepositorio = [];
 
 /* EXTENSÕES */
 
-const extensoesValidas = [".cpp", ".c", ".h"];
+const extensoesValidas = [".cpp", ".c", ".h", ".py"];
 
 /* IGNORAR */
 
