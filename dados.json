@@ -1,6 +1,6 @@
 {
-  "sha": "b085b5746d11790c9aaa24bd3af94398944203d6",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/b085b5746d11790c9aaa24bd3af94398944203d6",
+  "sha": "ce8387b81c83062b01338c214e6d77ebe082bbcc",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/ce8387b81c83062b01338c214e6d77ebe082bbcc",
   "tree": [
     {
       "path": ".github",
@@ -75,8 +75,8 @@
       "path": "Exercicios",
       "mode": "040000",
       "type": "tree",
-      "sha": "c0f592679ecdc23121c8e846cdb47b2298ccd7bb",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/c0f592679ecdc23121c8e846cdb47b2298ccd7bb"
+      "sha": "bce12401d82cf511a175558e6822be11c81d036c",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/bce12401d82cf511a175558e6822be11c81d036c"
     },
     {
       "path": "Exercicios/01-Logica",
@@ -1076,16 +1076,16 @@
       "path": "Exercicios/Exs Python | Milton",
       "mode": "040000",
       "type": "tree",
-      "sha": "dc7d2bbbe47987b07360780aa2695c286e9e2c57",
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/dc7d2bbbe47987b07360780aa2695c286e9e2c57"
+      "sha": "f6b08018ae98d60818449c26316d460691942b84",
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/f6b08018ae98d60818449c26316d460691942b84"
     },
     {
       "path": "Exercicios/Exs Python | Milton/PedraPapelTessoura.py",
       "mode": "100644",
       "type": "blob",
-      "sha": "d4b0137cceb5d5fee267e669a48926912d9c9628",
-      "size": 1189,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/d4b0137cceb5d5fee267e669a48926912d9c9628"
+      "sha": "e0c951a76f1443148dddb34fc6e65c5b2fcbcdfa",
+      "size": 1186,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/e0c951a76f1443148dddb34fc6e65c5b2fcbcdfa"
     },
     {
       "path": "Exercicios/Exs Python | Milton/ex_1.py",
@@ -1134,6 +1134,30 @@
       "sha": "1a7eaa8c637616ec5d3d877a01ce425484f41345",
       "size": 847,
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/1a7eaa8c637616ec5d3d877a01ce425484f41345"
+    },
+    {
+      "path": "Exercicios/Exs Python | Milton/ex_15.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0664d275c196e6890ddbd08beb2d88a984128c49",
+      "size": 1135,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/0664d275c196e6890ddbd08beb2d88a984128c49"
+    },
+    {
+      "path": "Exercicios/Exs Python | Milton/ex_16.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d71ad91d0ad102992ef0ea2aa729db1ed03bf73",
+      "size": 583,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/8d71ad91d0ad102992ef0ea2aa729db1ed03bf73"
+    },
+    {
+      "path": "Exercicios/Exs Python | Milton/ex_17.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce34df97b1c122c6d86c7dc2005571df59fbddaa",
+      "size": 1371,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/ce34df97b1c122c6d86c7dc2005571df59fbddaa"
     },
     {
       "path": "Exercicios/Exs Python | Milton/ex_2.py",
@@ -1448,17 +1472,17 @@
       "path": "commits.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "a0a226a6f3eca9eea10944fd014f66496c45bcf9",
-      "size": 15723,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/a0a226a6f3eca9eea10944fd014f66496c45bcf9"
+      "sha": "c40ad2310f8de3f6e5c4efe43ad66746af7c8f36",
+      "size": 15808,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/c40ad2310f8de3f6e5c4efe43ad66746af7c8f36"
     },
     {
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "9cb6e790b7d4bfd5885867bd8f4a604b261ac430",
-      "size": 59533,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/9cb6e790b7d4bfd5885867bd8f4a604b261ac430"
+      "sha": "72213a4b4d61c6a549526dd3f189cece6ead88c5",
+      "size": 60201,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/72213a4b4d61c6a549526dd3f189cece6ead88c5"
     },
     {
       "path": "favicon.ico",
@@ -1472,9 +1496,9 @@
       "path": "favoritos.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "3966b01209fd1b988126f118d6fa54505c72297e",
-      "size": 883,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/3966b01209fd1b988126f118d6fa54505c72297e"
+      "sha": "7fa4b3250b8aa3703d0b56f5390aea02cce649b0",
+      "size": 990,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/7fa4b3250b8aa3703d0b56f5390aea02cce649b0"
     },
     {
       "path": "index.html",
