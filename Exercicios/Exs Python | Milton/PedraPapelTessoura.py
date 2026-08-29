@@ -1,9 +1,5 @@
 import random
 
-PEDRA = 1
-PAPEL = 2
-TESSOURA = 3
-
 partidas = 10
 jogadas = 0
 
@@ -12,9 +8,8 @@ derrota = 0
 vitoria = 0
 
 while jogadas < partidas:
-    jogadas += 1
 
-#===================COMPUTADOR===================
+#===================COMPUTADOR========================
     
     computador = random.randint(1, 3)
 
@@ -25,11 +20,11 @@ while jogadas < partidas:
         print("Computador: PAPEL")
 
     else:
-        print("Computador: TESSOURA")
+        print("Computador: TESOURA")
 
-#===================USUARIO===================
+#===================USUARIO===========================
         
-    usuario = int(input("Escolha 1 - Pedra | 2 - Papel | 3 - Tessoura: "))
+    usuario = int(input("Escolha 1 - Pedra | 2 - Papel | 3 - Tesoura: "))
 
     if usuario == 1:
         print("Usuario: PEDRA")
@@ -38,9 +33,9 @@ while jogadas < partidas:
         print("Usuario: PAPEL")
 
     else:
-        print("Usuario: TESSOURA")
+        print("Usuario: TESOURA")
 
-#===================BATALHA===================
+#===================BATALHA===========================
         
     resultado = usuario - computador
 
@@ -48,14 +43,20 @@ while jogadas < partidas:
         print("EMPATE!\n")
         empate += 1
 
-    elif resultado == -1 or resultado == 2
+    elif resultado == -1 or resultado == 2:
         print("DERROTA!\n")
         derrota += 1
 
     else:
-        print("VITORIA\n")
+        print("VITORIA!\n")
         vitoria += 1
+
+
+    jogadas += 1
 
 #===================MOSTRAR NA TELA===================
         
-print(f"O jogo acabou! Você ganhou: {vitoria} vezes. Perdeu: {derrota}. Empate: {empate}")
+print(f"FIM DE JOGO!\n"
+	f"Você ganhou: {vitoria}\n"
+	f"Perdeu: {derrota}\n"
+	f"Empate: {empate}\n")
