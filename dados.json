@@ -1,6 +1,6 @@
 {
-  "sha": "ce8387b81c83062b01338c214e6d77ebe082bbcc",
-  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/ce8387b81c83062b01338c214e6d77ebe082bbcc",
+  "sha": "fc13690d6e999d3b4514b4ef0b9f94039c03af48",
+  "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/trees/fc13690d6e999d3b4514b4ef0b9f94039c03af48",
   "tree": [
     {
       "path": ".github",
@@ -1469,20 +1469,28 @@
       "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/c9abb308a47a247ba4512eafdfa662a2e130f2af"
     },
     {
+      "path": "Truco.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b3017ca26f14ed55a5b5f1896e04a93571aacce5",
+      "size": 1263,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/b3017ca26f14ed55a5b5f1896e04a93571aacce5"
+    },
+    {
       "path": "commits.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "c40ad2310f8de3f6e5c4efe43ad66746af7c8f36",
-      "size": 15808,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/c40ad2310f8de3f6e5c4efe43ad66746af7c8f36"
+      "sha": "4164b828986e3c1252fca3a000b458860850e6f0",
+      "size": 15893,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/4164b828986e3c1252fca3a000b458860850e6f0"
     },
     {
       "path": "dados.json",
       "mode": "100644",
       "type": "blob",
-      "sha": "72213a4b4d61c6a549526dd3f189cece6ead88c5",
-      "size": 60201,
-      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/72213a4b4d61c6a549526dd3f189cece6ead88c5"
+      "sha": "03f2eb9d3e51b52cd888a9dc044dcb5d3df39dc5",
+      "size": 61172,
+      "url": "https://api.github.com/repos/EduardoMotaSousa/University-Classes/git/blobs/03f2eb9d3e51b52cd888a9dc044dcb5d3df39dc5"
     },
     {
       "path": "favicon.ico",
